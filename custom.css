@@ -1,0 +1,31 @@
+/* Custom CSS for Mintlify Documentation */
+
+/* Reduce font size of navigation group titles */
+.sidebar-group-title {
+  font-size: 0.5rem !important; /* 14px instead of default 16px */
+  font-weight: 600 !important;
+}
+
+/* Alternative selector if the above doesn't work */
+[data-testid="sidebar-group-title"] {
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Another alternative selector */
+.sidebar .group-title {
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* If you want even smaller, you can use these sizes: */
+/* font-size: 0.75rem !important; */ /* 12px */
+/* font-size: 0.8125rem !important; */ /* 13px */
+/* font-size: 0.875rem !important; */ /* 14px - current setting */
+/* font-size: 1rem !important; */ /* 16px - default */
+
+/* Optional: Also reduce spacing around group titles */
+.sidebar-group-title {
+  margin-bottom: 0.5rem !important;
+  margin-top: 1rem !important;
+}

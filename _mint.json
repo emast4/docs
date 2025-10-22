@@ -7,7 +7,7 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#2563eb",
+    "primary": "#101075",
     "light": "#ffffff",
     "dark": "#1e293b",
     "anchors": {
@@ -16,6 +16,7 @@
     }
   },
   "openapi": "./api-reference/openapi.json",
+  "css": "./custom.css",
   "github": {
     "repo": "priorlabs/tabpfn",
     "label": "Star us on GitHub"
@@ -28,28 +29,28 @@
   ],
   "topbarCtaButton": {
     "name": "Try for Free",
-    "url": "https://app.sulie.com"
+    "url": "https://ux.priorlabs.ai"
   },
   "anchors": [
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/priorlabs/tabpfn"
+    },
     {
       "name": "Community",
       "icon": "discord",
       "url": "https://discord.com/invite/VJRuU3bSxt"
     },
     {
-      "name": "GitHub",
-      "icon": "github",
-      "url": "https://github.com/priorlabs/tabpfn"
-    }
-  ],
-  "tabs": [
-    {
-      "name": "Documentation",
-      "url": "/"
+      "name": "Cookbooks",
+      "icon": "book",
+      "url": "https://cookbooks.priorlabs.ai"
     },
     {
-      "name": "API Reference", 
-      "url": "/api-reference"
+      "name": "Changelog",
+      "icon": "history",
+      "url": "https://changelog.priorlabs.ai"
     }
   ],
   "navigation": [
@@ -92,8 +93,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/wearesulie",
-    "github": "https://github.com/wearesulie",
-    "linkedin": "https://www.linkedin.com/company/wearesulie"
+    "github": "https://github.com/priorlabs",
+    "linkedin": "https://www.linkedin.com/company/prior-labs"
   }
 }

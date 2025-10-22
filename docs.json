@@ -1,0 +1,121 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Prior Labs",
+  "colors": {
+    "primary": "#101075",
+    "light": "#ffffff",
+    "dark": "#1e293b"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "global": {
+      "anchors": [
+        { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
+        { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
+        { "anchor": "Cookbooks", "href": "https://cookbooks.priorlabs.ai", "icon": "book" },
+        { "anchor": "Changelog", "href": "https://changelog.priorlabs.ai", "icon": "history" }
+      ]
+    },
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "menu": [
+          { "item": "Home", "page": "overview", "icon": "book-open" },
+          { "item": "Quickstart", "page": "quickstart" }
+        ],
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": ["overview", "quickstart"]
+          },
+          {
+            "group": "Models",
+            "icon": "brain-circuit",
+            "expanded": false,
+            "pages": [
+              "models/overview",
+              {
+                "group": "Versions",
+                "pages": [
+                  "models/tabpfn-v2",
+                  "models/tabpfn-v3",
+                  "models/tabpfn-ts"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Usage Guide",
+            "icon": "book",
+            "pages": ["usage-guide"]
+          },
+          {
+            "group": "Capabilities",
+            "icon": "zap",
+            "pages": [
+              "capabilities/classification",
+              "capabilities/regression",
+              "capabilities/forecasting"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "icon": "lightbulb",
+            "pages": [
+              "use-cases/classification",
+              "use-cases/regression",
+              "use-cases/forecasting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "menu": [
+          { "item": "Overview", "page": "api-reference/overview", "icon": "rocket" },
+          { "item": "OpenAPI", "page": "api-reference/openapi.json" }
+        ],
+        "pages": ["api-reference/overview"]
+      },
+      {
+        "tab": "SDK",
+        "menu": [
+          { "item": "Python", "page": "sdk/python", "icon": "code" },
+          { "item": "JavaScript", "page": "sdk/javascript", "icon": "code" }
+        ],
+        "anchors": [
+          {
+            "anchor": "SDKs",
+            "icon": "code",
+            "pages": ["sdk/python", "sdk/javascript"]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/light.svg"
+  },
+  "api": {
+    "openapi": "api-reference/openapi.json"
+  },
+  "navbar": {
+    "links": [
+      { "label": "Support", "href": "mailto:hello@priorlabs.ai" }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Try for Free",
+      "href": "https://ux.priorlabs.ai"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/priorlabs",
+      "linkedin": "https://www.linkedin.com/company/prior-labs"
+    }
+  }
+}

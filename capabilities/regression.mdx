@@ -1,0 +1,128 @@
+---
+title: "Regression"
+description: "Learn about TabPFN's regression capabilities"
+---
+
+# Regression
+
+TabPFN provides powerful regression capabilities for predicting continuous numerical values with high accuracy and interpretability.
+
+## Key Features
+
+- **Continuous Predictions**: Accurate estimation of numerical values
+- **Prediction Intervals**: Built-in uncertainty quantification
+- **Feature Importance**: Understand which features drive predictions
+- **Robust Performance**: Works well with outliers and noise
+
+## When to Use Regression
+
+TabPFN regression is perfect for:
+
+- **Price prediction** in e-commerce and real estate
+- **Demand forecasting** for inventory management
+- **Performance estimation** in various domains
+- **Risk assessment** with continuous risk scores
+- **Resource allocation** optimization
+
+## Example Use Cases
+
+<CardGroup cols={2}>
+  <Card
+    title="Sales Forecasting"
+    icon="chart-line"
+    href="/use-cases/regression"
+  >
+    Predict sales volumes and revenue
+  </Card>
+  <Card
+    title="Price Optimization"
+    icon="dollar-sign"
+    href="/use-cases/regression"
+  >
+    Optimize pricing strategies
+  </Card>
+  <Card
+    title="Risk Assessment"
+    icon="exclamation-triangle"
+    href="/use-cases/regression"
+  >
+    Quantify risk levels continuously
+  </Card>
+  <Card
+    title="Performance Prediction"
+    icon="trophy"
+    href="/use-cases/regression"
+  >
+    Estimate performance metrics
+  </Card>
+</CardGroup>
+
+## Quick Example
+
+```python
+from tabpfn import TabPFNRegressor
+import pandas as pd
+import numpy as np
+
+# Load your regression data
+data = pd.read_csv("regression_data.csv")
+X = data.drop("target", axis=1)
+y = data["target"]
+
+# Initialize regressor
+regressor = TabPFNRegressor()
+
+# Get predictions
+predictions = regressor.predict(X)
+
+# Get prediction intervals
+intervals = regressor.predict_interval(X, confidence=0.95)
+
+# Display results
+for i, (pred, interval) in enumerate(zip(predictions, intervals)):
+    lower, upper = interval
+    print(f"Sample {i}: Prediction={pred:.2f}, Range=[{lower:.2f}, {upper:.2f}]")
+```
+
+## Performance Metrics
+
+TabPFN regression typically achieves:
+
+- **R² Score**: 0.85-0.95 on most datasets
+- **RMSE**: Low root mean square error
+- **MAE**: Minimal mean absolute error
+- **Speed**: Fast predictions for large datasets
+- **Calibration**: Well-calibrated prediction intervals
+
+## Advanced Features
+
+### Multiple Output Regression
+
+```python
+# Predict multiple continuous variables
+multi_regressor = TabPFNRegressor(output_dim=3)
+predictions = multi_regressor.predict(X)  # Shape: (n_samples, 3)
+```
+
+### Quantile Regression
+
+```python
+# Get predictions for specific quantiles
+quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
+```
+
+### Feature Interactions
+
+```python
+# Automatically detect feature interactions
+interactions = regressor.feature_interactions(X)
+print("Important feature interactions:", interactions)
+```
+
+## Best Practices
+
+1. **Data Preprocessing**: Normalize numerical features
+2. **Outlier Handling**: TabPFN is robust but consider outlier treatment
+3. **Feature Engineering**: Create meaningful derived features
+4. **Validation**: Use cross-validation for performance assessment
+5. **Interpretation**: Leverage feature importance for insights

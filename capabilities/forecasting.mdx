@@ -1,0 +1,140 @@
+---
+title: "Forecasting"
+description: "Learn about TabPFN's time series forecasting capabilities"
+---
+
+# Forecasting
+
+TabPFN-TS provides state-of-the-art time series forecasting capabilities, enabling accurate predictions of future trends and patterns.
+
+## Key Features
+
+- **Multiple Horizons**: Predict various time steps ahead
+- **Seasonality Detection**: Automatic identification of seasonal patterns
+- **Trend Analysis**: Handle linear, exponential, and polynomial trends
+- **Uncertainty Quantification**: Built-in confidence intervals
+- **Multi-Series Support**: Handle multiple correlated time series
+
+## When to Use Forecasting
+
+TabPFN forecasting is ideal for:
+
+- **Business Planning**: Revenue, sales, and demand forecasting
+- **Resource Management**: Capacity planning and resource allocation
+- **Financial Modeling**: Stock prices, market trends, and risk assessment
+- **Supply Chain**: Inventory management and logistics planning
+- **Energy Management**: Power consumption and renewable energy forecasting
+
+## Example Use Cases
+
+<CardGroup cols={2}>
+  <Card
+    title="Sales Forecasting"
+    icon="chart-line"
+    href="/use-cases/forecasting"
+  >
+    Predict future sales and revenue trends
+  </Card>
+  <Card
+    title="Demand Planning"
+    icon="shopping-cart"
+    href="/use-cases/forecasting"
+  >
+    Forecast product demand for inventory
+  </Card>
+  <Card
+    title="Financial Markets"
+    icon="chart-bar"
+    href="/use-cases/forecasting"
+  >
+    Predict market movements and trends
+  </Card>
+  <Card
+    title="Energy Forecasting"
+    icon="bolt"
+    href="/use-cases/forecasting"
+  >
+    Forecast energy consumption and generation
+  </Card>
+</CardGroup>
+
+## Quick Example
+
+```python
+from tabpfn import TabPFNTimeSeries
+import pandas as pd
+import numpy as np
+
+# Load time series data
+data = pd.read_csv("timeseries_data.csv")
+data['date'] = pd.to_datetime(data['date'])
+data = data.set_index('date')
+
+# Initialize time series model
+ts_model = TabPFNTimeSeries()
+
+# Forecast next 30 days
+forecast = ts_model.forecast(
+    data=data,
+    horizon=30,
+    confidence_level=0.95
+)
+
+# Display results
+print(f"Forecast: {forecast.predictions}")
+print(f"Confidence Intervals: {forecast.confidence_intervals}")
+print(f"Trend: {forecast.trend}")
+print(f"Seasonality: {forecast.seasonality}")
+```
+
+## Advanced Forecasting
+
+### Multiple Horizons
+
+```python
+# Forecast multiple time horizons
+forecasts = ts_model.forecast(
+    data=data,
+    horizon=[7, 14, 30, 90],  # 1 week, 2 weeks, 1 month, 3 months
+    confidence_level=0.95
+)
+```
+
+### Multi-Variate Forecasting
+
+```python
+# Handle multiple correlated time series
+multi_forecast = ts_model.forecast_multivariate(
+    data=multi_series_data,
+    horizon=30,
+    series_names=['sales', 'marketing', 'inventory']
+)
+```
+
+### Seasonal Decomposition
+
+```python
+# Get seasonal components
+decomposition = ts_model.decompose(data)
+print(f"Trend: {decomposition.trend}")
+print(f"Seasonal: {decomposition.seasonal}")
+print(f"Residual: {decomposition.residual}")
+```
+
+## Performance Metrics
+
+TabPFN forecasting typically achieves:
+
+- **MAPE**: 5-15% mean absolute percentage error
+- **RMSE**: Low root mean square error
+- **MAE**: Minimal mean absolute error
+- **Speed**: 100x faster than training-based methods
+- **Accuracy**: Competitive with state-of-the-art methods
+
+## Best Practices
+
+1. **Data Quality**: Ensure clean, consistent time series data
+2. **Seasonality**: Account for seasonal patterns in your data
+3. **Trend Analysis**: Understand underlying trends
+4. **Validation**: Use time series cross-validation
+5. **Monitoring**: Track forecast accuracy over time

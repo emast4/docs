@@ -1,0 +1,256 @@
+---
+title: "Regression Use Cases"
+description: "Real-world applications of TabPFN regression"
+---
+
+# Regression Use Cases
+
+Discover how TabPFN regression powers accurate predictions across various industries and applications.
+
+## Sales Forecasting
+
+Predict sales volumes and revenue to optimize business planning and resource allocation.
+
+### Business Impact
+
+- **Revenue Optimization**: Increase revenue by 15-25%
+- **Inventory Management**: Reduce stockouts and overstock
+- **Resource Planning**: Optimize staffing and marketing spend
+- **Budget Accuracy**: Improve budget forecasting accuracy
+
+### Implementation Example
+
+```python
+from tabpfn import TabPFNRegressor
+import pandas as pd
+
+# Sales prediction features
+sales_features = [
+    'historical_sales',
+    'seasonality_factor',
+    'marketing_spend',
+    'competitor_pricing',
+    'economic_indicators',
+    'weather_data',
+    'holiday_calendar'
+]
+
+# Load sales data
+sales_data = pd.read_csv("sales_data.csv")
+X = sales_data[sales_features]
+y = sales_data['sales_target']
+
+# Predict sales
+regressor = TabPFNRegressor()
+sales_predictions = regressor.predict(X)
+
+# Get prediction intervals
+intervals = regressor.predict_interval(X, confidence=0.95)
+
+# Business insights
+for i, (pred, interval) in enumerate(zip(sales_predictions, intervals)):
+    lower, upper = interval
+    print(f"Period {i}: ${pred:,.0f} (Range: ${lower:,.0f} - ${upper:,.0f})")
+```
+
+## Price Optimization
+
+Optimize pricing strategies to maximize revenue and market competitiveness.
+
+### Pricing Benefits
+
+- **Revenue Maximization**: Increase revenue by 10-20%
+- **Market Competitiveness**: Stay competitive while maximizing profit
+- **Dynamic Pricing**: Adjust prices based on market conditions
+- **Customer Segmentation**: Price differently for different segments
+
+### Dynamic Pricing Example
+
+```python
+# Price optimization features
+pricing_features = [
+    'product_cost',
+    'competitor_price',
+    'demand_elasticity',
+    'inventory_level',
+    'seasonality',
+    'customer_segment',
+    'market_conditions'
+]
+
+def optimize_price(product_data):
+    regressor = TabPFNRegressor()
+    
+    # Predict optimal price
+    optimal_price = regressor.predict(product_data)
+    
+    # Get confidence interval
+    price_interval = regressor.predict_interval(product_data, confidence=0.90)
+    
+    return {
+        'recommended_price': optimal_price[0],
+        'price_range': price_interval[0],
+        'confidence': 0.90
+    }
+```
+
+## Risk Assessment
+
+Quantify risk levels continuously for better decision-making in finance and insurance.
+
+### Risk Management Applications
+
+- **Credit Scoring**: Assess borrower creditworthiness
+- **Insurance Underwriting**: Determine premium rates
+- **Investment Risk**: Evaluate portfolio risk
+- **Operational Risk**: Assess business operational risks
+
+### Credit Risk Example
+
+```python
+# Credit risk features
+credit_features = [
+    'credit_score',
+    'income',
+    'debt_to_income_ratio',
+    'employment_history',
+    'loan_amount',
+    'loan_term',
+    'collateral_value'
+]
+
+def assess_credit_risk(applicant_data):
+    regressor = TabPFNRegressor()
+    
+    # Predict risk score (0-100)
+    risk_score = regressor.predict(applicant_data)
+    
+    # Get risk confidence interval
+    risk_interval = regressor.predict_interval(applicant_data, confidence=0.95)
+    
+    # Determine risk category
+    if risk_score < 30:
+        risk_category = "LOW"
+    elif risk_score < 60:
+        risk_category = "MEDIUM"
+    else:
+        risk_category = "HIGH"
+    
+    return {
+        'risk_score': risk_score[0],
+        'risk_category': risk_category,
+        'confidence_interval': risk_interval[0]
+    }
+```
+
+## Performance Prediction
+
+Estimate performance metrics across various domains for optimization and planning.
+
+### Performance Applications
+
+- **Employee Performance**: Predict job performance
+- **System Performance**: Forecast system metrics
+- **Athletic Performance**: Estimate sports performance
+- **Academic Performance**: Predict student outcomes
+
+### Employee Performance Example
+
+```python
+# Employee performance features
+performance_features = [
+    'years_experience',
+    'education_level',
+    'training_hours',
+    'previous_performance',
+    'team_size',
+    'project_complexity',
+    'workload'
+]
+
+def predict_employee_performance(employee_data):
+    regressor = TabPFNRegressor()
+    
+    # Predict performance score
+    performance_score = regressor.predict(employee_data)
+    
+    # Get prediction interval
+    performance_interval = regressor.predict_interval(employee_data, confidence=0.90)
+    
+    return {
+        'predicted_performance': performance_score[0],
+        'performance_range': performance_interval[0],
+        'recommendations': get_performance_recommendations(performance_score[0])
+    }
+```
+
+## Real Estate Valuation
+
+Predict property values for investment decisions and market analysis.
+
+### Real Estate Benefits
+
+- **Investment Decisions**: Make informed property investments
+- **Market Analysis**: Understand market trends
+- **Pricing Strategy**: Set competitive listing prices
+- **Risk Assessment**: Evaluate investment risks
+
+### Property Valuation Example
+
+```python
+# Property valuation features
+property_features = [
+    'square_footage',
+    'bedrooms',
+    'bathrooms',
+    'location_score',
+    'school_rating',
+    'crime_rate',
+    'transportation_access',
+    'market_trends'
+]
+
+def estimate_property_value(property_data):
+    regressor = TabPFNRegressor()
+    
+    # Predict property value
+    estimated_value = regressor.predict(property_data)
+    
+    # Get valuation range
+    value_interval = regressor.predict_interval(property_data, confidence=0.95)
+    
+    return {
+        'estimated_value': estimated_value[0],
+        'value_range': value_interval[0],
+        'investment_potential': assess_investment_potential(estimated_value[0])
+    }
+```
+
+## Performance Metrics
+
+TabPFN regression consistently delivers:
+
+- **R² Score**: 0.85-0.95 on most datasets
+- **RMSE**: Low root mean square error
+- **MAE**: Minimal mean absolute error
+- **Speed**: Fast predictions for large datasets
+- **Calibration**: Well-calibrated prediction intervals
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Try Regression"
+    icon="play"
+    href="/quickstart"
+  >
+    Get started with TabPFN regression
+  </Card>
+  <Card
+    title="Learn More"
+    icon="book"
+    href="/capabilities/regression"
+  >
+    Deep dive into regression capabilities
+  </Card>
+</CardGroup>

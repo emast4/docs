@@ -1,0 +1,95 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "TabPFN API",
+    "description": "API for TabPFN tabular data analysis",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Prior Labs Support",
+      "email": "hello@priorlabs.ai"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.priorlabs.ai/v1",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/hello": {
+      "get": {
+        "summary": "Hello World",
+        "description": "A simple hello world endpoint to test API connectivity",
+        "operationId": "helloWorld",
+        "tags": ["General"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Hello from TabPFN API!"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-01-15T10:30:00Z"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Hello from TabPFN API!",
+                  "status": "success",
+                  "timestamp": "2024-01-15T10:30:00Z"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key for authentication"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}

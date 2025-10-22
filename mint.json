@@ -1,0 +1,99 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Prior Labs",
+  "logo": {
+    "dark": "/logo/light.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#2563eb",
+    "light": "#ffffff",
+    "dark": "#1e293b",
+    "anchors": {
+      "from": "#2563eb",
+      "to": "#2563eb"
+    }
+  },
+  "openapi": "./api-reference/openapi.json",
+  "github": {
+    "repo": "priorlabs/tabpfn",
+    "label": "Star us on GitHub"
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:hello@priorlabs.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Try for Free",
+    "url": "https://app.sulie.com"
+  },
+  "anchors": [
+    {
+      "name": "Community",
+      "icon": "discord",
+      "url": "https://discord.com/invite/VJRuU3bSxt"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/priorlabs/tabpfn"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "Documentation",
+      "url": "/"
+    },
+    {
+      "name": "API Reference", 
+      "url": "/api-reference"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "overview",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Models",
+      "pages": [
+        "models/tabpfn-v2",
+        "models/tabpfn-v3",
+        "models/tabpfn-ts"
+      ]
+    },
+    {
+      "group": "Usage Guide",
+      "pages": [
+        "usage-guide"
+      ]
+    },
+    {
+      "group": "Capabilities",
+      "pages": [
+        "capabilities/classification",
+        "capabilities/regression",
+        "capabilities/forecasting",
+        {
+          "group": "Use Cases",
+          "pages": [
+            "use-cases/classification",
+            "use-cases/regression",
+            "use-cases/forecasting"
+          ]
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/wearesulie",
+    "github": "https://github.com/wearesulie",
+    "linkedin": "https://www.linkedin.com/company/wearesulie"
+  }
+}

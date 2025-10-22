@@ -1,0 +1,109 @@
+---
+title: "Quickstart"
+description: "Get started with TabPFN in minutes"
+---
+
+# Quickstart Guide
+
+Get up and running with TabPFN in just a few minutes. Choose your preferred deployment method below.
+
+## Installation
+
+<Tabs>
+  <Tab title="API (Hosted)">
+    <Steps>
+      <Step title="Get API Key">
+        Sign up at [app.sulie.com](https://app.sulie.com) to get your API key
+      </Step>
+      <Step title="Install Client">
+        ```bash
+        pip install tabpfn-client
+        ```
+      </Step>
+      <Step title="Set API Key">
+        ```bash
+        export TABPFN_API_KEY="your-api-key-here"
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="Package (Self-hosted)">
+    <Steps>
+      <Step title="Install Package">
+        ```bash
+        pip install tabpfn
+        ```
+      </Step>
+      <Step title="Verify Installation">
+        ```python
+        import tabpfn
+        print(tabpfn.__version__)
+        ```
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+## Basic Example
+
+Here's a simple example to get you started:
+
+<Tabs>
+  <Tab title="API (Hosted)">
+    ```python
+    from tabpfn_client import TabPFNClient
+    import pandas as pd
+
+    # Initialize client
+    client = TabPFNClient(api_key="your-api-key")
+
+    # Load your data
+    data = pd.read_csv("your_data.csv")
+    
+    # Split features and target
+    X = data.drop("target", axis=1)
+    y = data["target"]
+
+    # Get predictions
+    predictions = client.predict(X)
+    print(f"Predictions: {predictions}")
+    ```
+  </Tab>
+  <Tab title="Package (Self-hosted)">
+    ```python
+    from tabpfn import TabPFNClassifier
+    import pandas as pd
+
+    # Load your data
+    data = pd.read_csv("your_data.csv")
+    
+    # Split features and target
+    X = data.drop("target", axis=1)
+    y = data["target"]
+
+    # Initialize and predict
+    classifier = TabPFNClassifier()
+    predictions = classifier.predict(X)
+    print(f"Predictions: {predictions}")
+    ```
+  </Tab>
+</Tabs>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Explore Models"
+    icon="brain"
+    href="/models"
+  >
+    Learn about different TabPFN model versions
+  </Card>
+  <Card
+    title="Usage Guide"
+    icon="book"
+    href="/usage-guide"
+  >
+    Deep dive into advanced usage patterns
+  </Card>
+</CardGroup>

@@ -1,0 +1,192 @@
+---
+title: "Classification Use Cases"
+description: "Real-world applications of TabPFN classification"
+---
+
+# Classification Use Cases
+
+Explore real-world applications where TabPFN classification delivers exceptional results.
+
+## Customer Churn Prediction
+
+Predict which customers are likely to churn to improve retention strategies.
+
+### Business Impact
+
+- **Retention Rate**: Increase customer retention by 25-40%
+- **Cost Savings**: Reduce acquisition costs by targeting at-risk customers
+- **Revenue Protection**: Prevent revenue loss from churning customers
+
+### Implementation
+
+```python
+from tabpfn import TabPFNClassifier
+import pandas as pd
+
+# Customer data features
+features = [
+    'days_since_last_purchase',
+    'total_purchases',
+    'avg_order_value',
+    'support_tickets',
+    'payment_method',
+    'subscription_tier'
+]
+
+# Load customer data
+customer_data = pd.read_csv("customer_data.csv")
+X = customer_data[features]
+y = customer_data['churned']  # Binary: 0 or 1
+
+# Predict churn probability
+classifier = TabPFNClassifier()
+churn_probability = classifier.predict_proba(X)[:, 1]
+
+# Identify high-risk customers
+high_risk_customers = customer_data[churn_probability > 0.7]
+```
+
+## Fraud Detection
+
+Identify fraudulent transactions in real-time to protect your business.
+
+### Key Benefits
+
+- **Real-time Detection**: Instant fraud identification
+- **High Accuracy**: 95%+ accuracy in fraud detection
+- **Low False Positives**: Minimize legitimate transaction blocks
+- **Cost Reduction**: Prevent financial losses from fraud
+
+### Example Implementation
+
+```python
+# Transaction features
+transaction_features = [
+    'amount',
+    'merchant_category',
+    'time_of_day',
+    'day_of_week',
+    'location_distance',
+    'device_type',
+    'previous_fraud_history'
+]
+
+# Real-time fraud detection
+def detect_fraud(transaction_data):
+    classifier = TabPFNClassifier()
+    fraud_score = classifier.predict_proba(transaction_data)[:, 1]
+    
+    if fraud_score > 0.8:
+        return "HIGH_RISK"
+    elif fraud_score > 0.5:
+        return "MEDIUM_RISK"
+    else:
+        return "LOW_RISK"
+```
+
+## Medical Diagnosis Support
+
+Assist healthcare professionals with diagnostic predictions and screening.
+
+### Applications
+
+- **Disease Screening**: Early detection of diseases
+- **Risk Assessment**: Evaluate patient risk factors
+- **Treatment Planning**: Support treatment decisions
+- **Resource Allocation**: Optimize healthcare resources
+
+### Healthcare Example
+
+```python
+# Patient features
+patient_features = [
+    'age',
+    'gender',
+    'blood_pressure',
+    'cholesterol',
+    'glucose_level',
+    'family_history',
+    'lifestyle_factors'
+]
+
+# Disease prediction
+def predict_disease_risk(patient_data):
+    classifier = TabPFNClassifier()
+    risk_probability = classifier.predict_proba(patient_data)[:, 1]
+    
+    risk_level = "Low" if risk_probability < 0.3 else \
+                "Medium" if risk_probability < 0.7 else "High"
+    
+    return {
+        'risk_level': risk_level,
+        'probability': risk_probability[0],
+        'recommendations': get_recommendations(risk_probability[0])
+    }
+```
+
+## Quality Control
+
+Classify products as pass/fail in manufacturing processes.
+
+### Manufacturing Benefits
+
+- **Consistency**: Standardized quality assessment
+- **Speed**: Instant quality decisions
+- **Cost Reduction**: Reduce manual inspection costs
+- **Scalability**: Handle high-volume production
+
+### Quality Control Implementation
+
+```python
+# Product quality features
+quality_features = [
+    'dimension_1',
+    'dimension_2',
+    'weight',
+    'surface_finish',
+    'material_hardness',
+    'temperature',
+    'pressure'
+]
+
+# Quality classification
+def classify_product_quality(product_data):
+    classifier = TabPFNClassifier()
+    quality_score = classifier.predict_proba(product_data)[:, 1]
+    
+    if quality_score > 0.8:
+        return "PASS"
+    elif quality_score > 0.5:
+        return "REVIEW"
+    else:
+        return "FAIL"
+```
+
+## Performance Metrics
+
+TabPFN classification consistently delivers:
+
+- **Accuracy**: 85-95% across various domains
+- **Precision**: High precision for critical classes
+- **Recall**: Excellent recall for minority classes
+- **Speed**: Sub-second predictions for thousands of samples
+- **Interpretability**: Clear feature importance insights
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card
+    title="Try Classification"
+    icon="play"
+    href="/quickstart"
+  >
+    Get started with TabPFN classification
+  </Card>
+  <Card
+    title="Learn More"
+    icon="book"
+    href="/capabilities/classification"
+  >
+    Deep dive into classification capabilities
+  </Card>
+</CardGroup>

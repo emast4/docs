@@ -1,0 +1,115 @@
+---
+title: "Classification"
+description: "Learn about TabPFN's classification capabilities"
+---
+
+# Classification
+
+TabPFN excels at classification tasks, providing accurate predictions for categorical outcomes without requiring training.
+
+## Key Features
+
+- **Binary Classification**: Perfect for yes/no, true/false predictions
+- **Multi-Class Classification**: Handle multiple categories with ease
+- **Probability Estimates**: Get confidence scores for each prediction
+- **Feature Importance**: Understand which features drive predictions
+
+## When to Use Classification
+
+TabPFN classification is ideal for:
+
+- **Small datasets** where traditional ML struggles
+- **High-dimensional data** with many features
+- **Mixed data types** (numerical and categorical)
+- **Real-time applications** requiring instant predictions
+- **Research scenarios** where interpretability matters
+
+## Example Use Cases
+
+<CardGroup cols={2}>
+  <Card
+    title="Customer Churn Prediction"
+    icon="user-times"
+    href="/use-cases/classification"
+  >
+    Predict which customers are likely to churn
+  </Card>
+  <Card
+    title="Fraud Detection"
+    icon="shield-exclamation"
+    href="/use-cases/classification"
+  >
+    Identify fraudulent transactions in real-time
+  </Card>
+  <Card
+    title="Medical Diagnosis"
+    icon="heart-pulse"
+    href="/use-cases/classification"
+  >
+    Assist in medical diagnosis and screening
+  </Card>
+  <Card
+    title="Quality Control"
+    icon="check-circle"
+    href="/use-cases/classification"
+  >
+    Classify products as pass/fail in manufacturing
+  </Card>
+</CardGroup>
+
+## Quick Example
+
+```python
+from tabpfn import TabPFNClassifier
+import pandas as pd
+
+# Load your classification data
+data = pd.read_csv("classification_data.csv")
+X = data.drop("target", axis=1)
+y = data["target"]
+
+# Initialize classifier
+classifier = TabPFNClassifier()
+
+# Get predictions and probabilities
+predictions = classifier.predict(X)
+probabilities = classifier.predict_proba(X)
+
+# Display results
+for i, (pred, prob) in enumerate(zip(predictions, probabilities)):
+    print(f"Sample {i}: Prediction={pred}, Confidence={max(prob):.3f}")
+```
+
+## Performance Metrics
+
+TabPFN classification typically achieves:
+
+- **Accuracy**: 85-95% on most datasets
+- **Precision**: High precision for critical classes
+- **Recall**: Excellent recall for minority classes
+- **Speed**: Sub-second predictions for thousands of samples
+- **Memory**: Minimal memory footprint
+
+## Advanced Features
+
+### Probability Calibration
+
+```python
+# Get well-calibrated probabilities
+probabilities = classifier.predict_proba(X, calibrated=True)
+```
+
+### Feature Importance
+
+```python
+# Get feature importance scores
+importance = classifier.feature_importance(X)
+print("Feature importance:", importance)
+```
+
+### Prediction Intervals
+
+```python
+# Get prediction confidence intervals
+intervals = classifier.predict_interval(X, confidence=0.95)
+```

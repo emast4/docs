@@ -1,0 +1,195 @@
+---
+title: "Usage Guide"
+description: "Comprehensive guide to using TabPFN effectively"
+---
+
+# Usage Guide
+
+This guide provides comprehensive information on how to use TabPFN effectively for various data analysis tasks.
+
+## Intended Use
+
+TabPFN is designed for tabular data analysis where traditional machine learning approaches may struggle, particularly with:
+
+- **Small datasets** (< 10,000 samples)
+- **High-dimensional data** with many features
+- **Mixed data types** (numerical, categorical, text)
+- **Time-sensitive applications** requiring instant predictions
+- **Research and experimentation** where model interpretability matters
+
+## Best Practices
+
+### Data Preparation
+
+1. **Clean your data**: Remove or handle missing values appropriately
+2. **Encode categorical variables**: Use appropriate encoding methods
+3. **Scale numerical features**: Normalize or standardize as needed
+4. **Feature engineering**: Create meaningful derived features
+
+### Model Selection
+
+Choose the right TabPFN variant for your task:
+
+<CardGroup cols={3}>
+  <Card
+    title="TabPFN v2"
+    icon="brain"
+    href="/models/tabpfn-v2"
+  >
+    General-purpose classification and regression
+  </Card>
+  <Card
+    title="TabPFN v3"
+    icon="star"
+    href="/models/tabpfn-v3"
+  >
+    Multi-task learning and advanced scenarios
+  </Card>
+  <Card
+    title="TabPFN-TS"
+    icon="chart-line"
+    href="/models/tabpfn-ts"
+  >
+    Time series forecasting and temporal data
+  </Card>
+</CardGroup>
+
+### Performance Optimization
+
+- **Batch processing**: Process multiple samples together for better efficiency
+- **Memory management**: Use appropriate data types to minimize memory usage
+- **Caching**: Cache preprocessed data for repeated experiments
+- **Parallel processing**: Utilize multiple cores for large datasets
+
+## Common Patterns
+
+### Classification Workflow
+
+```python
+from tabpfn import TabPFNClassifier
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load and prepare data
+data = pd.read_csv("classification_data.csv")
+X = data.drop("target", axis=1)
+y = data["target"]
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Initialize classifier
+classifier = TabPFNClassifier()
+
+# Get predictions
+predictions = classifier.predict(X_test)
+probabilities = classifier.predict_proba(X_test)
+```
+
+### Regression Workflow
+
+```python
+from tabpfn import TabPFNRegressor
+
+# Initialize regressor
+regressor = TabPFNRegressor()
+
+# Get predictions
+predictions = regressor.predict(X_test)
+
+# Get prediction intervals
+intervals = regressor.predict_interval(X_test, confidence=0.95)
+```
+
+### Time Series Forecasting
+
+```python
+from tabpfn import TabPFNTimeSeries
+
+# Initialize time series model
+ts_model = TabPFNTimeSeries()
+
+# Forecast multiple horizons
+forecasts = ts_model.forecast(
+    data=time_series_data,
+    horizon=[7, 14, 30],  # Multiple horizons
+    confidence_level=0.95
+)
+```
+
+## Troubleshooting
+
+### Common Issues
+
+<AccordionGroup>
+  <Accordion title="Memory Issues">
+    - Reduce batch size
+    - Use more efficient data types
+    - Process data in chunks
+  </Accordion>
+  
+  <Accordion title="Poor Performance">
+    - Check data quality and preprocessing
+    - Try different TabPFN variants
+    - Verify feature engineering
+  </Accordion>
+  
+  <Accordion title="Slow Inference">
+    - Use batch processing
+    - Optimize data types
+    - Consider API version for large datasets
+  </Accordion>
+</AccordionGroup>
+
+## Advanced Usage
+
+### Custom Feature Engineering
+
+```python
+# Create custom features
+def create_features(df):
+    df['feature_ratio'] = df['feature1'] / df['feature2']
+    df['feature_interaction'] = df['feature1'] * df['feature2']
+    return df
+
+# Apply feature engineering
+processed_data = create_features(your_data)
+```
+
+### Model Ensembling
+
+```python
+from tabpfn import TabPFNClassifier
+import numpy as np
+
+# Create ensemble of models
+models = [TabPFNClassifier(model_id=f"v{i}") for i in [2, 3]]
+
+# Get predictions from all models
+predictions = []
+for model in models:
+    pred = model.predict(X_test)
+    predictions.append(pred)
+
+# Average predictions
+ensemble_prediction = np.mean(predictions, axis=0)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Explore Capabilities"
+    icon="cog"
+    href="/capabilities"
+  >
+    Learn about specific TabPFN capabilities
+  </Card>
+  <Card
+    title="View Use Cases"
+    icon="lightbulb"
+    href="/use-cases"
+  >
+    See real-world applications and examples
+  </Card>
+</CardGroup>

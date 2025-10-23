@@ -29,3 +29,26 @@
   margin-bottom: 0.5rem !important;
   margin-top: 1rem !important;
 }
+
+/* Table styling for content-based width and left alignment */
+.table-container {
+  width: auto !important;
+  overflow-x: auto !important;
+}
+
+.table-container table {
+  width: auto !important;
+  table-layout: auto !important;
+}
+
+.table-container table th:first-child,
+.table-container table td:first-child {
+  text-align: left !important;
+  white-space: nowrap !important;
+  padding-right: 1rem !important;
+}
+
+.table-container table th:last-child,
+.table-container table td:last-child {
+  text-align: left !important;
+}

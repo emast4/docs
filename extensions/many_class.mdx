@@ -1,0 +1,22 @@
+---
+title: "Many Class Classifier"
+description: "Learn about classification with TabPFN for large number of classes."
+---
+
+This extension allows TabPFN to handle classification problems with more classes than TabPFN's default limit (typically 10 classes). It works through an error-correcting output code (ECOC) approach that:
+
+- Encodes the multi-class task into multiple binary or small-class subtasks.
+- Trains the base `TabPFNClassifier` on these subtasks.
+- Decodes the results back into the original class space.
+
+This approach enables TabPFN to scale to hundreds of classes efficiently while maintaining accuracy and calibration.
+
+```python
+from tabpfn_extensions.manyclass_classifier import ManyClassClassifier
+from tabpfn import TabPFNClassifier
+
+estimator = TabPFNClassifier(device="cuda")
+classifier = ManyClassClassifier(base_estimator=estimator)
+classifier.fit(X_train, y_train)
+predictions = classifier.predict(X_test)
+```

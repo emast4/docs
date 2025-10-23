@@ -3,113 +3,85 @@ title: "Classification"
 description: "Learn about TabPFN's classification capabilities"
 ---
 
-# Classification
+TabPFN provides a powerful interface for classification on tabular data, supporting binary, multi-class, and even text-enhanced inputs - all without model training or hyperparameter tuning.
 
-TabPFN excels at classification tasks, providing accurate predictions for categorical outcomes without requiring training.
+## Key Capabilities
 
-## Key Features
+- **Zero-shot classification** - Predicts instantly through a single forward pass, no gradient descent required.
+- **Calibrated probabilities** - Outputs reliable class probabilities for uncertainty-aware decision-making.
+- **Robust to noise and missing data** - Handles categorical variables, uninformative columns, and outliers natively.
+- **Text-aware inputs** - This **API only** feature automatically detects textual fields, extracts embeddings, and includes them in the forward pass for classification.
+- **Seamless multi-class support** - Works out-of-the-box for binary and multi-class datasets.
 
-- **Binary Classification**: Perfect for yes/no, true/false predictions
-- **Multi-Class Classification**: Handle multiple categories with ease
-- **Probability Estimates**: Get confidence scores for each prediction
-- **Feature Importance**: Understand which features drive predictions
-
-## When to Use Classification
-
-TabPFN classification is ideal for:
-
-- **Small datasets** where traditional ML struggles
-- **High-dimensional data** with many features
-- **Mixed data types** (numerical and categorical)
-- **Real-time applications** requiring instant predictions
-- **Research scenarios** where interpretability matters
-
-## Example Use Cases
-
-<CardGroup cols={2}>
-  <Card
-    title="Customer Churn Prediction"
-    icon="user-times"
-    href="/use-cases/classification"
-  >
-    Predict which customers are likely to churn
-  </Card>
-  <Card
-    title="Fraud Detection"
-    icon="shield-exclamation"
-    href="/use-cases/classification"
-  >
-    Identify fraudulent transactions in real-time
-  </Card>
-  <Card
-    title="Medical Diagnosis"
-    icon="heart-pulse"
-    href="/use-cases/classification"
-  >
-    Assist in medical diagnosis and screening
-  </Card>
-  <Card
-    title="Quality Control"
-    icon="check-circle"
-    href="/use-cases/classification"
-  >
-    Classify products as pass/fail in manufacturing
-  </Card>
-</CardGroup>
-
-## Quick Example
+## Getting Started
 
 ```python
 from tabpfn import TabPFNClassifier
-import pandas as pd
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-# Load your classification data
-data = pd.read_csv("classification_data.csv")
-X = data.drop("target", axis=1)
-y = data["target"]
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Initialize classifier
-classifier = TabPFNClassifier()
+model = TabPFNClassifier(device="cuda")
+model.fit(X_train, y_train)
+preds = model.predict(X_test)
 
-# Get predictions and probabilities
-predictions = classifier.predict(X)
-probabilities = classifier.predict_proba(X)
-
-# Display results
-for i, (pred, prob) in enumerate(zip(predictions, probabilities)):
-    print(f"Sample {i}: Prediction={pred}, Confidence={max(prob):.3f}")
+print("Accuracy:", accuracy_score(y_test, preds))
 ```
 
-## Performance Metrics
+For datasets with more than 10 classes, use the `ManyClassClassifier` extension - available via [Prior Labs Extensions](https://github.com/priorlabs/tabpfn-extensions).
 
-TabPFN classification typically achieves:
+It extends TabPFN to large multi-class problems using Error-Correcting Output Codes (ECOC), which:
+- Encodes the multi-class task into multiple binary or small-class subtasks.
+- Trains the base TabPFNClassifier on these subtasks.
+- Decodes the results back into the original class space.
 
-- **Accuracy**: 85-95% on most datasets
-- **Precision**: High precision for critical classes
-- **Recall**: Excellent recall for minority classes
-- **Speed**: Sub-second predictions for thousands of samples
-- **Memory**: Minimal memory footprint
-
-## Advanced Features
-
-### Probability Calibration
+This approach enables TabPFN to scale to hundreds of classes efficiently while maintaining accuracy and calibration.
 
 ```python
-# Get well-calibrated probabilities
-probabilities = classifier.predict_proba(X, calibrated=True)
+from tabpfn_extensions.manyclass_classifier import ManyClassClassifier
+from tabpfn import TabPFNClassifier
+
+estimator = TabPFNClassifier(device="cuda")
+classifier = ManyClassClassifier(base_estimator=estimator)
+classifier.fit(X_train, y_train)
+predictions = classifier.predict(X_test)
 ```
 
-### Feature Importance
+<Accordion title="How can I improve classification speed, especially on large datasets?">
+
+Each `predict()` re-encodes the full training set in-context. Performance depends on:
+- Dataset size (e.g. TabPFN 2 is optimized for ≤10k samples)
+- Fit mode (low_memory vs fit_with_cache)
+- Device (CPU/MPS/GPU)
 
 ```python
-# Get feature importance scores
-importance = classifier.feature_importance(X)
-print("Feature importance:", importance)
+classifier = TabPFNClassifier(fit_mode="fit_with_cache", device="cuda")
 ```
 
-### Prediction Intervals
+`fit_with_cache` retains preprocessing and significantly speeds up repeated predictions.
+</Accordion>
+
+<Accordion title="How does TabPFN handle missing values?">
+
+`TabPFNClassifier` now supports native handling of missing values `pd.NA`. Older versions required manual preprocessing, but the current release integrates this automatically.
+
+We recommend upgrading to the latest version:
+```bash
+pip install -U tabpfn
+```
+
+</Accordion>
+
+<Accordion title="Why is my classifier moving back to CPU after training or prediction?">
+
+After each inference, TabPFN’s inference engine automatically moves back to CPU to free GPU memory.
+While this conserves resources, it slows down repeated predictions and can confuse users expecting persistent GPU behavior.
 
 ```python
-# Get prediction confidence intervals
-intervals = classifier.predict_interval(X, confidence=0.95)
+# Keeps model on GPU or MPS between predictions
+estimator.executor_.model = estimator.executor_.model.to("cuda")
 ```
+</Accordion>

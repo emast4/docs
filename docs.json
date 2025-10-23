@@ -39,8 +39,8 @@
               {
                 "group": "Versions",
                 "pages": [
-                  "models/tabpfn-v2",
-                  "models/tabpfn-v3",
+                  "models/tabpfn-25",
+                  "models/tabpfn-2",
                   "models/tabpfn-ts"
                 ]
               }
@@ -58,6 +58,13 @@
               "capabilities/classification",
               "capabilities/regression",
               "capabilities/forecasting"
+            ]
+          },
+          {
+            "group": "Extensions",
+            "icon": "puzzle-piece",
+            "pages": [
+              "extensions/many_class"
             ]
           },
           {

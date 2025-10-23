@@ -1,0 +1,45 @@
+---
+title: "TabPFN 2"
+description: "The original open-source foundation model for tabular learning."
+---
+
+TabPFN 2 is the original foundation model for tabular data - the model that introduced zero-shot learning to structured datasets and demonstrated that transformers can outperform traditional ML methods without any training.
+
+Published in [Nature (2024)](https://www.nature.com/articles/s41586-024-08328-6), it remains one of the most reproducible and accessible models in the TabPFN family, fully open source and available for commercial use.
+
+- **Academic foundation** - First large-scale pretrained transformer for tabular data, establishing the “foundation model” paradigm for structured learning.
+- **Zero-shot accuracy** - Outperforms tuned gradient-boosted trees and AutoML baselines on datasets up to 10 000 samples, predicting in seconds rather than hours.
+- **Compact and efficient** - Runs comfortably on a single GPU such as an NVIDIA P4 or T4; designed for accessibility and reproducibility.
+- **Robust to real-world noise** - Handles missing values, categorical variables, and outliers.
+
+## 🧬 Architecture
+
+TabPFN 2 introduced the alternating-attention transformer architecture — a design that alternates attention over rows (samples) and features to model both inter-sample and inter-feature dependencies efficiently.
+
+Key characteristics:
+- Meta-trained on millions of synthetic datasets generated from probabilistic graphical models and classical ML priors.
+- Learns to perform in-context classification and regression through self-supervised meta-learning.
+- Order-invariant with respect to samples and features.
+- Supports mixed data types, including categorical and numerical inputs, with minimal preprocessing.
+
+These design choices allow the model to infer high-quality predictions in a single forward pass - no fine-tuning or gradient updates required.
+
+<Note>TabPFN 2 can run on modest hardware and can even execute on CPU for small datasets.</Note>
+
+<Columns cols={2}>
+  <Card
+    title="Get Started"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Step-by-step Quickstart — run TabPFN 2.5 on your own data in minutes.
+  </Card>
+
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/api-reference"
+  >
+    Full API documentation — endpoints, parameters, and SDK usage details.
+  </Card>
+</Columns>

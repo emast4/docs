@@ -1,109 +1,97 @@
 ---
 title: "Quickstart"
-description: "Get started with TabPFN in minutes"
+description: "Get started with TabPFN in minutes."
 ---
 
-# Quickstart Guide
+## 🚀 How to Use TabPFN
+TabPFN can be used in two ways - depending on your workflow and compute setup.
 
-Get up and running with TabPFN in just a few minutes. Choose your preferred deployment method below.
+Whether you’re experimenting locally, integrating into a pipeline, or deploying at scale, there’s a path that fits.
 
-## Installation
+### 1. Open Source Package
 
-<Tabs>
-  <Tab title="API (Hosted)">
-    <Steps>
-      <Step title="Get API Key">
-        Sign up at [app.sulie.com](https://app.sulie.com) to get your API key
-      </Step>
-      <Step title="Install Client">
-        ```bash
-        pip install tabpfn-client
-        ```
-      </Step>
-      <Step title="Set API Key">
-        ```bash
-        export TABPFN_API_KEY="your-api-key-here"
-        ```
-      </Step>
-    </Steps>
-  </Tab>
-  <Tab title="Package (Self-hosted)">
-    <Steps>
-      <Step title="Install Package">
-        ```bash
-        pip install tabpfn
-        ```
-      </Step>
-      <Step title="Verify Installation">
-        ```python
-        import tabpfn
-        print(tabpfn.__version__)
-        ```
-      </Step>
-    </Steps>
-  </Tab>
-</Tabs>
+**Best for**: researchers, ML practitioners, and engineers with local GPU or cluster access.
 
-## Basic Example
+TabPFN is available as an open-source Python package on [GitHub](https://github.com/priorlabs/tabpfn). It provides the full model locally, giving you complete control over inference and experimentation.
 
-Here's a simple example to get you started:
+```bash
+pip install tabpfn
+```
 
-<Tabs>
-  <Tab title="API (Hosted)">
-    ```python
-    from tabpfn_client import TabPFNClient
-    import pandas as pd
+```python
+from tabpfn import TabPFNClassifier
 
-    # Initialize client
-    client = TabPFNClient(api_key="your-api-key")
+model = TabPFNClassifier()
+model.fit(X_train, y_train)
+preds = model.predict(X_test)
+```
 
-    # Load your data
-    data = pd.read_csv("your_data.csv")
-    
-    # Split features and target
-    X = data.drop("target", axis=1)
-    y = data["target"]
+<Note>GPU recommended (e.g., NVIDIA T4 at minimum or A100/H100) for optimal inference speed.</Note>
 
-    # Get predictions
-    predictions = client.predict(X)
-    print(f"Predictions: {predictions}")
-    ```
-  </Tab>
-  <Tab title="Package (Self-hosted)">
-    ```python
-    from tabpfn import TabPFNClassifier
-    import pandas as pd
+### 2. TabPFN API
+**Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
 
-    # Load your data
-    data = pd.read_csv("your_data.csv")
-    
-    # Split features and target
-    X = data.drop("target", axis=1)
-    y = data["target"]
+The Prior Labs API provides cloud-hosted access to TabPFN 2.5 - we handle all GPU compute, scaling, and model versioning.
 
-    # Initialize and predict
-    classifier = TabPFNClassifier()
-    predictions = classifier.predict(X)
-    print(f"Predictions: {predictions}")
-    ```
-  </Tab>
-</Tabs>
+You can use it either through a REST API or our Python SDK.
 
-## Next Steps
+#### Using the REST API
+
+```python
+import os, json, requests
+
+x_test_path = "x_test.csv"  # your test dataset
+api_key = os.getenv("PRIORLABS_API_KEY")
+
+payload = {
+    "task": "classification",
+    "model_id": "123e4567-e89b-12d3-a456-426614174000",
+}
+
+with open(x_test_path, "rb") as f:
+    files = {
+        "data": (None, json.dumps(payload), "application/json"),
+        "file": (x_test_path, f, "text/csv"),
+    }
+    response = requests.post(
+        "https://api.priorlabs.ai/v1/predict",
+        headers={"Authorization": f"Bearer {api_key}"},
+        files=files,
+    )
+
+print(response.json())
+```
+
+#### Using the Python SDK
+
+```python
+import tabpfn_client
+from tabpfn_client import TabPFNClassifier, TabPFNRegressor
+
+# Authenticate using your Prior Labs token
+tabpfn_client.set_access_token("YOUR_API_KEY")
+
+# Use TabPFN like any scikit-learn model
+model = TabPFNClassifier()
+model.fit(X_train, y_train)
+
+# Get predictions
+preds = model.predict(X_test)
+```
 
 <CardGroup cols={2}>
   <Card
-    title="Explore Models"
-    icon="brain"
-    href="/models"
+    title="API Reference"
+    icon="book"
+    href="/api-reference"
   >
-    Learn about different TabPFN model versions
+    See the full OpenAPI spec, endpoint details, and request/response formats.
   </Card>
   <Card
-    title="Usage Guide"
-    icon="book"
-    href="/usage-guide"
+    title="SDKs"
+    icon="code"
+    href="/sdk/python"
   >
-    Deep dive into advanced usage patterns
+    View available SDKs for Python and JavaScript, usage instructions, and code samples.
   </Card>
 </CardGroup>

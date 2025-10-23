@@ -1,58 +1,153 @@
 ---
 title: "Overview"
-description: "Learn about TabPFN and its capabilities for tabular data analysis"
+description: "One model, infinitive predictions."
 ---
 
-# TabPFN Overview
+# Welcome to Prior Labs
+TabPFN is a **foundation model for tabular data** - built to replace manual model tuning with instant, state-of-the-art predictions.
 
-TabPFN (Tabular Prior-data Fitted Networks) is a revolutionary approach to tabular data analysis that combines the power of neural networks with the efficiency of traditional machine learning methods.
+It’s trained across millions of synthetic datasets to learn the learning process itself. Instead of optimizing weights for every new dataset, TabPFN already encodes the inductive biases, priors, and optimization strategies that traditional models must rediscover each time.
+When you run it on your data, it performs **zero-shot inference** - producing predictions in seconds that match or exceed the accuracy of tuned ensembles trained for hours.
 
-## Value Proposition
+## ⚡ Why teams choose TabPFN
 
-TabPFN offers several key advantages:
+<Columns cols={2}>
 
-- **Zero Training Time**: Get instant predictions without waiting for model training
-- **Small Data Friendly**: Works exceptionally well with small datasets where traditional ML struggles
-- **No Hyperparameter Tuning**: Automatically optimized for tabular data
-- **Interpretable Results**: Clear insights into model decisions
-- **Production Ready**: Deploy immediately with confidence
+<Card title="Accurate predictions in seconds" icon="zap">
+  TabPFN 2.5 delivers benchmark-level performance instantly - achieving tuned-ensemble accuracy in seconds, not hours.
+</Card>
 
-## How to Use TabPFN
+<Card title="No training required" icon="repeat">
+  Skip the training loop. TabPFN performs zero-shot inference with no tuning or gradient descent.
+</Card>
 
-TabPFN is designed to be simple yet powerful. Whether you're a data scientist, researcher, or developer, you can:
+<Card title="Seamless integration" icon="puzzle">
+  Plug into any workflow with the familiar `scikit-learn` interface or through the Prior Labs API for production use.
+</Card>
 
-1. **Load your data** - CSV, pandas DataFrame, or any tabular format
-2. **Instant predictions** - No training required, just feed your data
-3. **Get results** - Classification, regression, or forecasting outputs
-4. **Deploy anywhere** - From notebooks to production systems
+<Card title="Robust in the real world" icon="shield-check">
+  Handles missing values, outliers, and categorical features natively for stable, reliable performance.
+</Card>
+
+<Card title="Minimal preprocessing" icon="gear">
+  Works directly on raw tabular data - no encoding, scaling, or imputation pipelines required.
+</Card>
+
+<Card title="Interpretable & trustworthy" icon="search">
+  Produces calibrated probabilities and integrates with SHAP for transparent, explainable outcomes.
+</Card>
+
+</Columns>
 
 ## Capabilities
 
-TabPFN supports three main types of analysis:
+Customers use TabPFN to power high-impact predictions - from disease diagnosis and risk modeling to energy forecasting and industrial optimization - across three core capabilities: **classification**, **regression** and **time series forecasting**.
 
 <CardGroup cols={3}>
+
   <Card
     title="Classification"
-    icon="target"
+    icon="bullseye"
     href="/capabilities/classification"
   >
-    Predict categorical outcomes with high accuracy
+    Predict categorical outcomes with calibrated probabilities and strong zero-shot accuracy.
   </Card>
+
   <Card
     title="Regression"
-    icon="trending-up"
+    icon="puzzle"
     href="/capabilities/regression"
   >
-    Estimate continuous values and relationships
+    Estimate continuous values with uncertainty-aware outputs and minimal preprocessing.
   </Card>
+
   <Card
     title="Forecasting"
-    icon="calendar"
+    icon="line-chart"
     href="/capabilities/forecasting"
   >
-    Predict future trends and time series patterns
+    Model tabular time series (via TabPFN for forecasting) to predict future values and trends.
   </Card>
+
 </CardGroup>
+
+## 🚀 How to Use TabPFN
+TabPFN can be used in two ways - depending on your workflow and compute setup.
+
+Whether you’re experimenting locally, integrating into a pipeline, or deploying at scale, there’s a path that fits.
+
+### 1. Open Source Package
+
+**Best for**: researchers, ML practitioners, and engineers with local GPU or cluster access.
+
+TabPFN is available as an open-source Python package on [GitHub](https://github.com/priorlabs/tabpfn). It provides the full model locally, giving you complete control over inference and experimentation.
+
+```bash
+pip install tabpfn
+```
+
+```python
+from tabpfn import TabPFNClassifier
+
+model = TabPFNClassifier()
+model.fit(X_train, y_train)
+preds = model.predict(X_test)
+```
+
+<Note>GPU recommended (e.g., NVIDIA T4 at minimum or A100/H100) for optimal inference speed.</Note>
+
+### 2. TabPFN API
+**Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
+
+The Prior Labs API provides cloud-hosted access to TabPFN 2.5 - we handle all GPU compute, scaling, and model versioning.
+
+You can use it either through a REST API or our Python SDK.
+
+#### Using the REST API
+
+```python
+import os, json, requests
+
+x_test_path = "x_test.csv"  # your test dataset
+api_key = os.getenv("PRIORLABS_API_KEY")
+
+payload = {
+    "task": "classification",
+    "model_id": "123e4567-e89b-12d3-a456-426614174000",
+}
+
+with open(x_test_path, "rb") as f:
+    files = {
+        "data": (None, json.dumps(payload), "application/json"),
+        "file": (x_test_path, f, "text/csv"),
+    }
+    response = requests.post(
+        "https://api.priorlabs.ai/v1/predict",
+        headers={"Authorization": f"Bearer {api_key}"},
+        files=files,
+    )
+
+print(response.json())
+```
+
+#### Using the Python SDK
+
+```python
+import tabpfn_client
+from tabpfn_client import TabPFNClassifier, TabPFNRegressor
+
+# Authenticate using your Prior Labs token
+tabpfn_client.set_access_token("YOUR_API_KEY")
+
+# Use TabPFN like any scikit-learn model
+model = TabPFNClassifier()
+model.fit(X_train, y_train)
+
+# Get predictions
+preds = model.predict(X_test)
+```
+
+### 
 
 ## Get Started
 

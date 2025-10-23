@@ -14,7 +14,7 @@
         { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
         { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
         { "anchor": "Cookbooks", "href": "https://cookbooks.priorlabs.ai", "icon": "book" },
-        { "anchor": "Changelog", "href": "https://changelog.priorlabs.ai", "icon": "history" }
+        { "anchor": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md", "icon": "history" }
       ]
     },
     "tabs": [
@@ -73,11 +73,7 @@
       },
       {
         "tab": "API reference",
-        "menu": [
-          { "item": "Overview", "page": "api-reference/overview", "icon": "rocket" },
-          { "item": "OpenAPI", "page": "api-reference/openapi.json" }
-        ],
-        "pages": ["api-reference/overview"]
+        "openapi": "api-reference/openapi.json"
       },
       {
         "tab": "SDK",
@@ -98,9 +94,6 @@
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/light.svg"
-  },
-  "api": {
-    "openapi": "api-reference/openapi.json"
   },
   "navbar": {
     "links": [

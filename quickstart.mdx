@@ -26,7 +26,7 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
-<Note>GPU recommended (e.g., NVIDIA T4 at minimum or A100/H100) for optimal inference speed.</Note>
+<Note>GPU recommended (e.g., NVIDIA T4 at minimum) or A100/H100 for optimal inference speed.</Note>
 
 ### 2. TabPFN API
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
@@ -37,29 +37,62 @@ You can use it either through a REST API or our Python SDK.
 
 #### Using the REST API
 
+First, define your dataset paths and authentication details. This allows you to reuse them across fit and predict calls.
+
 ```python
 import os, json, requests
 
-x_test_path = "x_test.csv"  # your test dataset
+# Define your file paths
+train_path = "train.csv"   # path to your training dataset
+test_path = "test.csv"     # path to your test dataset
+
+# Get your API key from the environment
 api_key = os.getenv("PRIORLABS_API_KEY")
 
-payload = {
-    "task": "classification",
-    "model_id": "123e4567-e89b-12d3-a456-426614174000",
+headers = {"Authorization": f"Bearer {api_key}"}
+```
+
+Next, upload your training dataset to the `/v1/fit` endpoint. The API automatically preprocesses the data.
+
+```python
+payload = {"task": "classification"}
+
+files = {
+    "data": (None, json.dumps(payload), "application/json"),
+    "dataset_file": (train_path, open(train_path, "rb")),
 }
 
-with open(x_test_path, "rb") as f:
-    files = {
-        "data": (None, json.dumps(payload), "application/json"),
-        "file": (x_test_path, f, "text/csv"),
-    }
-    response = requests.post(
-        "https://api.priorlabs.ai/v1/predict",
-        headers={"Authorization": f"Bearer {api_key}"},
-        files=files,
-    )
+fit_response = requests.post(
+    "https://api.priorlabs.ai/v1/fit",
+    headers=headers,
+    files=files,
+)
 
-print(response.json())
+model_id = fit_response.json().get("model_id")
+print(f"✅ Model trained: {model_id}")
+```
+
+Once fitted your model using in-context learning, send your test dataset to the `/v1/predict` endpoint using the returned `model_id`. You’ll receive predictions and/or probabilities in JSON format.
+
+```python
+payload = {
+    "task": "classification",
+    "model_id": model_id,
+}
+
+files = {
+    "data": (None, json.dumps(payload), "application/json"),
+    "file": (test_path, open(test_path, "rb")),
+}
+
+predict_response = requests.post(
+    "https://api.priorlabs.ai/v1/predict",
+    headers=headers,
+    files=files,
+)
+
+print("✅ Predictions:")
+print(json.dumps(predict_response.json(), indent=2))
 ```
 
 #### Using the Python SDK

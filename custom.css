@@ -52,3 +52,15 @@
 .table-container table td:last-child {
   text-align: left !important;
 }
+
+/* Logo sizing - 80% of default size */
+.nav-logo {
+  width: 25% !important;
+  height: auto;
+}
+
+/* If you want different sizes, adjust the scale value: */
+/* transform: scale(0.6) !important; */ /* 60% - Very small */
+/* transform: scale(0.7) !important; */ /* 70% - Small */
+/* transform: scale(0.8) !important; */ /* 80% - Current setting */
+/* transform: scale(0.9) !important; */ /* 90% - Slightly smaller */

@@ -3,105 +3,69 @@ title: "Regression"
 description: "Learn about TabPFN's regression capabilities"
 ---
 
-# Regression
-
 TabPFN provides powerful regression capabilities for predicting continuous numerical values with high accuracy and interpretability.
 
-## Key Features
+## Key Capabilities
 
-- **Continuous Predictions**: Accurate estimation of numerical values
-- **Prediction Intervals**: Built-in uncertainty quantification
-- **Feature Importance**: Understand which features drive predictions
-- **Robust Performance**: Works well with outliers and noise
+- **Zero-shot regression** - Predicts continuous targets instantly in a single forward pass.
+- **Calibrated uncertainty** - Produces reliable mean, median, or quantile-based predictions for confidence estimation.
+- **Robust to real-world noise** - Handles outliers, missing values, and mixed data types.
+- **Text-aware inputs** - Detects textual columns, extracts embeddings, and integrates them into predictions.
+- **Minimal preprocessing** - Works directly with raw numerical and categorical data.
+- **Fast inference** - Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
-## When to Use Regression
+## Getting Started
 
-TabPFN regression is perfect for:
+First, load your training and test datasets. The training dataset is used for in-context learning - it’s passed directly into the model’s forward pass, allowing TabPFN to condition its predictions on the data distribution without performing gradient-based optimization. The test dataset is then used for making predictions, leveraging what the model inferred from the context provided by your training data.
 
-- **Price prediction** in e-commerce and real estate
-- **Demand forecasting** for inventory management
-- **Performance estimation** in various domains
-- **Risk assessment** with continuous risk scores
-- **Resource allocation** optimization
+```python
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
 
-## Example Use Cases
+# Load example dataset
+X, y = load_diabetes(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+```
 
-<CardGroup cols={2}>
-  <Card
-    title="Sales Forecasting"
-    icon="chart-line"
-    href="/use-cases/regression"
-  >
-    Predict sales volumes and revenue
-  </Card>
-  <Card
-    title="Price Optimization"
-    icon="dollar-sign"
-    href="/use-cases/regression"
-  >
-    Optimize pricing strategies
-  </Card>
-  <Card
-    title="Risk Assessment"
-    icon="exclamation-triangle"
-    href="/use-cases/regression"
-  >
-    Quantify risk levels continuously
-  </Card>
-  <Card
-    title="Performance Prediction"
-    icon="trophy"
-    href="/use-cases/regression"
-  >
-    Estimate performance metrics
-  </Card>
-</CardGroup>
-
-## Quick Example
+Next, run inference using TabPFN.
 
 ```python
 from tabpfn import TabPFNRegressor
-import pandas as pd
-import numpy as np
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
-# Load your regression data
-data = pd.read_csv("regression_data.csv")
-X = data.drop("target", axis=1)
-y = data["target"]
+# Initialize and fit
+model = TabPFNRegressor(device="auto")
+model.fit(X_train, y_train)
 
-# Initialize regressor
-regressor = TabPFNRegressor()
+# Predict
+preds = model.predict(X_test)
 
-# Get predictions
-predictions = regressor.predict(X)
-
-# Get prediction intervals
-intervals = regressor.predict_interval(X, confidence=0.95)
-
-# Display results
-for i, (pred, interval) in enumerate(zip(predictions, intervals)):
-    lower, upper = interval
-    print(f"Sample {i}: Prediction={pred:.2f}, Range=[{lower:.2f}, {upper:.2f}]")
+# Evaluate
+print("MSE:", mean_squared_error(y_test, preds))
+print("MAE:", mean_absolute_error(y_test, preds))
+print("R²:", r2_score(y_test, preds))
 ```
-
-## Performance Metrics
-
-TabPFN regression typically achieves:
-
-- **R² Score**: 0.85-0.95 on most datasets
-- **RMSE**: Low root mean square error
-- **MAE**: Minimal mean absolute error
-- **Speed**: Fast predictions for large datasets
-- **Calibration**: Well-calibrated prediction intervals
 
 ## Advanced Features
 
-### Multiple Output Regression
+### Auto fine-tuning
+
+The `AutoTabPFNRegressor` automatically builds ensembles of strong models to maximize accuracy:
+
+- Runs an automated hyperparameter search for optimal settings.
+- Builds a Post-Hoc Ensemble (PHE) for improved calibration and performance.
+- Balances accuracy vs. latency with the `max_time` parameter.
 
 ```python
-# Predict multiple continuous variables
-multi_regressor = TabPFNRegressor(output_dim=3)
-predictions = multi_regressor.predict(X)  # Shape: (n_samples, 3)
+from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+
+reg = AutoTabPFNRegressor(max_time=30)  # runtime budget in seconds
+reg.fit(X_train, y_train)
+preds = reg.predict(X_test)
+
+print("MSE:", mean_squared_error(y_test, preds))
+print("R²:", r2_score(y_test, preds))
 ```
 
 ### Quantile Regression
@@ -111,18 +75,38 @@ predictions = multi_regressor.predict(X)  # Shape: (n_samples, 3)
 quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
 ```
 
-### Feature Interactions
+<Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
+
+TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
 
 ```python
-# Automatically detect feature interactions
-interactions = regressor.feature_interactions(X)
-print("Important feature interactions:", interactions)
+out = reg.predict(X, output_type="full")
+criterion, logits = out["criterion"], out["logits"]
+
+q = np.linspace(0.01, 0.99, 101)
+samples = np.stack(
+    [criterion.icdf(logits, float(x)).cpu().numpy() for x in q], axis=1
+)
+
+denom = np.maximum(np.abs(samples), 1e-6)
+diffs = np.abs(samples[:, :, None] - samples[:, None, :])
+exp_mape = (diffs / denom[:, :, None]).mean(axis=1)
+best_idx = exp_mape.argmin(axis=1)
+y_hat = samples[np.arange(samples.shape[0]), best_idx]
 ```
 
-## Best Practices
+</Accordion>
 
-1. **Data Preprocessing**: Normalize numerical features
-2. **Outlier Handling**: TabPFN is robust but consider outlier treatment
-3. **Feature Engineering**: Create meaningful derived features
-4. **Validation**: Use cross-validation for performance assessment
-5. **Interpretation**: Leverage feature importance for insights
+<Accordion title="GPU memory keeps increasing after multiple regression predictions - what’s happening??">
+
+This is due to cached tensors not being cleared between predictions. It occurs primarily in regression because distributional predictions retain more GPU buffers.
+
+```python
+for _ in range(10):
+    y_pred = reg.predict(X)
+    torch.cuda.empty_cache()
+```
+
+This prevents gradual VRAM growth until automatic cleanup is added in future releases.
+
+</Accordion>

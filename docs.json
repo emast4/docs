@@ -13,7 +13,7 @@
       "anchors": [
         { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
         { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
-        { "anchor": "Cookbooks", "href": "https://cookbooks.priorlabs.ai", "icon": "book" },
+        { "anchor": "Cookbooks", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" },
         { "anchor": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md", "icon": "history" }
       ]
     },
@@ -64,7 +64,15 @@
             "group": "Extensions",
             "icon": "puzzle-piece",
             "pages": [
-              "extensions/many_class"
+              "extensions/many_class",
+              "extensions/post_hoc_ensembles",
+              "extensions/interpretability",
+              {
+                "group": "More Extensions",
+                "pages": [
+                  "extensions/hpo"
+                ]
+              }
             ]
           },
           {

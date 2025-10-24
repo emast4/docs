@@ -1,0 +1,73 @@
+---
+title: "Interpretability"
+description: "Explain TabPFN predictions with SHAP values and feature selection."
+---
+
+
+TabPFN models are interpretable by design - their predictions are stable and reproducible thanks to in-context meta-learning.
+
+The Interpretability Extension adds SHAP (SHapley Additive exPlanations) support to quantify the contribution of each input feature to an individual prediction. Why it matters:
+- See which features drive model predictions.
+- Compare feature importance across samples.
+- Debug unexpected model behavior.
+- Communicate insights to stakeholders clearly and visually.
+
+### Shapley Values
+
+SHAP values explain a single prediction by attributing the prediction’s deviation from the baseline (mean prediction) to individual features. They provide a consistent, game-theoretic measure of feature influence. Mathematically, each SHAP value represents the marginal contribution of a feature across all possible feature combinations.
+
+## Getting Started
+
+Install the `interpretability` extension:
+
+```bash
+pip install "tabpfn-extensions[interpretability]"
+```
+
+Then, use SHAP with any trained TabPFN model:
+
+```python
+from tabpfn import TabPFNClassifier
+from tabpfn_extensions import interpretability
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+
+# Load dataset
+data = load_breast_cancer()
+X, y = data.data, data.target
+feature_names = data.feature_names
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+
+# Train TabPFN model
+clf = TabPFNClassifier()
+clf.fit(X_train, y_train)
+
+# Compute SHAP values for the first 50 samples
+shap_values = interpretability.shap.get_shap_values(
+    estimator=clf,
+    test_x=X_test[:50],
+    attribute_names=feature_names,
+    algorithm="permutation",
+)
+
+# Visualize feature contributions
+fig = interpretability.shap.plot_shap(shap_values)
+```
+
+<Note>SHAP values can be calculated for both classification and regression tasks. The extension supports CPU and GPU execution transparently.</Note>
+
+### Core Functions
+
+| Function                                                             | Description                                |
+| -------------------------------------------------------------------- | ------------------------------------------ |
+| **`get_shap_values`** | Calculates SHAP values for the provided model and data subset.                            |
+| **`plot_shap`**       | Generates an interactive visualization showing feature contributions for each prediction. |
+
+## Advanced Use Cases
+
+- **Per-sample explainability**: inspect individual predictions to see why the model produced a specific output.
+- **Global interpretability**: aggregate SHAP values across samples to rank features by importance.
+- **Feature interaction analysis**: identify features that amplify or offset contributions.
+- **Model comparison**: use SHAP to compare explanations between TabPFN variants.

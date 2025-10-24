@@ -1,0 +1,84 @@
+---
+title: "Hyperparameter Optimization"
+description: "Automatic hyperparameter tuning for TabPFN."
+---
+
+The Hyperparameter Optimization (HPO) extension provides automatic hyperparameter tuning for TabPFN models using Bayesian optimization (via Hyperopt). It finds the optimal configuration for both TabPFN model parameters and inference settings, improving predictive performance across classification and regression tasks.
+
+Traditional TabPFN models are zero-shot - they don’t require tuning for strong performance.
+However, for specific datasets, model variants, or evaluation goals, fine-tuning hyperparameters can further improve accuracy, calibration, and robustness.
+The HPO module automates this process using a Bayesian search strategy that intelligently explores the parameter space to find the best-performing configuration.
+
+Key features:
+- Optimized search spaces for classification and regression tasks
+- Support for multiple evaluation metrics - _accuracy_, _ROC-AUC_, _F1_, _RMSE_, _MAE_
+- Proper handling of categorical features via automatic encoding
+- Compatible with both TabPFN and TabPFN-client backends
+- Implements scikit-learn’s estimator interface for seamless pipeline integration
+- Built-in validation and stratification for reliable performance estimation
+- Configurable search algorithms - TPE (Bayesian) or Random Search
+
+## Getting Started
+
+Install the `hpo` extension:
+
+```bash
+pip install "tabpfn-extensions[hpo]"
+```
+
+And then automatically tune a TabPFN classifier using Bayesian optimization with just a few lines of code.
+
+```python
+from tabpfn_extensions.hpo import TunedTabPFNClassifier
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+
+# Load example dataset
+X, y = load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create a tuned classifier with 50 optimization trials
+tuned_clf = TunedTabPFNClassifier(
+    n_trials=50,                       # Number of configurations to explore
+    metric="accuracy",                 # Metric to optimize
+    categorical_feature_indices=[0, 2],# Categorical feature columns
+    random_state=42                    # Ensures reproducibility
+)
+
+# Fit automatically searches for the best hyperparameters
+tuned_clf.fit(X_train, y_train)
+
+# Use like any sklearn model
+y_pred = tuned_clf.predict(X_test)
+```
+
+### Supported Metrics
+
+| Metric         | Description                                                 |
+| -------------- | ----------------------------------------------------------- |
+| **`accuracy`** | Classification accuracy (proportion of correct predictions) |
+| **`roc_auc`**  | Area under the ROC curve (binary or multiclass)             |
+| **`f1`**       | F1 score (harmonic mean of precision and recall)            |
+| **`rmse`**     | Root mean squared error (regression)                        |
+| **`mse`**      | Mean squared error (regression)                             |
+| **`mae`**      | Mean absolute error (regression)                            |
+
+### Supported Models
+
+| Model                       | Description                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------- |
+| **`TunedTabPFNClassifier`** | TabPFN classifier with automatic hyperparameter tuning and categorical handling. |
+| **`TunedTabPFNRegressor`**  | TabPFN regressor with automatic tuning for continuous prediction tasks.          |
+
+## How it Works
+
+Under the hood, the HPO system:
+- Splits your data into train and validation sets with optional stratification.
+- Samples a candidate configuration from the TabPFN hyperparameter space.
+- Trains a TabPFN model with those parameters.
+- Evaluates it using the chosen metric.
+- Updates its belief model via TPE (Tree-structured Parzen Estimator).
+- Repeats this process for `n_trials`, selecting the configuration with the best score.
+
+Each run is fully reproducible, with built-in logging and random seed control.
+

@@ -1,9 +1,9 @@
 ---
-title: "TabPFN 2"
+title: "TabPFN-2"
 description: "The original open-source foundation model for tabular learning."
 ---
 
-TabPFN 2 is the original foundation model for tabular data - the model that introduced zero-shot learning to structured datasets and demonstrated that transformers can outperform traditional ML methods without any training.
+TabPFN-2 is the original foundation model for tabular data - the model that introduced zero-shot learning to structured datasets and demonstrated that transformers can outperform traditional ML methods without any training.
 
 Published in [Nature (2024)](https://www.nature.com/articles/s41586-024-08328-6), it remains one of the most reproducible and accessible models in the TabPFN family, fully open source and available for commercial use.
 
@@ -12,9 +12,16 @@ Published in [Nature (2024)](https://www.nature.com/articles/s41586-024-08328-6)
 - **Compact and efficient** - Runs comfortably on a single GPU such as an NVIDIA P4 or T4; designed for accessibility and reproducibility.
 - **Robust to real-world noise** - Handles missing values, categorical variables, and outliers.
 
-## 🧬 Architecture
+<Warning>
+**Deprecation notice**
 
-TabPFN 2 introduced the alternating-attention transformer architecture — a design that alternates attention over rows (samples) and features to model both inter-sample and inter-feature dependencies efficiently.
+TabPFN-2 will be deprecated in upcoming releases. It remains available only through the open-source tabpfn package up to version `2.3.0`.
+For all new projects, we recommend upgrading to [**TabPFN-2.5**](/models/overview#our-flagship-model) for better performance, robustness, and ongoing support.
+</Warning>
+
+## Architecture
+
+TabPFN-2 introduced the alternating-attention transformer architecture - a design that alternates attention over rows (samples) and features to model both inter-sample and inter-feature dependencies efficiently.
 
 Key characteristics:
 - Meta-trained on millions of synthetic datasets generated from probabilistic graphical models and classical ML priors.
@@ -24,7 +31,7 @@ Key characteristics:
 
 These design choices allow the model to infer high-quality predictions in a single forward pass - no fine-tuning or gradient updates required.
 
-<Note>TabPFN 2 can run on modest hardware and can even execute on CPU for small datasets.</Note>
+<Note>TabPFN-2 can run on modest hardware and can even execute on CPU for small datasets.</Note>
 
 <Columns cols={2}>
   <Card
@@ -32,7 +39,7 @@ These design choices allow the model to infer high-quality predictions in a sing
     icon="rocket"
     href="/quickstart"
   >
-    Step-by-step Quickstart — run TabPFN 2.5 on your own data in minutes.
+    Step-by-step Quickstart - run TabPFN-2.5 on your own data in minutes.
   </Card>
 
   <Card
@@ -40,6 +47,6 @@ These design choices allow the model to infer high-quality predictions in a sing
     icon="book"
     href="/api-reference"
   >
-    Full API documentation — endpoints, parameters, and SDK usage details.
+    Full API documentation - endpoints, parameters, and SDK usage details.
   </Card>
 </Columns>

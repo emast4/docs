@@ -53,7 +53,7 @@ predictions = classifier.predict(X_test)
 <Accordion title="How can I improve classification speed, especially on large datasets?">
 
 Each `predict()` re-encodes the full training set in-context. Performance depends on:
-- Dataset size (e.g. TabPFN 2 is optimized for ≤10k samples)
+- Dataset size (e.g. TabPFN-2 is optimized for ≤10k samples)
 - Fit mode (low_memory vs fit_with_cache)
 - Device (CPU/MPS/GPU)
 

@@ -41,9 +41,8 @@
             "pages": [
               "models/overview",
               {
-                "group": "Versions",
+                "group": "Other Models",
                 "pages": [
-                  "models/tabpfn-25",
                   "models/tabpfn-2",
                   "models/tabpfn-ts"
                 ]
@@ -56,7 +55,14 @@
             "pages": [
               "capabilities/classification",
               "capabilities/regression",
-              "capabilities/forecasting"
+              {
+                "group": "Time Series",
+                "pages": [
+                  "capabilities/forecasting",
+                  "capabilities/anomaly_detection"
+                ]
+              },
+              "capabilities/fine_tuning"
             ]
           },
           {

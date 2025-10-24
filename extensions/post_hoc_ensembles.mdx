@@ -3,7 +3,7 @@ title: "AutoTabPFN Ensembles"
 description: "Learn about AutoTabPFN post-hoc ensembles using AutoGluon."
 ---
 
-AutoTabPFN Ensembles provide an automated, high-performance system for building Post-Hoc Ensembles (PHE) of TabPFN models. This extension uses [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling — delivering state-of-the-art accuracy on tabular classification and regression tasks with minimal configuration.
+AutoTabPFN Ensembles provide an automated, high-performance system for building Post-Hoc Ensembles (PHE) of TabPFN models. This extension uses [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling - delivering state-of-the-art accuracy on tabular classification and regression tasks with minimal configuration.
 
 ## Overview
 
@@ -69,7 +69,7 @@ The interface is scikit-learn compatible and built around two parameter sets: Au
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **`n_estimators`**                                      | Number of internal transformers to ensemble within each individual TabPFN model. Increasing this can boost performance at the cost of compute time. `(int, default=16)`  |
 | **`balance_probabilities`**                             | Balances class probabilities for imbalanced datasets. Recommended for skewed classification tasks. `(bool, default=False)`                                               |
-| **`ignore_pretraining_limits`**                         | Bypasses TabPFN’s dataset size and feature limits (10k samples / 500 features). Use with caution — performance beyond these limits may degrade. `(bool, default=False)`  |
+| **`ignore_pretraining_limits`**                         | Bypasses TabPFN’s dataset size and feature limits (10k samples / 500 features). Use with caution - performance beyond these limits may degrade. `(bool, default=False)`  |
 
 ## Best Practices
 

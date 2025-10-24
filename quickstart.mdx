@@ -31,9 +31,13 @@ preds = model.predict(X_test)
 ### 2. TabPFN API
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
 
-The Prior Labs API provides cloud-hosted access to TabPFN 2.5 - we handle all GPU compute, scaling, and model versioning.
+The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning.
 
 You can use it either through a REST API or our Python SDK.
+
+<Warning>
+You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected.
+</Warning>
 
 #### Using the REST API
 
@@ -94,6 +98,10 @@ predict_response = requests.post(
 print("✅ Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
+
+<Card title="API Reference" icon="book" horizontal arrow="true" href="/api-reference/">
+You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/), which also includes detailed endpoint descriptions and authentication examples.
+</Card>
 
 #### Using the Python SDK
 

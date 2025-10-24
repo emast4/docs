@@ -6,18 +6,11 @@ description: "Explore all available models and compare their capabilities."
 The **TabPFN** family are foundation models built for structured data - powering classification, regression, and forecasting with zero-shot accuracy in seconds.
 Each model is optimized for different use cases, from research to large-scale production systems.
 
-## Featured Models
+## Overview
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card
-    title="TabPFN 2.5"
-    href="/models/tabpfn-25"
-  >
-    The latest and most capable model - optimized for scale, robustness, and production deployment. Delivers SOTA tabular accuracy in seconds.
-  </Card>
-  
-  <Card
-    title="TabPFN 2"
+    title="TabPFN-2"
     href="/models/tabpfn-2"
   >
     The original foundation model for tabular data - published in Nature (2024). Proven academic benchmark for small-and medium-sized datasets.
@@ -27,6 +20,50 @@ Each model is optimized for different use cases, from research to large-scale pr
     title="TabPFN-TS"
     href="/models/tabpfn-ts"
   >
-    TabPFN adapted for time series forecasting — reframing temporal prediction as tabular regression for fast, zero-shot forecasts.
+    TabPFN adapted for time series forecasting - reframing temporal prediction as tabular regression for fast, zero-shot forecasts.
   </Card>
 </CardGroup>
+
+## Our Flagship Model
+
+**TabPFN-2.5** is the latest generation of Prior Labs’ tabular foundation models - delivering state-of-the-art zero-shot performance across classification and regression tasks, with scalability up to **50,000** samples and no training required.
+It extends the original TabPFN v2 architecture with deeper layers, broader synthetic priors, and advanced preprocessing - providing the fastest and most accurate TabPFN model yet.
+
+- **Zero-shot SOTA performance**: Matches or surpasses tuned AutoGluon 1.4 ensembles in just 2.8 seconds, compared to 4 hours of tuning.
+- **Scales up to 50 k samples**:  Efficient inference on large tabular datasets using multi-GPU parallelism.
+- **18-layer transformer** - Deeper architecture improves generalization and calibration across diverse data types.
+- **Enhanced robustness** - Combines robust scaling, soft clipping, quantile transforms, and SVD features for stability on outlier-heavy datasets.
+- **Meta-optimized by TabPFN** - Its own hyperparameters were optimized using TabPFN v2 as a surrogate model, enabling faster, more efficient development through in-context optimization.
+
+<Warning>
+**Commercial use restrictions**
+
+The TabPFN-2.5 weights hosted on Hugging Face and GitHub are provided for research and non-commercial use only. For commercial licensing or large-scale deployment, please [contact us](mailto:hello@priorlabs.ai).
+</Warning>
+
+## Architecture
+TabPFN-2.5 retains the alternating attention architecture introduced in TabPFN v2 - attending over both rows and features - while scaling to 18 transformer layers for improved expressivity and calibration.
+
+Key improvements include:
+- **Broader synthetic training distribution**: covers more diverse feature types and statistical structures.
+- **Optimized feature transformations**: robust scaling and quantile mappings improve stability under noise and outliers.
+- **SVD-based augmentation**: adds global structure awareness for high-dimensional datasets.
+- **Reduced memory footprint**: removes redundant feature copies, cutting memory use nearly in half.
+
+<Columns cols={2}>
+  <Card
+    title="Get Started"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Step-by-step Quickstart - run TabPFN-2.5 on your own data in minutes.
+  </Card>
+
+  <Card
+    title="API Reference"
+    icon="book"
+    href="/api-reference"
+  >
+    Full API documentation - endpoints, parameters, and SDK usage details.
+  </Card>
+</Columns>

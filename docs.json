@@ -47,11 +47,6 @@
             ]
           },
           {
-            "group": "Usage Guide",
-            "icon": "book",
-            "pages": ["usage-guide"]
-          },
-          {
             "group": "Capabilities",
             "icon": "zap",
             "pages": [

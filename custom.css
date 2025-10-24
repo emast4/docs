@@ -59,6 +59,47 @@
   height: auto;
 }
 
+/* Heading colors - all headings in #101075 */
+h1, h2, h3, h4, h5, h6 {
+  color: #101075 !important;
+}
+
+/* Alternative selectors for different heading structures */
+.heading-1, .heading-2, .heading-3, .heading-4, .heading-5, .heading-6 {
+  color: #101075 !important;
+}
+
+/* For Mintlify-specific heading classes */
+[data-heading] {
+  color: #101075 !important;
+}
+
+/* For any heading elements */
+.heading {
+  color: #101075 !important;
+}
+
+
+/* Main content area */
+.main-content, .content, .page-content {
+  background-color: #f8f8f9 !important;
+}
+
+/* Text color - change black text to #0c0c0c */
+body, p, div, a, li, td, th {
+  color: #0c0c0c !important;
+}
+
+/* Specific text elements */
+.paragraph {
+  color: #0c0c0c !important;
+}
+
+/* Links - keep them distinguishable but darker */
+a {
+  color: #0c0c0c !important;
+}
+
 /* If you want different sizes, adjust the scale value: */
 /* transform: scale(0.6) !important; */ /* 60% - Very small */
 /* transform: scale(0.7) !important; */ /* 70% - Small */

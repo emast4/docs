@@ -8,6 +8,10 @@
     "dark": "#1e293b"
   },
   "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
   "navigation": {
     "global": {
       "anchors": [

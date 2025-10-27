@@ -3,31 +3,29 @@ title: "AutoTabPFN Ensembles"
 description: "Learn about AutoTabPFN post-hoc ensembles using AutoGluon."
 ---
 
-AutoTabPFN Ensembles provide an automated, high-performance system for building Post-Hoc Ensembles (PHE) of TabPFN models. This extension uses [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling - delivering state-of-the-art accuracy on tabular classification and regression tasks with minimal configuration.
+This extension leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling, delivering state-of-the-art accuracy on tabular classification and regression tasks - all with minimal configuration.
 
-## Overview
+The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers. By combining TabPFN’s zero-shot modeling with AutoGluon’s ensemble optimization, it produces robust predictions that consistently outperform single-model configurations.
 
-The AutoTabPFN ensemble framework automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and builds an optimized weighted ensemble from the best performers.
-This process combines TabPFN’s zero-shot modeling with AutoGluon’s ensemble optimization, resulting in robust predictions that outperform single-model configurations.
 How it works:
-1. Random search across the TabPFN hyperparameter space.
-2. A fixed number of configurations (`n_ensemble_models`) are sampled.
-3. A TabPFN model is trained for each sampled configuration.
-4. AutoGluon selects and weights the best-performing models into a final ensemble.
+- Randomly sample configurations from the TabPFN hyperparameter space.
+- Train a TabPFN model for each sampled configuration (`n_ensemble_models` total).
+- Use AutoGluon to evaluate, select, and weight the top-performing models.
+- Combine them into a final, optimized meta-ensemble of TabPFNs.
 
-**The result**: a meta-ensemble of TabPFNs tuned automatically for your dataset.
+Result: an automatically tuned ensemble of TabPFN models optimized for your dataset - no manual tuning required.
 
-To install the extension, include the `post-hoc-ensembles` extras module:
+## Getting Started
+
+Here’s a quick example showing how to build an AutoTabPFN ensemble for classification.
+
+To install the extension, include the `post-hoc-ensembles` extension:
 
 ```bash
 pip install "tabpfn-extensions[post-hoc-ensembles]"
 ```
 
 <Note>This installs all dependencies, including AutoGluon and the TabPFN core library.</Note>
-
-## Getting Started
-
-Here’s a quick example showing how to build an AutoTabPFN ensemble for classification.
 
 ```python
 from tabpfn_extensions.post-hoc-ensembles.sklearn_interface import AutoTabPFNClassifier

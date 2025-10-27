@@ -10,14 +10,6 @@ TabPFN estimates the likelihood of each sample under its learned distribution. S
 
 The model combines multiple TabPFN instances to capture dependencies between numerical and categorical features, providing **robust, label-free anomaly detection**.
 
-## Key Capabilities
-
-- **Joint probability scoring:** Outlier scores are based on the sample’s overall feature likelihood.
-- **Mixed-type support:** Handles both numerical and categorical columns automatically.
-- **Permutation averaging:** Reduces bias from feature ordering by averaging over multiple random permutations.
-- **Probabilistic scoring:** Outputs calibrated, interpretable anomaly likelihoods.
-- **Unified interface:** Works seamlessly with the same TabPFN classifiers and regressors used for supervised tasks.
-
 ## How It Works
 
 TabPFN decomposes the joint feature probability using the chain rule:
@@ -32,7 +24,9 @@ Each conditional term is predicted using a TabPFN model:
 The model sums log-probabilities across features to produce a sample-level log-likelihood score.
 Multiple random permutations are averaged to ensure stability across different feature orderings.
 
-## Example: Detecting Anomalies in Breast Cancer Data
+## Getting Started
+
+In the next few minutes, you'll use TabPFN to detect anomalies in a dataset - no labels required. You'll load your data, compute probability-based outlier scores, and identify unusual samples automatically.
 
 ```python
 import torch
@@ -63,3 +57,12 @@ print("Outlier scores:", scores[:10])
 <Card title="Google Colab Example" icon="book" horizontal arrow="true" href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#scrollTo=_aoNg2_K4k6E">
 Check out our Google Colab for a detailed tutorial on anomaly detection using TabPFN.
 </Card>
+
+## Key Features
+
+- **Joint probability scoring:** Outlier scores are based on the sample’s overall feature likelihood.
+- **Mixed-type support:** Handles both numerical and categorical columns automatically.
+- **Permutation averaging:** Reduces bias from feature ordering by averaging over multiple random permutations.
+- **Probabilistic scoring:** Outputs calibrated, interpretable anomaly likelihoods.
+- **Unified interface:** Works seamlessly with the same TabPFN classifiers and regressors used for supervised tasks.
+

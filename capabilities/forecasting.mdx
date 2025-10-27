@@ -5,13 +5,48 @@ description: "Learn about TabPFN's time series forecasting capabilities"
 
 TabPFN extends beyond tabular and regression tasks - it can perform **zero-shot time series forecasting** by reframing forecasting as a tabular regression problem. Our method, **TabPFN-TS**, combines the TabPFN model with lightweight feature engineering to deliver both **point** and **probabilistic** forecasts instantly, without any retraining.
 
-## Key Capabilities
+## Getting Started
+
+In the next few minutes, you'll use TabPFN to forecast a time series dataset - no training or GPU required. You'll load data, extract features automatically, and generate both point and probabilistic forecasts.
+
+```python
+# Import all required components for data handling, feature engineering, and prediction
+from datasets import load_dataset
+from tabpfn_time_series import TimeSeriesDataFrame, FeatureTransformer, TabPFNTimeSeriesPredictor, TabPFNMode
+from tabpfn_time_series.data_preparation import to_gluonts_univariate, generate_test_X
+from tabpfn_time_series.features import RunningIndexFeature, CalendarFeature, AutoSeasonalFeature
+
+# Choose dataset and define forecast horizon
+ds, pred_len = "monash_tourism_monthly", 24
+
+# Load dataset from Hugging Face and convert to a standard TimeSeriesDataFrame
+raw = load_dataset("autogluon/chronos_datasets", ds)
+tsdf = TimeSeriesDataFrame(to_gluonts_univariate(raw["train"]))
+
+# Keep only the first 2 time series to keep the example lightweight
+tsdf = tsdf[tsdf.index.get_level_values("item_id").isin(tsdf.item_ids[:2])]
+
+# Split into training and test portions based on forecast horizon
+train, _ = tsdf.train_test_split(prediction_length=pred_len)
+test = generate_test_X(train, pred_len)
+
+# Add useful temporal and seasonal features
+features = [RunningIndexFeature(), CalendarFeature(), AutoSeasonalFeature()]
+train, test = FeatureTransformer(features).transform(train, test)
+
+# Initialize the predictor (client mode uses pretrained TabPFN weights) and generate forecasts
+predictor = TabPFNTimeSeriesPredictor(tabpfn_mode=TabPFNMode.CLIENT)
+pred = predictor.predict(train, test)
+```
+
+## Key Features
 
 - **Zero-shot forecasting:** Predicts future values immediately with no fine-tuning or pretraining on time-series data.
 - **Point and probabilistic outputs:** Produces accurate mean, median, and quantile forecasts directly from TabPFN’s predictive distribution.
 - **Supports exogenous variables:** Easily integrates external regressors or covariates as additional table columns.
 - **Lightweight model:** Achieves state-of-the-art results with just 11M parameters (40× smaller than some foundation models).
 - **Fast, no-GPU inference:** Works locally or via the `tabpfn-client`, requiring no dedicated hardware.
+
 
 <Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/tabpfn-time-series/blob/main/demo.ipynb">
   Check out our Google Colab for a detailed tutorial on using TabPFN for time-series forecasting.

@@ -5,23 +5,14 @@ description: "Extract latent feature representations from TabPFN models."
 
 The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a powerful way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, or meta-learning.
 
-The module supports both **classification** and **regression** models and offers two embedding extraction modes:
+The extension supports both **classification** and **regression** models and offers two embedding extraction modes:
 
 - **Vanilla embeddings** - trained on the full dataset
 - **Cross-validated embeddings** - extracted via _K_-fold cross-validation for improved generalization
 
 <Warning>
-  The embeddings extension requires the full TabPFN implementation (`pip install tabpfn`) and is not compatible with the lightweight client (`pip install tabpfn-client`), since the client does not expose internal model representations.
+  The embeddings extension is not compatible with the lightweight `tabpfn-client` package since the client does not expose internal model representations.
 </Warning>
-
-## Key Features
-
-- Extract embeddings from any **TabPFNClassifier** or **TabPFNRegressor**
-- Supports both **standard training** and **K-fold cross-validation**
-- Embedding quality improves with higher `n_fold` values
-- Works with both **classification** and **regression** tasks
-- Compatible with standard NumPy arrays and scikit-learn datasets
-- Implements a clean, unified API for training and embedding extraction
 
 ## Getting Started
 
@@ -89,6 +80,15 @@ Under the hood, this:
 2. Trains a new TabPFN model on each fold
 3. Extracts embeddings from the validation partition of each fold
 4. Concatenates all fold embeddings into a unified matrix
+
+## Key Features
+
+- Extract embeddings from any **TabPFNClassifier** or **TabPFNRegressor**
+- Supports both **standard training** and **K-fold cross-validation**
+- Embedding quality improves with higher `n_fold` values
+- Works with both **classification** and **regression** tasks
+- Compatible with standard NumPy arrays and scikit-learn datasets
+- Implements a clean, unified API for training and embedding extraction
 
 ## Notes
 

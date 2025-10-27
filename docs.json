@@ -54,12 +54,12 @@
             "pages": [
               "capabilities/classification",
               "capabilities/regression",
+              "capabilities/forecasting",
               {
                 "group": "More Capabilities",
                 "pages": [
                   "capabilities/anomaly-detection",
-                  "capabilities/fine-tuning",
-                  "capabilities/forecasting"
+                  "capabilities/fine-tuning"
                 ]
               }
             ]

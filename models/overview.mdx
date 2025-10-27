@@ -1,20 +1,9 @@
 ---
-title: "Overview"
+title: "TabPFN-2.5"
 description: "Explore all available models and compare their capabilities."
 ---
 
 **TabPFN** foundation models are built for structured data - delivering classification, regression, and forecasting with zero-shot accuracy in seconds. Each model is optimized for different use cases, from research to large-scale production systems.
-
-## Overview
-
-<CardGroup cols={2}>
-  <Card title="TabPFN-2" href="/models/tabpfn-2">
-    The original foundation model for tabular data - published in Nature (2024). Proven academic benchmark for small-and medium-sized datasets.
-  </Card>
-  <Card title="TabPFN-TS" href="/models/tabpfn-ts">
-    TabPFN adapted for time series forecasting - reframing temporal prediction as tabular regression for fast, zero-shot forecasts.
-  </Card>
-</CardGroup>
 
 ## Our Flagship Model
 
@@ -32,7 +21,7 @@ description: "Explore all available models and compare their capabilities."
   The TabPFN-2.5 weights hosted on Hugging Face and GitHub are provided for research and non-commercial use only. For commercial licensing or large-scale deployment, please [contact us](mailto:hello@priorlabs.ai).
 </Warning>
 
-## Architecture
+### Architecture
 
 TabPFN-2.5 retains the alternating attention architecture introduced in TabPFN v2 - attending over both rows and features - while scaling to 18 transformer layers for improved expressivity and calibration.
 
@@ -43,11 +32,13 @@ Key improvements include:
 - **SVD-based augmentation**: adds global structure awareness for high-dimensional datasets.
 - **Reduced memory footprint**: removes redundant feature copies, cutting memory use nearly in half.
 
-<Columns cols={2}>
-  <Card title="Get Started" icon="rocket" href="/quickstart">
-    Step-by-step Quickstart - run TabPFN-2.5 on your own data in minutes.
+## Other Models
+
+<CardGroup cols={2}>
+  <Card title="TabPFN-2" href="/models/tabpfn-2">
+    The original foundation model for tabular data - published in Nature (2024). Proven academic benchmark for small-and medium-sized datasets.
   </Card>
-  <Card title="API Reference" icon="book" href="/api-reference">
-    Full API documentation - endpoints, parameters, and SDK usage details.
+  <Card title="TabPFN-TS" href="/models/tabpfn-ts">
+    TabPFN adapted for time series forecasting - reframing temporal prediction as tabular regression for fast, zero-shot forecasts.
   </Card>
-</Columns>
+</CardGroup>

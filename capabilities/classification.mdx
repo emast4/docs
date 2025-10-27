@@ -1,17 +1,9 @@
 ---
 title: "Classification"
-description: "Learn about TabPFN's classification capabilities"
+description: "Learn about TabPFN's classification capabilities."
 ---
 
 TabPFN provides a powerful interface for classification on tabular data, supporting binary, multi-class, and even text-enhanced inputs. All without model training or hyperparameter tuning.
-
-## Key Capabilities
-
-- **Zero-shot classification:** Predicts instantly through a single forward pass, no gradient descent required.
-- **Calibrated probabilities:** Outputs reliable class probabilities for uncertainty-aware decision-making.
-- **Robust to noise and missing data:** Handles categorical variables, uninformative columns, and outliers natively.
-- **Text-aware inputs:** This **API only** feature automatically detects textual fields, extracts embeddings, and includes them in the forward pass for classification.
-- **Seamless multi-class support:** Works out-of-the-box for binary and multi-class datasets.
 
 ## Getting Started
 
@@ -30,6 +22,8 @@ preds = model.predict(X_test)
 
 print("Accuracy:", accuracy_score(y_test, preds))
 ```
+
+### Advanced Techniques
 
 For datasets with more than 10 classes, use the `ManyClassClassifier` extension - available via [Prior Labs Extensions](https://github.com/priorlabs/tabpfn-extensions).
 
@@ -50,6 +44,14 @@ classifier = ManyClassClassifier(base_estimator=estimator)
 classifier.fit(X_train, y_train)
 predictions = classifier.predict(X_test)
 ```
+
+## Key Features
+
+- **Zero-shot classification:** Predicts instantly through a single forward pass, no gradient descent required.
+- **Calibrated probabilities:** Outputs reliable class probabilities for uncertainty-aware decision-making.
+- **Robust to noise and missing data:** Handles categorical variables, uninformative columns, and outliers natively.
+- **Text-aware inputs:** This **API only** feature automatically detects textual fields, extracts embeddings, and includes them in the forward pass for classification.
+- **Seamless multi-class support:** Works out-of-the-box for binary and multi-class datasets.
 
 <Accordion title="How can I improve classification speed, especially on large datasets?">
   Each `predict()` re-encodes the full training set in-context. Performance depends on:

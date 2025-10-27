@@ -11,6 +11,16 @@ This extension allows TabPFN to handle classification problems with more classes
 
 This approach enables TabPFN to scale to hundreds of classes efficiently while maintaining accuracy and calibration.
 
+## Getting Started
+
+Install the `many_class` extension:
+
+```bash
+pip install "tabpfn-extensions[many_class]"
+```
+
+After installing the `many_class` extension, there's no need to change your tabular ML workflow - simply wrap your existing `TabPFNClassifier` with `ManyClassClassifier` to transparently enable support for datasets with dozens or even hundreds of classes.
+
 ```python
 from tabpfn_extensions.manyclass_classifier import ManyClassClassifier
 from tabpfn import TabPFNClassifier

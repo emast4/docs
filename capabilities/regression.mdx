@@ -1,18 +1,9 @@
 ---
 title: "Regression"
-description: "Learn about TabPFN's regression capabilities"
+description: "Learn about TabPFN's regression capabilities."
 ---
 
 TabPFN provides powerful regression capabilities for predicting continuous numerical values with high accuracy and interpretability.
-
-## Key Capabilities
-
-- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
-- **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
-- **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
-- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
-- **Minimal preprocessing:** Works directly with raw numerical and categorical data.
-- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
 ## Getting Started
 
@@ -46,9 +37,11 @@ print("MAE:", mean_absolute_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-## Advanced Features
+### Advanced Techniques
 
-### Auto fine-tuning
+If you want to squeeze more performance out of TabPFN, here are some techniques that can help - usually with minimal code changes.
+
+#### Auto Fine-Tuning
 
 The `AutoTabPFNRegressor` automatically builds ensembles of strong models to maximize accuracy:
 
@@ -68,12 +61,21 @@ print("MSE:", mean_squared_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-### Quantile Regression
+#### Quantile Regression
 
 ```python
 # Get predictions for specific quantiles
 quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
 ```
+
+## Key Features
+
+- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
+- **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
+- **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
+- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
+- **Minimal preprocessing:** Works directly with raw numerical and categorical data.
+- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
   TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
@@ -95,7 +97,7 @@ quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
   ```
 </Accordion>
 
-<Accordion title="GPU memory keeps increasing after multiple regression predictions - what’s happening??">
+<Accordion title="GPU memory keeps increasing after multiple regression predictions, why?">
   This is due to cached tensors not being cleared between predictions. It occurs primarily in regression because distributional predictions retain more GPU buffers.
 
   ```python

@@ -1,20 +1,16 @@
 ---
-title: "TabPFN TS"
+title: "TabPFN-TS"
 description: "Specialized TabPFN model for time series forecasting"
 ---
 
-# TabPFN-TS
-
 TabPFN-TS is a specialized variant of TabPFN designed specifically for time series forecasting and temporal data analysis.
-
-## Time Series Specialization
 
 - **Temporal Patterns**: Optimized for capturing time-dependent relationships
 - **Seasonality Detection**: Automatic identification of seasonal patterns
 - **Trend Analysis**: Robust handling of various trend types
 - **Missing Data**: Intelligent imputation for incomplete time series
 
-## Key Advantages
+When you need to forecast time series, TabPFN-TS makes it straightforward:
 
 - **No Training Required**: Instant forecasts without model training
 - **Multiple Horizons**: Predict multiple time steps ahead simultaneously
@@ -50,30 +46,39 @@ TabPFN-TS is a specialized variant of TabPFN designed specifically for time seri
   </Card>
 </CardGroup>
 
-## Usage Example
+## Getting Started
 
 ```python
-from tabpfn import TabPFNTimeSeries
-import pandas as pd
+# Import all required components for data handling, feature engineering, and prediction
+from datasets import load_dataset
+from tabpfn_time_series import TimeSeriesDataFrame, FeatureTransformer, TabPFNTimeSeriesPredictor, TabPFNMode
+from tabpfn_time_series.data_preparation import to_gluonts_univariate, generate_test_X
+from tabpfn_time_series.features import RunningIndexFeature, CalendarFeature, AutoSeasonalFeature
 
-# Initialize time series model
-ts_model = TabPFNTimeSeries()
+# Choose dataset and define forecast horizon
+ds, pred_len = "monash_tourism_monthly", 24
 
-# Your time series data
-data = pd.read_csv("timeseries_data.csv")
-data['date'] = pd.to_datetime(data['date'])
-data = data.set_index('date')
+# Load dataset from Hugging Face and convert to a standard TimeSeriesDataFrame
+raw = load_dataset("autogluon/chronos_datasets", ds)
+tsdf = TimeSeriesDataFrame(to_gluonts_univariate(raw["train"]))
 
-# Forecast next 30 days
-forecast = ts_model.forecast(
-    data=data,
-    horizon=30,
-    confidence_level=0.95
-)
+# Keep only the first 2 time series to keep the example lightweight
+tsdf = tsdf[tsdf.index.get_level_values("item_id").isin(tsdf.item_ids[:2])]
 
-print(f"Forecast: {forecast.predictions}")
-print(f"Confidence Intervals: {forecast.confidence_intervals}")
+# Split into training and test portions based on forecast horizon
+train, _ = tsdf.train_test_split(prediction_length=pred_len)
+test = generate_test_X(train, pred_len)
+
+# Add useful temporal and seasonal features
+features = [RunningIndexFeature(), CalendarFeature(), AutoSeasonalFeature()]
+train, test = FeatureTransformer(features).transform(train, test)
+
+# Initialize the predictor (client mode uses pretrained TabPFN weights) and generate forecasts
+predictor = TabPFNTimeSeriesPredictor(tabpfn_mode=TabPFNMode.CLIENT)
+pred = predictor.predict(train, test)
 ```
+
+You can find the TabPFN Time Series source code and latest updates on [GitHub](https://github.com/PriorLabs/tabpfn-time-series).
 
 ## Performance Metrics
 

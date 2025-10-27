@@ -5,7 +5,7 @@ description: "Adapt TabPFN models to your own data with fine-tuning."
 
 Fine-tuning enables you to **adapt TabPFN’s pretrained foundation models** to your own datasets. While TabPFN delivers strong zero-shot performance on most tabular problems, fine-tuning allows for domain-specific adaptation — improving calibration, robustness, and accuracy in specialized tasks.
 
-## Overview
+## Getting Started
 
 Fine-tuning works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent. This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
 
@@ -14,16 +14,6 @@ You can fine-tune both:
 - `TabPFNClassifier` – for classification tasks
 - `TabPFNRegressor` – for regression tasks
 
-Fine-tuning typically requires **GPU acceleration** for efficient training. Partial support for Apple Silicon (MPS) is available but not yet fully optimized.
-
-**Recommended setup**
-
-- CUDA-enabled GPU (T4, A100, or similar)
-- `torch>=2.1`
-- Dataset sizes between **10k–100k samples** for best stability
-
-## Why Fine-Tune?
-
 Fine-tuning can help when:
 
 - Your data distribution differs significantly from TabPFN’s priors
@@ -31,7 +21,15 @@ Fine-tuning can help when:
 - You need better calibration, reduced bias, or improved small-class performance
 - You want to study TabPFN’s adaptation or representation behavior on domain-specific datasets
 
-## Fine-Tuning Workflow
+**Recommended setup**
+
+- CUDA-enabled GPU (T4, A100, or similar)
+- `torch>=2.1`
+- Dataset sizes between **10k–100k samples** for best stability
+
+Fine-tuning typically requires **GPU acceleration** for efficient training. Partial support for Apple Silicon (MPS) is available but not yet fully optimized.
+
+### Workflow
 
 The fine-tuning process is similar for classifiers and regressors:
 
@@ -41,11 +39,9 @@ The fine-tuning process is similar for classifiers and regressors:
 4. **Run the fine-tuning loop:** Iterate for several epochs, performing backpropagation and optimizer updates.
 5. **Evaluate performance:** Clone the fine-tuned model and test it on held-out validation data.
 
-### Fine-Tuning the Classifier
+<CodeGroup>
 
-The `TabPFNClassifier` can be fine-tuned for binary or multi-class problems. Below is an end-to-end example using the **Covertype** dataset.
-
-```python
+```python title="Classifier"
 from tabpfn import TabPFNClassifier
 from tabpfn.utils import meta_dataset_collator
 from tabpfn.finetune_utils import clone_model_for_evaluation
@@ -95,15 +91,7 @@ print("ROC AUC:", roc_auc_score(y_test, probs, multi_class="ovr", average="weigh
 print("Log Loss:", log_loss(y_test, probs))
 ```
 
-**Key metrics:** ROC AUC and Log Loss **Typical LR:** `1e-5` **Recommended epochs:** 5–10
-
-[Full example on GitHub](https://github.com/priorlabs/tabpfn/examples/fine_tuning/classifier_finetune.py)
-
-### Fine-Tuning the Regressor
-
-The `TabPFNRegressor` supports gradient-based fine-tuning on continuous targets. Here’s a full workflow using the **Bike Sharing Demand** dataset.
-
-```python
+```python title="Regressor"
 from tabpfn import TabPFNRegressor
 from tabpfn.utils import meta_dataset_collator
 from tabpfn.finetune_utils import clone_model_for_evaluation
@@ -159,9 +147,7 @@ print("MAE:", mean_absolute_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-**Key metrics:** MSE, MAE, R² **Typical LR:** `1e-6`–`2e-6` **Recommended epochs:** 5–10
-
-[Full example on GitHub](https://github.com/priorlabs/tabpfn/examples/fine_tuning/regressor_finetune.py)
+</CodeGroup>
 
 ## Best Practices
 

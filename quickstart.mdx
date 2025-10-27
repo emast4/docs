@@ -4,6 +4,7 @@ description: "Get started with TabPFN in minutes."
 ---
 
 ## How to Use TabPFN
+
 TabPFN can be used in two ways - depending on your workflow and compute setup.
 
 Whether you’re experimenting locally, integrating into a pipeline, or deploying at scale, there’s a path that fits.
@@ -26,9 +27,12 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
-<Note>GPU recommended (e.g., NVIDIA T4 at minimum) or A100/H100 for optimal inference speed.</Note>
+<Note>
+  GPU recommended (e.g., NVIDIA T4 at minimum) or A100/H100 for optimal inference speed.
+</Note>
 
 ### 2. TabPFN API
+
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
 
 The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning.
@@ -36,7 +40,7 @@ The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GP
 You can use it either through a REST API or our Python SDK.
 
 <Warning>
-You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected.
+  You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected.
 </Warning>
 
 #### Using the REST API
@@ -99,8 +103,8 @@ print("✅ Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
 
-<Card title="API Reference" icon="book" horizontal arrow="true" href="/api-reference/">
-You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/), which also includes detailed endpoint descriptions and authentication examples.
+<Card title="API Reference" icon="book" horizontal href="/api-reference/">
+  You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/), which also includes detailed endpoint descriptions and authentication examples.
 </Card>
 
 #### Using the Python SDK
@@ -121,18 +125,10 @@ preds = model.predict(X_test)
 ```
 
 <CardGroup cols={2}>
-  <Card
-    title="API Reference"
-    icon="book"
-    href="/api-reference"
-  >
+  <Card title="API Reference" icon="book" href="/api-reference">
     See the full OpenAPI spec, endpoint details, and request/response formats.
   </Card>
-  <Card
-    title="SDKs"
-    icon="code"
-    href="/sdk/python"
-  >
+  <Card title="SDKs" icon="code" href="/sdk/python">
     View available SDKs for Python and JavaScript, usage instructions, and code samples.
   </Card>
 </CardGroup>

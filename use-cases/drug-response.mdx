@@ -3,62 +3,77 @@ title: "Drug Response Prediction"
 description: "Learn about using TabPFN for drug response prediction."
 ---
 
-Transform patient complexity into treatment clarity. Extract genomic profiles, clinical history, and demographic data to predict which treatments will work best for individual patients, reducing trial-and-error in medicine.
+## Start With a Template
 
-The following table summarizes common data types leveraged when building drug response predictors:
+[Link to "cookbook" (i.e. notebook on drug response prediction)]
+
+## How It Works
+
+Predict drug response using genomic and clinical data. TabPFN analyzes patient profiles including mutation data, gene expression, and clinical history to identify treatment patterns, supporting clinical decision-making with quantified predictions.
+
+The following table summarizes common data types used when building drug response predictors. Integrating both genomic and clinical data helps capture patient response complexity, enabling data-driven treatment insights.
 
 <div className="table-container-dc3e57e5">
-
-| Genomic Data             | Clinical Records                    |
-|--------------------------|-----------------------------------|
-| Mutation profiles        | Patient demographics               |
-| Gene expression          | Medical history                    |
-| Biomarker panels         | Laboratory values                  |
-| Methylation patterns     | Imaging results                    |
+| Genomic Data         | Clinical Records     |
+| -------------------- | -------------------- |
+| Mutation profiles    | Patient demographics |
+| Gene expression      | Medical history      |
+| Biomarker panels     | Laboratory values    |
+| Methylation patterns | Imaging results      |
 
 </div>
 
-Integrating both genomic and clinical data helps capture the full complexity of patient responses, enabling highly personalized treatment predictions.
-
-
 ## Why Healthcare Teams Choose TabPFN?
 
-### Precision Medicine at Scale
+### **Robust Performance on Clinical Data Sparsity**
 
-Every patient profile contains hidden treatment insights. TabPFN extracts personalized treatment recommendations from complex genomic and clinical data - complete with probability scores and confidence intervals.
+- Handles missing genomic markers and incomplete clinical records natively
+- Zero-shot inference on out-of-distribution patient populations
+- Stable predictions with small cohort sizes (≤10k samples) where traditional ML overfits
 
-### Accelerate Clinical Decision-Making
+### **Domain Adaptation Through Fine-Tuning**
 
-Stop waiting weeks for model results. TabPFN delivers treatment predictions in minutes, ensuring your clinical team always has the latest insights for patient care decisions.
+- Adapt pretrained transformer weights to specific patient demographics
+- Fine-tune on institution-specific protocols and clinical contexts
+- Retain foundation model priors while specializing for population-specific patterns
+
+### **Unified Transformer Architecture**
+
+- Single 18-layer alternating attention model handles classification and regression tasks
+- Replace ensemble pipelines with one foundation model across prediction workflows
+- Eliminates model selection and hyperparameter optimization overhead
+
+### **In-Context Learning for Clinical Research**
+
+- No extended training cycles or retraining needed
+- Immediate inference on new patient data without retraining cycles
+- Calibrated probabilities for uncertainty-aware clinical decision support
+
+## **Frequently Asked Questions**
 
 <Accordion title="How does TabPFN enhance treatment prediction?">
-
-TabPFN automatically analyzes complex genomic interactions and clinical patterns to predict treatment responses. This helps clinicians choose the most effective treatments for individual patients.
+  - Alternating row-feature attention captures complex genomic-clinical dependencies
+  - Transformer architecture learns interaction patterns from millions of synthetic datasets
+  - Produces interpretable attention weights for feature importance analysis
 </Accordion>
 
 <Accordion title="Can TabPFN work with incomplete patient data?">
+  Yes! TabPFN handles missing values and incomplete records automatically, making it practical for real-world clinical settings where complete data isn't always available.
 
-Yes! TabPFN handles missing values and incomplete records automatically, making it practical for real-world clinical settings where complete data isn't always available.
+  - Pretrained on synthetic datasets with realistic missing value patterns
+  - Native support for `pd.NA` and mixed data types without imputation pipelines
 </Accordion>
 
-## Applications
+## Related Use Cases
 
 <CardGroup cols={3}>
-  <Card
-    title="Clinical Trials"
-  >
+  <Card title="Clinical Trials">
     Patient stratification and enrollment by predicting patient treatment responses and optimizing trial design.
   </Card>
-  
-  <Card
-    title="Medical Diagnosis"
-  >
+  <Card title="Medical Diagnosis">
     Diagnostic decision support by analyzing patient data patterns and providing evidence-based recommendations.
   </Card>
-  
-  <Card
-    title="Pharmaceutical R&D"
-  >
+  <Card title="Pharmaceutical R&D">
     Drug development optimization by predicting drug efficacy and identifying promising candidate compounds.
   </Card>
 </CardGroup>

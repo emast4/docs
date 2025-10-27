@@ -3,13 +3,11 @@ title: "Fine Tuning"
 description: "Adapt TabPFN models to your own data with fine-tuning."
 ---
 
-Fine-tuning enables you to **adapt TabPFN’s pretrained foundation models** to your own datasets.
-While TabPFN delivers strong zero-shot performance on most tabular problems, fine-tuning allows for domain-specific adaptation — improving calibration, robustness, and accuracy in specialized tasks.
+Fine-tuning enables you to **adapt TabPFN’s pretrained foundation models** to your own datasets. While TabPFN delivers strong zero-shot performance on most tabular problems, fine-tuning allows for domain-specific adaptation — improving calibration, robustness, and accuracy in specialized tasks.
 
 ## Overview
 
-Fine-tuning works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent.
-This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
+Fine-tuning works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent. This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
 
 You can fine-tune both:
 
@@ -19,6 +17,7 @@ You can fine-tune both:
 Fine-tuning typically requires **GPU acceleration** for efficient training. Partial support for Apple Silicon (MPS) is available but not yet fully optimized.
 
 **Recommended setup**
+
 - CUDA-enabled GPU (T4, A100, or similar)
 - `torch>=2.1`
 - Dataset sizes between **10k–100k samples** for best stability
@@ -36,11 +35,11 @@ Fine-tuning can help when:
 
 The fine-tuning process is similar for classifiers and regressors:
 
-1. **Prepare your dataset** - Load, subset, and split your data into train and validation sets. Only numeric features are typically used for simplicity.
-2. **Configure your model** - Initialize a `TabPFNClassifier` or `TabPFNRegressor` with fine-tuning-specific hyperparameters. Use a **very low learning rate** (e.g., `1e-5` to `1e-6`) to avoid catastrophic forgetting.
-3. **Create a fine-tuning dataloader** - Use `get_preprocessed_datasets()` and `meta_dataset_collator` to prepare batches.
-4. **Run the fine-tuning loop** - Iterate for several epochs, performing backpropagation and optimizer updates.
-5. **Evaluate performance** - Clone the fine-tuned model and test it on held-out validation data.
+1. **Prepare your dataset:** Load, subset, and split your data into train and validation sets. Only numeric features are typically used for simplicity.
+2. **Configure your model:** Initialize a `TabPFNClassifier` or `TabPFNRegressor` with fine-tuning-specific hyperparameters. Use a **very low learning rate** (e.g., `1e-5` to `1e-6`) to avoid catastrophic forgetting.
+3. **Create a fine-tuning dataloader:** Use `get_preprocessed_datasets()` and `meta_dataset_collator` to prepare batches.
+4. **Run the fine-tuning loop:** Iterate for several epochs, performing backpropagation and optimizer updates.
+5. **Evaluate performance:** Clone the fine-tuned model and test it on held-out validation data.
 
 ### Fine-Tuning the Classifier
 
@@ -96,9 +95,7 @@ print("ROC AUC:", roc_auc_score(y_test, probs, multi_class="ovr", average="weigh
 print("Log Loss:", log_loss(y_test, probs))
 ```
 
-**Key metrics:** ROC AUC and Log Loss
-**Typical LR:** `1e-5`
-**Recommended epochs:** 5–10
+**Key metrics:** ROC AUC and Log Loss **Typical LR:** `1e-5` **Recommended epochs:** 5–10
 
 [Full example on GitHub](https://github.com/priorlabs/tabpfn/examples/fine_tuning/classifier_finetune.py)
 
@@ -162,20 +159,18 @@ print("MAE:", mean_absolute_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-**Key metrics:** MSE, MAE, R²
-**Typical LR:** `1e-6`–`2e-6`
-**Recommended epochs:** 5–10
+**Key metrics:** MSE, MAE, R² **Typical LR:** `1e-6`–`2e-6` **Recommended epochs:** 5–10
 
 [Full example on GitHub](https://github.com/priorlabs/tabpfn/examples/fine_tuning/regressor_finetune.py)
 
 ## Best Practices
 
-* Always start with **a small learning rate** (`1e-5` or lower).
-* Limit **epochs (≤10)** to avoid overfitting or forgetting pretraining.
-* Use a **subset of 10k–50k samples** for fast iteration and stability.
-* Evaluate frequently using validation splits or the provided evaluation utilities.
-* Store and reuse checkpoints if iterating across different data domains.
+- Always start with **a small learning rate** (`1e-5` or lower).
+- Limit **epochs (≤10)** to avoid overfitting or forgetting pretraining.
+- Use a **subset of 10k–50k samples** for fast iteration and stability.
+- Evaluate frequently using validation splits or the provided evaluation utilities.
+- Store and reuse checkpoints if iterating across different data domains.
 
-<Card title="GitHub Examples" icon="book" horizontal arrow="true" href="https://github.com/priorlabs/tabpfn/tree/main/examples">
-See more examples and fine-tuning utilities in our official TabPFN GitHub repository.
+<Card title="GitHub Examples" icon="book" horizontal href="https://github.com/priorlabs/tabpfn/tree/main/examples">
+  See more examples and fine-tuning utilities in our official TabPFN GitHub repository.
 </Card>

@@ -3,69 +3,60 @@ title: "Anomaly Detection"
 description: "Detect anomalies and unusual patterns in operational systems using TabPFN with high accuracy."
 ---
 
-Transform operational complexity into early warning systems. Extract system metrics, performance data, user behavior patterns, and process parameters to identify anomalies before they become critical issues - preventing downtime and quality problems.
+## Start With a Template
 
-The following table summarizes key signals leveraged when building anomaly detection models:
+[Link to "cookbook" (i.e. isolate notebook on industrial anomaly detection, hitachi use-case but not sure we have one ready by launch)]
+
+## How It Works
+
+TabPFN converts raw operational data into anomaly detection models. It processes system metrics, performance indicators, user activity, and process parameters to identify unusual patterns before they cause downtime or quality issues.
+
+The table below lists typical input signal categories used for anomaly detection:
 
 <div className="table-container-dc3e57e5">
-
-| System Metrics             | Process Data                    |
-|----------------------------|---------------------------------|
-| Performance indicators     | Quality measurements            |
-| Error rates and logs       | Equipment parameters           |
-| Resource utilization       | Environmental conditions       |
-| Network traffic            | Production schedules           |
+| System Metrics         | Process Data             |
+| ---------------------- | ------------------------ |
+| Performance indicators | Quality measurements     |
+| Error rates and logs   | Equipment parameters     |
+| Resource utilization   | Environmental conditions |
+| Network traffic        | Production schedules     |
 
 </div>
 
 ## Why Operations Teams Choose TabPFN
 
-### Catch Issues Before They Escalate
+### **Anomaly Detection and Forecasting**
 
-Every system metric contains anomaly signals. TabPFN extracts unusual patterns from operational data, performance metrics, and user behavior - complete with severity scores and root cause indicators for immediate action.
+- Detects statistical deviations across system metrics, process parameters, and performance indicators
+- Works with heterogeneous tabular data, including numerical, categorical, and missing values
+- Applicable to equipment monitoring, process drift detection, and production quality control
 
-### Reduce False Alarms
+### **Noise Reduction and False Positive Control**
 
-Stop alert fatigue from noisy monitoring systems. TabPFN's sophisticated pattern recognition identifies true anomalies while filtering out normal variations, improving response times and reducing investigation overhead.
+- Learns non-linear dependencies across correlated signals to filter noise
+- Improves distinction between true anomalies and expected operational variation
+- Reduces false positives compared to rule-based and threshold-based systems
+
+## **Frequently Asked Questions**
 
 <Accordion title="How does TabPFN enhance anomaly detection?">
-
-TabPFN automatically analyzes complex operational patterns and system behaviors to identify unusual activities. This helps operations teams catch issues before they impact customers or production.
-</Accordion>
-
-<Accordion title="How accurate is TabPFN for anomaly detection?">
-
-Operations teams typically see 90% reduction in false positives while maintaining high detection rates for critical anomalies. Performance varies by system complexity and data quality.
-</Accordion>
-
-<Accordion title="Can I integrate TabPFN with monitoring systems?">
-
-Yes. Use our API to automatically analyze data from Datadog, New Relic, Prometheus, and other monitoring platforms. Keep anomaly detection updated as new operational data becomes available.
+  TabPFN automatically analyzes complex operational patterns and system behaviors to identify unusual activities. This helps operations teams catch issues before they impact customers or production.
 </Accordion>
 
 <Accordion title="How does TabPFN help with root cause analysis?">
-
-Extract detailed feature importance and anomaly explanations to understand which factors contribute to unusual patterns, accelerating troubleshooting and resolution.
+  Each prediction includes feature importance and contribution scores derived from attention weights and model calibration layers. These values indicate which input variables influenced the anomaly score, supporting root-cause investigation and troubleshooting.
 </Accordion>
 
-## Applications
+## Related Use-Cases
 
 <CardGroup cols={3}>
-  <Card
-    title="Quality Control"
-  >
+  <Card title="Quality Control">
     Manufacturing defect prevention through real-time anomaly detection in production processes.
   </Card>
-  
-  <Card
-    title="Security Monitoring"
-  >
+  <Card title="Security Monitoring">
     Threat detection and response by identifying unusual patterns in security events and network traffic.
   </Card>
-  
-  <Card
-    title="Infrastructure"
-  >
+  <Card title="Infra monitoring">
     System health and performance monitoring to prevent downtime and optimize resource utilization.
   </Card>
 </CardGroup>

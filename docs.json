@@ -17,8 +17,7 @@
       "anchors": [
         { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
         { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
-        { "anchor": "Cookbooks", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" },
-        { "anchor": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md", "icon": "history" }
+        { "anchor": "Cookbooks", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" }
       ]
     },
     "tabs": [
@@ -41,7 +40,7 @@
             "pages": [
               "models/overview",
               {
-                "group": "Other Models",
+                "group": "Versions",
                 "pages": [
                   "models/tabpfn-2",
                   "models/tabpfn-ts"
@@ -55,9 +54,14 @@
             "pages": [
               "capabilities/classification",
               "capabilities/regression",
-              "capabilities/fine-tuning",
-              "capabilities/forecasting",
-              "capabilities/anomaly-detection"
+              {
+                "group": "More Capabilities",
+                "pages": [
+                  "capabilities/anomaly-detection",
+                  "capabilities/fine-tuning",
+                  "capabilities/forecasting"
+                ]
+              }
             ]
           },
           {
@@ -68,7 +72,7 @@
               "extensions/interpretability",
               "extensions/many-class",
               {
-                "group": "More Extensions",
+                "group": "All Extensions",
                 "pages": [
                   "extensions/hpo",
                   "extensions/embeddings"
@@ -85,25 +89,19 @@
               "use-cases/customer-churn",
               "use-cases/drug-response"
             ]
+          },
+          {
+            "group": "API",
+            "icon": "code",
+            "pages": ["api-reference/security"]
           }
         ]
       },
       {
         "tab": "API reference",
-        "openapi": "api-reference/openapi.json"
-      },
-      {
-        "tab": "SDK",
-        "menu": [
-          { "item": "Python", "page": "sdk/python", "icon": "code" },
-          { "item": "JavaScript", "page": "sdk/javascript", "icon": "code" }
-        ],
-        "anchors": [
-          {
-            "anchor": "SDKs",
-            "icon": "code",
-            "pages": ["sdk/python", "sdk/javascript"]
-          }
+        "openapi": "api-reference/openapi.json",
+        "pages": [
+          "api-reference/security"
         ]
       }
     ]
@@ -114,7 +112,7 @@
   },
   "navbar": {
     "links": [
-      { "label": "Support", "href": "mailto:hello@priorlabs.ai" }
+      { "label": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md" }
     ],
     "primary": {
       "type": "button",

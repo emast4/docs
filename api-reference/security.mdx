@@ -1,0 +1,48 @@
+---
+title: "Security & Data Privacy"
+description: "How Prior Labs protects your data and ensures enterprise-grade security."
+---
+
+Your data security and privacy are our highest priority.
+
+Prior Labs is built with **enterprise-grade encryption, isolation, and security controls** to ensure that your information remains protected at every stage - from upload to inference.
+
+## Data Protection and Privacy
+
+All data processed by the TabPFN API - including uploads via `/v1/fit` and `/v1/predict` - is handled using secure, compliant infrastructure designed to safeguard confidentiality and integrity.
+
+**Encryption**
+
+- All communication with our API is encrypted in transit using TLS 1.2+.
+- Data stored on our servers is fully encrypted at rest.
+- Encryption keys are securely managed and rotated in line with industry best practices.
+
+**Security and Access Controls**
+
+- Services run on hardened cloud infrastructure with strict access control, audit logging, and network segmentation.
+- Authentication is enforced via Bearer tokens (JWT), and all internal systems follow the principle of least privilege.
+- Continuous monitoring ensures compliance with modern enterprise security standards.
+
+**Data Isolation**
+
+- No data is ever shared between customers.
+  Each uploaded dataset, fitted model, and prediction request is scoped to your account and processed in isolated environments.
+- Data from one user or organization is never accessible to another.
+
+**Model Privacy**
+
+- TabPFN foundation models are **never trained or fine-tuned** on customer data. All training is performed exclusively on synthetic under controlled conditions - guaranteeing complete separation between customer data and model weights.
+
+**Data Retention and Control**
+
+- Uploaded data may be stored temporarily for reproducibility and debugging.
+- You can opt out of storage or request data deletion at any time by [contacting us](mailto:hello@priorlabs.ai).
+- We retain only minimal metadata necessary for authentication, billing, and audit purposes.
+
+---
+
+## Contact and Support
+
+For questions about data handling, security compliance, or enterprise policies, reach out to our security team at:
+[**hello@priorlabs.ai**](mailto:hello@priorlabs.ai)
+

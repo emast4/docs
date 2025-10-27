@@ -1,570 +1,782 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "TabPFN API",
-    "description": "The official API for TabPFN — Prior Labs’ foundation model for tabular machine learning. Use it to fit models, make predictions, and integrate zero-shot inference into your pipelines.",
-    "version": "1.0.0",
-    "contact": {
-      "name": "Prior Labs",
-      "email": "hello@priorlabs.ai"
-    }
+      "title": "TabPFN API",
+      "description": "The official API for TabPFN — Prior Labs’ foundation model for tabular machine learning. Use it to fit models, make predictions, and integrate zero-shot inference into your pipelines.",
+      "version": "1.0.0",
+      "contact": {
+          "name": "Prior Labs",
+          "email": "hello@priorlabs.ai"
+      }
   },
   "servers": [
-    {
-      "url": "https://api.priorlabs.ai.com/v1",
-      "description": "Production environment for the TabPFN API"
-    }
+      {
+          "url": "https://api.priorlabs.ai.com/v1",
+          "description": "Production environment for the TabPFN API"
+      }
   ],
   "security": [
-    {
-      "BearerAuth": []
-    }
+      {
+          "BearerAuth": []
+      }
   ],
   "paths": {
-    "/fit": {
-      "post": {
-        "summary": "Fit a Model",
-        "description": "Uploads and fits a TabPFN model on your training data. The API automatically handles preprocessing and stores a reference to your trained context (not the model weights). You can use either a single dataset file (with the target column included) or separate feature and label files.",
-        "operationId": "fit_v1",
-        "tags": [
-          "Training"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "data"
-                ],
-                "properties": {
-                  "data": {
-                    "type": "string",
-                    "description": "A JSON string defining the training configuration, including task type, target column, and preprocessing settings.",
-                    "example": "{\"task\": \"classification\", \"systems\": [\"preprocessing\"], \"schema\": {\"target\": \"target_column\", \"description\": \"Customer churn dataset\"}, \"config\": {\"thinking\": true}}"
-                  },
-                  "dataset_file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "CSV file containing both features and the target column."
-                  },
-                  "features_file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "CSV file containing only feature columns (used together with labels_file)."
-                  },
-                  "labels_file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "CSV file containing only the target/label column (used together with features_file)."
+      "/fit": {
+          "post": {
+              "summary": "Fit a Model",
+              "description": "Uploads and fits a TabPFN model on your training data. The API automatically handles preprocessing and stores a reference to your trained context (not the model weights). You can use either a single dataset file (with the target column included) or separate feature and label files.",
+              "operationId": "fit_v1",
+              "tags": [
+                  "Training"
+              ],
+              "security": [
+                  {
+                      "BearerAuth": []
                   }
-                }
+              ],
+              "requestBody": {
+                  "required": true,
+                  "content": {
+                      "multipart/form-data": {
+                          "schema": {
+                              "type": "object",
+                              "required": [
+                                  "data"
+                              ],
+                              "properties": {
+                                  "data": {
+                                      "type": "string",
+                                      "description": "A JSON string defining the training configuration. \n\n**Supported Systems**: \n- `[\"preprocessing\"]` - Applies skrub preprocessing, \n- `[\"text\"]` - Adds text embeddings for text columns. \n\n**Default**: `[\"preprocessing\", \"text\"]`. \n\n**Supported Config Parameters**:\n- `n_estimators` (`int`, 1-10) - Number of ensemble estimators, \n- `softmax_temperature` (`float`) - Temperature for softmax scaling, \n- `average_before_softmax` (`bool`) - Average before softmax,\n- `ignore_pretraining_limits` (`bool`) - Ignore pretraining limits, \n- `random_state` (`int`) - Random seed for reproducibility."
+                                  },
+                                  "dataset_file": {
+                                      "type": "string",
+                                      "format": "binary",
+                                      "description": "**Option 1:** CSV file containing both features (`X_train`) and labels (`y_train`). Use this when you have **all data in a single file**."
+                                  },
+                                  "features_file": {
+                                      "type": "string",
+                                      "format": "binary",
+                                      "description": "**Option 2:**: CSV file containing only feature columns (`X_train`). Must be used together with `labels_file`."
+                                  },
+                                  "labels_file": {
+                                      "type": "string",
+                                      "format": "binary",
+                                      "description": "**Option 2:** CSV file containing only the target/label column (`y_train`). Must be used together with `features_file`."
+                                  }
+                              },
+                              "oneOf": [
+                                { "required": ["data", "dataset_file"] },
+                                { "required": ["data", "features_file", "labels_file"] }
+                              ]
+                          },
+                          "examples": {
+                              "single_dataset": {
+                                  "summary": "Single CSV file (features + target)",
+                                  "value": {
+                                      "data": "{\"task\": \"classification\", \"schema\": {\"target\": \"churn\"}}",
+                                      "dataset_file": "[binary data]"
+                                  }
+                              },
+                              "separate_files": {
+                                  "summary": "Separate features and labels files",
+                                  "value": {
+                                      "data": "{\"task\": \"regression\", \"schema\": {\"target\": \"price\"}}",
+                                      "features_file": "[binary data]",
+                                      "labels_file": "[binary data]"
+                                  }
+                              }
+                          }
+                      }
+                  }
               },
-              "examples": {
-                "single_dataset": {
-                  "summary": "Single CSV file (features + target)",
-                  "value": {
-                    "data": "{\"task\": \"classification\", \"schema\": {\"target\": \"churn\"}}",
-                    "dataset_file": "[binary data]"
+              "responses": {
+                  "200": {
+                      "description": "Model fitted successfully — returns a model ID for later prediction calls.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/FitResponse"
+                              },
+                              "example": {
+                                  "model_id": "123e4567-e89b-12d3-a456-426614174000",
+                                  "task": "classification"
+                              }
+                          }
+                      }
+                  },
+                  "400": {
+                      "description": "Invalid request — missing data or malformed input.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "example": {
+                                  "code": "error.bad_request",
+                                  "detail": "Invalid request data",
+                                  "retryable": false,
+                                  "support": "https://discord.com/invite/VJRuU3bSxt"
+                              }
+                          }
+                      }
+                  },
+                  "401": {
+                      "description": "Unauthorized — authentication required or credentials invalid.\n\n**Possible causes:**\n- Missing or malformed `Authorization` header\n- Invalid or expired JWT token\n- User not found (token references a deleted account)\n- JWT decode errors (JWEDecodeError, JWTDecodeError, JWTClaimsError)\n\n**Examples:**\n- Missing token: `{\"detail\": \"Not authenticated\"}`\n- Invalid credentials: `{\"detail\": \"Could not validate credentials\"}`",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "examples": {
+                                  "missing_token": {
+                                      "value": {
+                                          "code": "auth.unauthorized",
+                                          "detail": "Not authenticated",
+                                          "retryable": false,
+                                          "support": "https://discord.com/invite/VJRuU3bSxt"
+                                      }
+                                  },
+                                  "invalid_credentials": {
+                                      "value": {
+                                          "code": "auth.unauthorized",
+                                          "detail": "Could not validate credentials",
+                                          "retryable": false,
+                                          "support": "https://discord.com/invite/VJRuU3bSxt"
+                                      }
+                                  },
+                                  "expired_token": {
+                                      "value": {
+                                          "code": "auth.unauthorized",
+                                          "detail": "Invalid or expired JWT token",
+                                          "retryable": false,
+                                          "support": "https://discord.com/invite/VJRuU3bSxt"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "403": {
+                      "description": "Forbidden — user account not verified or insufficient permissions.\n\n**Possible causes:**\n- Valid token for an unverified user\n- Account not yet verified via email\n\n**Example response:**\n`{\"code\": \"auth.forbidden\", \"detail\": \"User account not verified\", \"retryable\": false, \"support\": \"https://discord.com/invite/VJRuU3bSxt\"}`",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "example": {
+                                  "code": "auth.forbidden",
+                                  "detail": "User account not verified",
+                                  "retryable": false,
+                                  "support": "https://discord.com/invite/VJRuU3bSxt"
+                              }
+                          }
+                      }
+                  },
+                  "422": {
+                      "description": "Validation error — one or more fields are incorrectly formatted.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ValidationError"
+                              }
+                          }
+                      }
                   }
+              },
+              "x-codeSamples": [
+                {
+                  "lang": "python",
+                  "label": "Single CSV upload",
+                  "source": "import os, json, requests\n\n# Define your dataset path\ntrain_path = \"train.csv\"\n\n# Get your API key from the environment\napi_key = os.getenv(\"PRIORLABS_API_KEY\")\nheaders = {\"Authorization\": f\"Bearer {api_key}\"}\n\n# Upload your training dataset to /v1/fit\npayload = {\n     \"task\": \"classification\",\n     \"schema\": {\n         \"target\": \"churn\",\n         \"description\": \"Customer churn dataset\"\n     }\n}\n\nfiles = {\n     \"data\": (None, json.dumps(payload), \"application/json\"),\n     \"dataset_file\": (train_path, open(train_path, \"rb\")),\n}\n\nfit_response = requests.post(\n     \"https://api.priorlabs.ai/v1/fit\",\n     headers=headers,\n     files=files,\n)\n\nmodel_id = fit_response.json().get(\"model_id\")\nprint(f\"✅ Model trained: {model_id}\")"
                 },
-                "separate_files": {
-                  "summary": "Separate features and labels files",
-                  "value": {
-                    "data": "{\"task\": \"regression\", \"schema\": {\"target\": \"price\"}}",
-                    "features_file": "[binary data]",
-                    "labels_file": "[binary data]"
-                  }
+                {
+                  "lang": "python",
+                  "label": "Separate features + labels",
+                  "source": "import os, json, requests\n\n# Define your file paths\nX_train_path = \"X_train.csv\"  # features only\ny_train_path = \"y_train.csv\"  # labels only\n\n# Get your API key from the environment\napi_key = os.getenv(\"PRIORLABS_API_KEY\")\nheaders = {\"Authorization\": f\"Bearer {api_key}\"}\n\n# Upload your training dataset with separate files\npayload = {\n    \"task\": \"regression\",\n    \"schema\": {\n        \"target\": \"price\",\n        \"description\": \"House price prediction dataset\"\n    }\n}\n\nfiles = {\n    \"data\": (None, json.dumps(payload), \"application/json\"),\n    \"features_file\": (X_train_path, open(X_train_path, \"rb\")),\n    \"labels_file\": (y_train_path, open(y_train_path, \"rb\")),\n}\n\nfit_response = requests.post(\n    \"https://api.priorlabs.ai/v1/fit\",\n    headers=headers,\n    files=files,\n)\n\nmodel_id = fit_response.json().get(\"model_id\")\nprint(f\"✅ Model trained: {model_id}\")"
                 }
-              }
-            }
+              ]
           }
-        },
-        "responses": {
-          "200": {
-            "description": "Model fitted successfully — returns a model ID for later prediction calls.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FitResponse"
-                },
-                "example": {
+      },
+      "/predict": {
+          "post": {
+              "summary": "Run Predictions",
+              "description": "Run inference using a previously fitted TabPFN model. Upload your test dataset and specify the model ID from your previous `/v1/fit` call. The endpoint returns predicted probabilities or values depending on the task type.",
+              "operationId": "predict_v1",
+              "tags": [
+                  "Prediction"
+              ],
+              "security": [
+                  {
+                      "BearerAuth": []
+                  }
+              ],
+              "requestBody": {
+                  "required": true,
+                  "content": {
+                      "multipart/form-data": {
+                          "schema": {
+                              "type": "object",
+                              "required": [
+                                  "data",
+                                  "file"
+                              ],
+                              "properties": {
+                                  "data": {
+                                      "type": "string",
+                                      "description": "A JSON string defining the prediction request parameters.\n\n**Required fields:**\n- `model_id` (`str`) - Model ID from your previous `/v1/fit` call\n- `task` (`str`) - Task type: `\"classification\"` or `\"regression\"`\n\n**Optional Config Parameters:**\n- `n_estimators` (`int`) - Number of estimators in the ensemble (1-10)\n- `categorical_features_indices` (`List[int]`) - Indices of categorical features\n- `softmax_temperature` (`float`) - Temperature for softmax scaling\n- `average_before_softmax` (`bool`) - Average before applying softmax\n- `ignore_pretraining_limits` (`bool`) - Ignore pretraining limits\n- `inference_precision` (`str`) - Inference precision (\"float32\", \"float16\", \"auto\")\n- `random_state` (`int`) - Random seed for reproducibility\n- `balance_probabilities` (`bool`) - Balance class probabilities\n\n**Optional Params (output configuration):**\n- `output_type` (`str`) - Determines prediction output format\n  - Classification: `\"probas\"` (default, probabilities) or `\"preds\"` (predictions)\n  - Regression: `\"mean\"` (default, mean value) or `\"full\"` (includes quantiles, ei, pi)",
+                                  },
+                                  "file": {
+                                      "type": "string",
+                                      "format": "binary",
+                                      "description": "CSV file containing the dataset to predict on."
+                                  }
+                              }
+                          },
+                          "examples": {
+                              "classification": {
+                                  "summary": "Classification task",
+                                  "value": {
+                                      "data": "{\"model_id\": \"123e4567-e89b-12d3-a456-426614174000\", \"task\": \"classification\", \"params\": {\"output_type\": \"probabilities\"}}",
+                                      "file": "[binary data]"
+                                  }
+                              },
+                              "regression": {
+                                  "summary": "Regression task",
+                                  "value": {
+                                      "data": "{\"model_id\": \"123e4567-e89b-12d3-a456-426614174000\", \"task\": \"regression\", \"config\": {\"n_estimators\": 8}}",
+                                      "file": "[binary data]"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "Prediction completed successfully — returns predicted values or probabilities depending on the task.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PredictionResponse"
+                              },
+                              "examples": {
+                                  "Classification with probabilities": {
+                                      "summary": "Classification with probabilities",
+                                      "value": {
+                                          "duration_seconds": 15,
+                                          "prediction": [
+                                              [0.1, 0.9],
+                                              [0.8, 0.2]
+                                          ],
+                                          "task": "classification",
+                                          "used_credits": 10,
+                                          "remaining_quota": 90
+                                      }
+                                  },
+                                  "Classification with class predictions": {
+                                      "summary": "Classification with class predictions",
+                                      "value": {
+                                          "duration_seconds": 12,
+                                          "prediction": [
+                                              "class_1",
+                                              "class_0",
+                                              "class_1"
+                                          ],
+                                          "task": "classification",
+                                          "used_credits": 8,
+                                          "remaining_quota": 92
+                                      }
+                                  },
+                                  "Regression prediction": {
+                                      "summary": "Regression prediction",
+                                      "value": {
+                                          "duration_seconds": 10,
+                                          "prediction": [
+                                              1250.5,
+                                              3200.8,
+                                              980.2,
+                                              2100.0
+                                          ],
+                                          "task": "regression",
+                                          "used_credits": 5,
+                                          "remaining_quota": 95
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "400": {
+                      "description": "Invalid request — dataset file missing or malformed input.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "example": {
+                                  "code": "error.bad_request",
+                                  "detail": "You must upload a dataset `file` for prediction.",
+                                  "retryable": false,
+                                  "support": "https://discord.com/invite/VJRuU3bSxt"
+                              }
+                          }
+                      }
+                  },
+                  "401": {
+                      "description": "Unauthorized — authentication required or credentials invalid.\n\n**Possible causes:**\n- Missing or malformed `Authorization` header\n- Invalid or expired JWT token\n- User not found (token references a deleted account)\n- JWT decode errors",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "examples": {
+                                  "missing_token": {
+                                      "value": {
+                                          "code": "auth.unauthorized",
+                                          "detail": "Not authenticated",
+                                          "retryable": false,
+                                          "support": "https://discord.com/invite/VJRuU3bSxt"
+                                      }
+                                  },
+                                  "invalid_credentials": {
+                                      "value": {
+                                          "code": "auth.unauthorized",
+                                          "detail": "Could not validate credentials",
+                                          "retryable": false,
+                                          "support": "https://discord.com/invite/VJRuU3bSxt"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "403": {
+                      "description": "Forbidden — user account not verified or insufficient permissions.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "example": {
+                                  "code": "auth.forbidden",
+                                  "detail": "User account not verified",
+                                  "retryable": false,
+                                  "support": "https://discord.com/invite/VJRuU3bSxt"
+                              }
+                          }
+                      }
+                  },
+                  "404": {
+                      "description": "Model not found — the provided model ID does not exist or has expired.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ErrorResponse"
+                              },
+                              "example": {
+                                  "code": "error.not_found",
+                                  "detail": "Fitted model with ID 123e4567-e89b-12d3-a456-426614174000 not found",
+                                  "retryable": false,
+                                  "support": "https://discord.com/invite/VJRuU3bSxt"
+                              }
+                          }
+                      }
+                  },
+                  "422": {
+                      "description": "Validation error — incorrect or missing fields in the request.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ValidationError"
+                              }
+                          }
+                      }
+                  }
+              },
+              "x-codeSamples": [
+                  {
+                      "lang": "python",
+                      "label": "Run predictions",
+                      "source": "import os, json, requests\n\n# Define your test dataset path\ntest_path = \"test.csv\"\n\n# Get your API key from the environment\napi_key = os.getenv(\"PRIORLABS_API_KEY\")\nheaders = {\"Authorization\": f\"Bearer {api_key}\"}\n\n# Create prediction payload\npayload = {\n    \"task\": \"classification\",\n    \"model_id\": model_id,  # Use model_id from your /v1/fit call\n}\n\nfiles = {\n    \"data\": (None, json.dumps(payload), \"application/json\"),\n    \"file\": (test_path, open(test_path, \"rb\")),\n}\n\npredict_response = requests.post(\n    \"https://api.priorlabs.ai/v1/predict\",\n    headers=headers,\n    files=files,\n)\n\nprint(\"✅ Predictions:\")\nprint(json.dumps(predict_response.json(), indent=2))"
+                  }
+              ]
+          }
+      }
+  },
+  "components": {
+      "securitySchemes": {
+          "BearerAuth": {
+              "type": "http",
+              "scheme": "bearer",
+              "bearerFormat": "JWT",
+              "description": "Bearer token for authentication, obtained after signing up and generating an API key."
+          }
+      },
+      "schemas": {
+          "PredictionTask": {
+              "type": "string",
+              "enum": [
+                  "classification",
+                  "regression"
+              ],
+              "description": "Specifies the type of task to perform — either classification or regression."
+          },
+          "Schema": {
+              "type": "object",
+              "properties": {
+                  "target": {
+                      "type": "string",
+                      "default": "target",
+                      "description": "The name of the target column in the dataset."
+                  },
+                  "description": {
+                      "type": "string",
+                      "description": "A short description of the dataset for reference."
+                  }
+              },
+              "example": {
+                  "target": "churn",
+                  "description": "Customer churn prediction dataset"
+              }
+          },
+          "FitRequest": {
+              "type": "object",
+              "required": [
+                  "task"
+              ],
+              "properties": {
+                  "dataset_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "ID of an existing dataset stored on the platform to reuse for training."
+                  },
+                  "systems": {
+                      "type": "array",
+                      "items": {
+                          "type": "string",
+                          "enum": [
+                              "preprocessing",
+                              "text"
+                          ]
+                      },
+                      "default": [
+                          "preprocessing",
+                          "text"
+                      ],
+                      "description": "Defines which internal systems to activate (e.g., preprocessing or text embeddings)."
+                  },
+                  "task": {
+                      "$ref": "#/components/schemas/PredictionTask"
+                  },
+                  "schema": {
+                      "$ref": "#/components/schemas/Schema"
+                  },
+                  "config": {
+                      "type": "object",
+                      "description": "Optional TabPFN configuration parameters for advanced control.",
+                      "properties": {
+                          "thinking": {
+                              "type": "boolean",
+                              "description": "Enable 'thinking mode' to improve performance via deeper in-context reasoning."
+                          },
+                          "n_estimators": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10,
+                              "description": "Number of estimators to ensemble during inference."
+                          },
+                          "softmax_temperature": {
+                              "type": "number",
+                              "description": "Softmax temperature parameter for adjusting output calibration."
+                          },
+                          "random_state": {
+                              "type": "integer",
+                              "description": "Random seed for reproducible results."
+                          }
+                      },
+                      "example": {
+                          "thinking": true,
+                          "n_estimators": 4,
+                          "random_state": 42
+                      }
+                  }
+              }
+          },
+          "FitResponse": {
+              "type": "object",
+              "required": [
+                  "model_id",
+                  "task"
+              ],
+              "properties": {
+                  "model_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Unique identifier for the fitted model (used for prediction calls)."
+                  },
+                  "task": {
+                      "$ref": "#/components/schemas/PredictionTask"
+                  }
+              },
+              "example": {
                   "model_id": "123e4567-e89b-12d3-a456-426614174000",
                   "task": "classification"
-                }
               }
-            }
           },
-          "400": {
-            "description": "Invalid request — missing data or malformed input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                },
-                "example": {
-                  "detail": "Invalid request data"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — missing or invalid authentication token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation error — one or more fields are incorrectly formatted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/predict": {
-      "post": {
-        "summary": "Run Predictions",
-        "description": "Run inference using a previously fitted TabPFN model. Upload your test dataset and specify the model ID from your previous `/fit` call. The endpoint returns predicted probabilities or values depending on the task type.",
-        "operationId": "predict_v1",
-        "tags": [
-          "Prediction"
-        ],
-        "security": [
-          {
-            "BearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "data",
-                  "file"
-                ],
-                "properties": {
-                  "data": {
-                    "type": "string",
-                    "description": "A JSON string defining the prediction request parameters, including model ID, task type, and output configuration.",
-                    "example": "{\"model_id\": \"123e4567-e89b-12d3-a456-426614174000\", \"task\": \"classification\", \"params\": {\"output_type\": \"probabilities\"}, \"config\": {\"n_estimators\": 4, \"random_state\": 42}}"
+          "PredictionRequest": {
+              "type": "object",
+              "required": [
+                  "model_id",
+                  "task"
+              ],
+              "properties": {
+                  "model_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The unique model ID returned from a previous `/fit` call."
                   },
-                  "file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "CSV file containing the dataset to predict on."
+                  "task": {
+                      "$ref": "#/components/schemas/PredictionTask"
+                  },
+                  "dataset_id": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "ID of an existing dataset to reuse for prediction."
+                  },
+                  "params": {
+                      "type": "object",
+                      "description": "Prediction parameters that control the output type and format.",
+                      "properties": {
+                          "output_type": {
+                              "type": "string",
+                              "enum": [
+                                  "probabilities",
+                                  "predictions"
+                              ],
+                              "description": "Specifies whether to return probabilities or direct predictions."
+                          }
+                      },
+                      "example": {
+                          "output_type": "probabilities"
+                      }
+                  },
+                  "systems": {
+                      "type": "array",
+                      "items": {
+                          "type": "string",
+                          "enum": [
+                              "preprocessing",
+                              "text"
+                          ]
+                      },
+                      "default": [
+                          "preprocessing",
+                          "text"
+                      ],
+                      "description": "Internal systems to use for prediction (e.g., preprocessing, text embeddings)."
+                  },
+                  "config": {
+                      "type": "object",
+                      "description": "Optional TabPFN inference configuration parameters.",
+                      "properties": {
+                          "n_estimators": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 10
+                          },
+                          "softmax_temperature": {
+                              "type": "number"
+                          },
+                          "average_before_softmax": {
+                              "type": "boolean"
+                          },
+                          "random_state": {
+                              "type": "integer"
+                          },
+                          "thinking": {
+                              "type": "boolean"
+                          }
+                      },
+                      "example": {
+                          "n_estimators": 4,
+                          "random_state": 42,
+                          "thinking": true
+                      }
                   }
-                }
-              },
-              "examples": {
-                "classification": {
-                  "summary": "Classification task",
-                  "value": {
-                    "data": "{\"model_id\": \"123e4567-e89b-12d3-a456-426614174000\", \"task\": \"classification\", \"params\": {\"output_type\": \"probabilities\"}}",
-                    "file": "[binary data]"
-                  }
-                },
-                "regression": {
-                  "summary": "Regression task",
-                  "value": {
-                    "data": "{\"model_id\": \"123e4567-e89b-12d3-a456-426614174000\", \"task\": \"regression\", \"config\": {\"n_estimators\": 8}}",
-                    "file": "[binary data]"
-                  }
-                }
               }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Prediction completed successfully — returns predicted values or probabilities depending on the task.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PredictionResponse"
-                },
-                "example": {
+          },
+          "PredictionResponse": {
+              "type": "object",
+              "required": [
+                  "duration_seconds",
+                  "prediction",
+                  "task",
+                  "used_credits",
+                  "remaining_quota"
+              ],
+              "properties": {
+                  "duration_seconds": {
+                      "type": "integer",
+                      "description": "Time taken (in seconds) to complete the prediction."
+                  },
+                  "prediction": {
+                      "description": "The prediction output. Format depends on task and output_type:\n- **Regression**: List of floats (e.g., `[1250.5, 3200.8, 980.2]`)\n- **Classification with `output_type: probas`**: List of lists (probabilities) (e.g., `[[0.1, 0.9], [0.8, 0.2]]`)\n- **Classification with `output_type: preds`**: List of classes (e.g., `[\"class_0\", \"class_1\"]`)",
+                      "oneOf": [
+                          {
+                              "type": "array",
+                              "items": {
+                                  "type": "number"
+                              },
+                              "description": "Regression predictions or classification probabilities"
+                          },
+                          {
+                              "type": "array",
+                              "items": {
+                                  "type": "array",
+                                  "items": {
+                                      "type": "number"
+                                  }
+                              },
+                              "description": "Classification probabilities (list of lists)"
+                          },
+                          {
+                              "type": "array",
+                              "items": {
+                                  "type": "string"
+                              },
+                              "description": "Classification predictions (list of class names)"
+                          }
+                      ]
+                  },
+                  "task": {
+                      "$ref": "#/components/schemas/PredictionTask"
+                  },
+                  "used_credits": {
+                      "type": "integer",
+                      "description": "The number of credits consumed by this API call."
+                  },
+                  "remaining_quota": {
+                      "type": "integer",
+                      "description": "Your remaining credit balance after this request."
+                  }
+              },
+              "example": {
                   "duration_seconds": 15,
-                  "prediction": [0.1, 0.9, 0.3, 0.7],
+                  "prediction": [
+                      0.1,
+                      0.9,
+                      0.3,
+                      0.7
+                  ],
                   "task": "classification",
                   "used_credits": 10,
                   "remaining_quota": 90
-                }
               }
-            }
           },
-          "400": {
-            "description": "Invalid request — dataset file missing or malformed input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                },
-                "example": {
-                  "detail": "You must upload a dataset `file` for prediction."
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized — missing or invalid authentication token.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Model not found — the provided model ID does not exist or has expired.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                },
-                "example": {
-                  "detail": "Fitted model with ID 123e4567-e89b-12d3-a456-426614174000 not found"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation error — incorrect or missing fields in the request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "BearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "description": "Bearer token for authentication, obtained after signing up and generating an API key."
-      }
-    },
-    "schemas": {
-      "PredictionTask": {
-        "type": "string",
-        "enum": [
-          "classification",
-          "regression"
-        ],
-        "description": "Specifies the type of task to perform — either classification or regression."
-      },
-      "Schema": {
-        "type": "object",
-        "properties": {
-          "target": {
-            "type": "string",
-            "default": "target",
-            "description": "The name of the target column in the dataset."
-          },
-          "description": {
-            "type": "string",
-            "description": "A short description of the dataset for reference."
-          }
-        },
-        "example": {
-          "target": "churn",
-          "description": "Customer churn prediction dataset"
-        }
-      },
-      "FitRequest": {
-        "type": "object",
-        "required": [
-          "task"
-        ],
-        "properties": {
-          "dataset_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "ID of an existing dataset stored on the platform to reuse for training."
-          },
-          "systems": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "preprocessing",
-                "text"
-              ]
-            },
-            "default": [
-              "preprocessing",
-              "text"
-            ],
-            "description": "Defines which internal systems to activate (e.g., preprocessing or text embeddings)."
-          },
-          "task": {
-            "$ref": "#/components/schemas/PredictionTask"
-          },
-          "schema": {
-            "$ref": "#/components/schemas/Schema"
-          },
-          "config": {
-            "type": "object",
-            "description": "Optional TabPFN configuration parameters for advanced control.",
-            "properties": {
-              "thinking": {
-                "type": "boolean",
-                "description": "Enable 'thinking mode' to improve performance via deeper in-context reasoning."
-              },
-              "n_estimators": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 10,
-                "description": "Number of estimators to ensemble during inference."
-              },
-              "softmax_temperature": {
-                "type": "number",
-                "description": "Softmax temperature parameter for adjusting output calibration."
-              },
-              "random_state": {
-                "type": "integer",
-                "description": "Random seed for reproducible results."
-              }
-            },
-            "example": {
-              "thinking": true,
-              "n_estimators": 4,
-              "random_state": 42
-            }
-          }
-        }
-      },
-      "FitResponse": {
-        "type": "object",
-        "required": [
-          "model_id",
-          "task"
-        ],
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Unique identifier for the fitted model (used for prediction calls)."
-          },
-          "task": {
-            "$ref": "#/components/schemas/PredictionTask"
-          }
-        },
-        "example": {
-          "model_id": "123e4567-e89b-12d3-a456-426614174000",
-          "task": "classification"
-        }
-      },
-      "PredictionRequest": {
-        "type": "object",
-        "required": [
-          "model_id",
-          "task"
-        ],
-        "properties": {
-          "model_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "The unique model ID returned from a previous `/fit` call."
-          },
-          "task": {
-            "$ref": "#/components/schemas/PredictionTask"
-          },
-          "dataset_id": {
-            "type": "string",
-            "format": "uuid",
-            "description": "ID of an existing dataset to reuse for prediction."
-          },
-          "params": {
-            "type": "object",
-            "description": "Prediction parameters that control the output type and format.",
-            "properties": {
-              "output_type": {
-                "type": "string",
-                "enum": [
-                  "probabilities",
-                  "predictions"
-                ],
-                "description": "Specifies whether to return probabilities or direct predictions."
-              }
-            },
-            "example": {
-              "output_type": "probabilities"
-            }
-          },
-          "systems": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "preprocessing",
-                "text"
-              ]
-            },
-            "default": [
-              "preprocessing",
-              "text"
-            ],
-            "description": "Internal systems to use for prediction (e.g., preprocessing, text embeddings)."
-          },
-          "config": {
-            "type": "object",
-            "description": "Optional TabPFN inference configuration parameters.",
-            "properties": {
-              "n_estimators": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 10
-              },
-              "softmax_temperature": {
-                "type": "number"
-              },
-              "average_before_softmax": {
-                "type": "boolean"
-              },
-              "random_state": {
-                "type": "integer"
-              },
-              "thinking": {
-                "type": "boolean"
-              }
-            },
-            "example": {
-              "n_estimators": 4,
-              "random_state": 42,
-              "thinking": true
-            }
-          }
-        }
-      },
-      "PredictionResponse": {
-        "type": "object",
-        "required": [
-          "duration_seconds",
-          "prediction",
-          "task",
-          "used_credits",
-          "remaining_quota"
-        ],
-        "properties": {
-          "duration_seconds": {
-            "type": "integer",
-            "description": "Time taken (in seconds) to complete the prediction."
-          },
-          "prediction": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "The prediction output — probabilities for classification or numerical values for regression."
-          },
-          "task": {
-            "$ref": "#/components/schemas/PredictionTask"
-          },
-          "used_credits": {
-            "type": "integer",
-            "description": "The number of credits consumed by this API call."
-          },
-          "remaining_quota": {
-            "type": "integer",
-            "description": "Your remaining credit balance after this request."
-          }
-        },
-        "example": {
-          "duration_seconds": 15,
-          "prediction": [0.1, 0.9, 0.3, 0.7],
-          "task": "classification",
-          "used_credits": 10,
-          "remaining_quota": 90
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "required": [
-          "detail"
-        ],
-        "properties": {
-          "detail": {
-            "type": "string",
-            "description": "A human-readable error message describing what went wrong."
-          }
-        },
-        "example": {
-          "detail": "Fitted model with ID 123e4567-e89b-12d3-a456-426614174000 not found"
-        }
-      },
-      "ValidationError": {
-        "type": "object",
-        "required": [
-          "detail"
-        ],
-        "properties": {
-          "detail": {
-            "type": "array",
-            "items": {
+          "ErrorResponse": {
               "type": "object",
-              "properties": {
-                "loc": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "msg": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "example": {
-          "detail": [
-            {
-              "loc": [
-                "body",
-                "task"
+              "required": [
+                  "code",
+                  "detail",
+                  "retryable",
+                  "support"
               ],
-              "msg": "field required",
-              "type": "value_error.missing"
-            }
-          ]
-        }
+              "properties": {
+                  "code": {
+                      "type": "string",
+                      "description": "Error category code (e.g., auth.unauthorized, rate.limit.exceeded)",
+                      "example": "auth.unauthorized"
+                  },
+                  "detail": {
+                      "type": "string",
+                      "description": "Human-readable error message describing what went wrong.",
+                      "example": "Invalid authentication credentials"
+                  },
+                  "retryable": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request can be retried.",
+                      "example": false
+                  },
+                  "support": {
+                      "type": "string",
+                      "description": "URL to get support for this error.",
+                      "example": "https://discord.com/invite/VJRuU3bSxt"
+                  }
+              },
+              "example": {
+                  "code": "auth.unauthorized",
+                  "detail": "Invalid authentication credentials",
+                  "retryable": false,
+                  "support": "https://discord.com/invite/VJRuU3bSxt"
+              }
+          },
+          "ValidationError": {
+              "type": "object",
+              "required": [
+                  "code",
+                  "detail",
+                  "errors",
+                  "retryable",
+                  "support"
+              ],
+              "properties": {
+                  "code": {
+                      "type": "string",
+                      "description": "Error category code for validation errors",
+                      "example": "validation.failed"
+                  },
+                  "detail": {
+                      "type": "string",
+                      "description": "Human-readable validation error message",
+                      "example": "Validation error for FitRequest"
+                  },
+                  "errors": {
+                      "type": "array",
+                      "description": "Array of field-level validation errors",
+                      "items": {
+                          "type": "object",
+                          "properties": {
+                              "field": {
+                                  "type": "string",
+                                  "description": "Field name where the error occurred",
+                                  "example": "task"
+                              },
+                              "message": {
+                                  "type": "string",
+                                  "description": "Error message for this field",
+                                  "example": "field required"
+                              }
+                          }
+                      }
+                  },
+                  "retryable": {
+                      "type": "boolean",
+                      "description": "Indicates whether the request can be retried",
+                      "example": false
+                  },
+                  "support": {
+                      "type": "string",
+                      "description": "URL to get support for this error",
+                      "example": "https://discord.com/invite/VJRuU3bSxt"
+                  }
+              },
+              "example": {
+                  "code": "validation.failed",
+                  "detail": "Validation error for FitRequest",
+                  "errors": [
+                      {
+                          "field": "task",
+                          "message": "field required"
+                      },
+                      {
+                          "field": "systems",
+                          "message": "Invalid system: invalid_system. Must be one of: ['preprocessing', 'text']"
+                      }
+                  ],
+                  "retryable": false,
+                  "support": "https://discord.com/invite/VJRuU3bSxt"
+              }
+          }
       }
-    }
   }
 }

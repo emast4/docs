@@ -1,0 +1,83 @@
+---
+title: "Quickstart"
+description: "Authenticate, upload your first dataset, and make predictions using the Prior Labs API."
+---
+
+The Prior Labs API provides secure, cloud-hosted access to TabPFN, enabling you to run zero-shot classification and regression at scale - without managing GPUs or infrastructure.
+
+This guide walks you through how to authenticate, upload your data, and make your first API call.
+
+---
+
+## 1. Get Your Access Token
+
+1. Visit [ux.priorlabs.ai](https://ux.priorlabs.ai) and sign up/in to your Prior Labs account.
+2. Complete your account setup by entering the required details.
+3. Navigate to **Account → Access Tokens**.
+4. Click **Unmask** to reveal your personal API token, then **copy** it securely.
+
+<Warning>
+Your access token grants full API access to your account. Store it securely and **never share or commit it to version control**.
+</Warning>
+
+## 2. Set Up Authentication
+
+You can authenticate and define dataset paths once, and reuse them across both `/v1/fit` and `/v1/predict` calls.
+
+```python
+import os, json, requests
+
+# Define your file paths
+train_path = "train.csv"   # path to your training dataset
+test_path = "test.csv"     # path to your test dataset
+
+# Get your API key from the environment
+api_key = os.getenv("PRIORLABS_API_KEY")
+
+headers = {"Authorization": f"Bearer {api_key}"}
+```
+
+We recommend storing your access token in an environment variable rather than directly in code:
+
+```bash
+export PRIORLABS_API_KEY="your_api_token_here"
+```
+
+## 3. Train a Model with `/v1/fit`
+
+Upload your training dataset to the `/v1/fit` endpoint. The API automatically handles preprocessing and schema inference.
+
+```python
+payload = {"task": "classification"}
+
+files = {
+    "data": (None, json.dumps(payload), "application/json"),
+    "dataset_file": (train_path, open(train_path, "rb")),
+}
+
+fit_response = requests.post(
+    "https://api.priorlabs.ai/v1/fit",
+    headers=headers,
+    files=files,
+)
+
+model_id = fit_response.json().get("model_id")
+print(f"✅ Model trained: {model_id}")
+```
+
+The API returns a unique `model_id` - use this ID for subsequent prediction requests.
+
+## 4. Next Steps
+
+Refer to the [POST /v1/predict](/api-reference/prediction/run-predictions) endpoint in the API Reference for detailed request formats, parameters, and response examples.
+
+---
+
+### Security Reminder
+
+* Keep your access token private and rotate it periodically.
+* All requests are **fully encrypted in transit (TLS 1.2+)**.
+* Prior Labs **does not store or share** your datasets without your consent.
+
+For questions about authentication, access tokens, or API onboarding, contact us at:
+[hello@priorlabs.ai](mailto:hello@priorlabs.ai)

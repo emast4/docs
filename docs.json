@@ -89,17 +89,36 @@
               "use-cases/customer-churn",
               "use-cases/drug-response"
             ]
-          },
-          {
-            "group": "API",
-            "icon": "code",
-            "pages": ["api-reference/security"]
           }
         ]
       },
       {
         "tab": "API reference",
-        "openapi": "api-reference/openapi.json"
+        "openapi": "api-reference/openapi.json",
+        "pages": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "api-reference/getting-started"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "icon": "code",
+            "pages": [
+              "POST /v1/fit",
+              "POST /v1/predict"
+            ]
+          },
+          {
+            "group": "Security",
+            "icon": "shield-check",
+            "pages": [
+              "api-reference/security"
+            ]
+          }
+        ]
       }
     ]
   },

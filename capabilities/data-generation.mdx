@@ -1,0 +1,69 @@
+---
+title: "Data Generation"
+description: "Generate realistic synthetic tabular data with TabPFN."
+---
+
+The Data Generation capability extends TabPFN’s unsupervised modeling system to create realistic synthetic tabular datasets. By modeling feature dependencies and joint probability distributions, TabPFN can generate new samples that follow the same statistical structure as your original data - useful for augmentation, simulation, and robustness testing.
+
+## Getting Started
+
+The unsupervised module in `tabpfn-extensions` provides built-in support for synthetic data generation through the `GenerateSyntheticDataExperiment` class. This experiment uses a `TabPFNUnsupervisedModel`, which internally combines both the `TabPFNClassifier` and `TabPFNRegressor` to handle mixed feature types.
+
+Install the unsupervised extension:
+
+```bash
+pip install "tabpfn-extensions[unsupervised]"
+```
+
+```python
+from tabpfn_extensions import unsupervised
+from tabpfn_extensions.unsupervised import experiments
+from sklearn.datasets import load_breast_cancer
+import torch
+from tabpfn_extensions import TabPFNClassifier, TabPFNRegressor
+
+# Load and prepare breast cancer dataset
+df = load_breast_cancer(return_X_y=False)
+X, y = df["data"], df["target"]
+feature_names = df["feature_names"]
+
+# Initialize TabPFN models
+model_unsupervised = unsupervised.TabPFNUnsupervisedModel(
+    tabpfn_clf=TabPFNClassifier(), 
+    tabpfn_reg=TabPFNRegressor()
+)
+
+# Select features for synthetic data generation
+# Example features: [mean texture, mean area, mean concavity]
+feature_indices = [4, 6, 12]
+
+# Run synthetic data generation experiment
+experiment = unsupervised.experiments.GenerateSyntheticDataExperiment(
+    task_type="unsupervised"
+)
+
+results = experiment.run(
+    tabpfn=model_unsupervised,
+    X=torch.tensor(X),
+    y=torch.tensor(y),
+    attribute_names=feature_names,
+    temp=1.0,                     # Temperature parameter for sampling
+    n_samples=X.shape[0] * 2,     # Generate twice as many samples as original data
+    indices=feature_indices,
+)
+```
+
+## How it Works
+
+The data generation process leverages the same probabilistic modeling used in TabPFN’s unsupervised mode:
+- Each feature is modeled conditionally on the others.
+- The chain rule of probability is used to estimate the full joint distribution.
+- New samples are drawn using the learned conditional dependencies, controlled by a temperature parameter (`temp`) that influences variability and diversity.
+
+## Use Cases
+
+Synthetic data generation can be applied across a range of research and engineering tasks:
+
+- Data augmentation - expand limited datasets for training or validation.
+- Privacy-preserving analytics - create realistic datasets without exposing sensitive information.
+- Feature analysis - study relationships between attributes by sampling under different conditions.

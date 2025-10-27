@@ -7,11 +7,11 @@ The **Embeddings** extension enables extraction of **latent feature representati
 
 The module supports both **classification** and **regression** models and offers two embedding extraction modes:
 
-* **Vanilla embeddings** - trained on the full dataset
-* **Cross-validated embeddings** - extracted via *K*-fold cross-validation for improved generalization
+- **Vanilla embeddings** - trained on the full dataset
+- **Cross-validated embeddings** - extracted via _K_-fold cross-validation for improved generalization
 
 <Warning>
-The embeddings extension requires the full TabPFN implementation (`pip install tabpfn`) and is not compatible with the lightweight client (`pip install tabpfn-client`), since the client does not expose internal model representations.
+  The embeddings extension requires the full TabPFN implementation (`pip install tabpfn`) and is not compatible with the lightweight client (`pip install tabpfn-client`), since the client does not expose internal model representations.
 </Warning>
 
 ## Key Features
@@ -31,12 +31,11 @@ Install the embeddings extension:
 pip install "tabpfn-extensions[embedding]"
 ```
 
-## Example Usage
+## Example
 
 ### 1. Initialize the Extractor
 
-You can use a classifier or regressor depending on your task.
-The example below demonstrates the workflow with a **TabPFNClassifier**.
+You can use a classifier or regressor depending on your task. The example below demonstrates the workflow with a **TabPFNClassifier**.
 
 ```python
 from tabpfn_extensions import TabPFNClassifier
@@ -72,9 +71,7 @@ This produces NumPy arrays containing dense vector representations of each sampl
 
 ### 3. Extract Cross-Validated Embeddings
 
-When `n_fold > 0`, *K*-fold cross-validation is applied following
-the method described in *“A Closer Look at TabPFN v2: Strength, Limitation, and Extension”*
-([arXiv:2502.17361](https://arxiv.org/abs/2502.17361)).
+When `n_fold > 0`, _K_-fold cross-validation is applied following the method described in _“A Closer Look at TabPFN v2: Strength, Limitation, and Extension”_ ([arXiv:2502.17361](https://arxiv.org/abs/2502.17361)).
 
 Larger values of `n_fold` yield more robust embeddings.
 
@@ -95,11 +92,11 @@ Under the hood, this:
 
 ## Notes
 
-* Embeddings are returned as NumPy arrays.
-* When `n_fold >= 2`, embeddings from all folds are concatenated along the feature axis.
-* Cross-validation mode requires the `sklearn.model_selection.KFold` backend.
-* The `TabPFNEmbedding` class is automatically registered under the `"embedding"` extension using Prior Labs’ telemetry system.
+- Embeddings are returned as NumPy arrays.
+- When `n_fold >= 2`, embeddings from all folds are concatenated along the feature axis.
+- Cross-validation mode requires the `sklearn.model_selection.KFold` backend.
+- The `TabPFNEmbedding` class is automatically registered under the `"embedding"` extension using Prior Labs’ telemetry system.
 
-<Card title="GitHub Code" icon="book" horizontal arrow="true" href="https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/embedding">
-Check out our official embeddings GitHub page for more details.
+<Card title="GitHub Code" icon="book" horizontal href="https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/embedding">
+  Check out our official embeddings GitHub page for more details.
 </Card>

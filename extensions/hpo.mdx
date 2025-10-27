@@ -5,11 +5,10 @@ description: "Automatic hyperparameter tuning for TabPFN."
 
 The Hyperparameter Optimization (HPO) extension provides automatic hyperparameter tuning for TabPFN models using Bayesian optimization (via Hyperopt). It finds the optimal configuration for both TabPFN model parameters and inference settings, improving predictive performance across classification and regression tasks.
 
-Traditional TabPFN models are zero-shot - they don’t require tuning for strong performance.
-However, for specific datasets, model variants, or evaluation goals, fine-tuning hyperparameters can further improve accuracy, calibration, and robustness.
-The HPO module automates this process using a Bayesian search strategy that intelligently explores the parameter space to find the best-performing configuration.
+Traditional TabPFN models are zero-shot - they don’t require tuning for strong performance. However, for specific datasets, model variants, or evaluation goals, fine-tuning hyperparameters can further improve accuracy, calibration, and robustness. The HPO module automates this process using a Bayesian search strategy that intelligently explores the parameter space to find the best-performing configuration.
 
-Key features:
+## Key features:
+
 - Optimized search spaces for classification and regression tasks
 - Support for multiple evaluation metrics - _accuracy_, _ROC-AUC_, _F1_, _RMSE_, _MAE_
 - Proper handling of categorical features via automatic encoding
@@ -73,6 +72,7 @@ y_pred = tuned_clf.predict(X_test)
 ## How it Works
 
 Under the hood, the HPO system:
+
 - Splits your data into train and validation sets with optional stratification.
 - Samples a candidate configuration from the TabPFN hyperparameter space.
 - Trains a TabPFN model with those parameters.
@@ -81,4 +81,3 @@ Under the hood, the HPO system:
 - Repeats this process for `n_trials`, selecting the configuration with the best score.
 
 Each run is fully reproducible, with built-in logging and random seed control.
-

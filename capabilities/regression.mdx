@@ -7,12 +7,12 @@ TabPFN provides powerful regression capabilities for predicting continuous numer
 
 ## Key Capabilities
 
-- **Zero-shot regression** - Predicts continuous targets instantly in a single forward pass.
-- **Calibrated uncertainty** - Produces reliable mean, median, or quantile-based predictions for confidence estimation.
-- **Robust to real-world noise** - Handles outliers, missing values, and mixed data types.
-- **Text-aware inputs** - Detects textual columns, extracts embeddings, and integrates them into predictions.
-- **Minimal preprocessing** - Works directly with raw numerical and categorical data.
-- **Fast inference** - Zero-shot predictions complete in seconds, even on mid-range GPUs.
+- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
+- **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
+- **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
+- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
+- **Minimal preprocessing:** Works directly with raw numerical and categorical data.
+- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
 ## Getting Started
 
@@ -76,63 +76,47 @@ quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
 ```
 
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
+  TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
 
-TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
-
-```python
-out = reg.predict(X, output_type="full")
-criterion, logits = out["criterion"], out["logits"]
-
-q = np.linspace(0.01, 0.99, 101)
-samples = np.stack(
-    [criterion.icdf(logits, float(x)).cpu().numpy() for x in q], axis=1
-)
-
-denom = np.maximum(np.abs(samples), 1e-6)
-diffs = np.abs(samples[:, :, None] - samples[:, None, :])
-exp_mape = (diffs / denom[:, :, None]).mean(axis=1)
-best_idx = exp_mape.argmin(axis=1)
-y_hat = samples[np.arange(samples.shape[0]), best_idx]
-```
-
+  ```python
+  out = reg.predict(X, output_type="full")
+  criterion, logits = out["criterion"], out["logits"]
+  
+  q = np.linspace(0.01, 0.99, 101)
+  samples = np.stack(
+      [criterion.icdf(logits, float(x)).cpu().numpy() for x in q], axis=1
+  )
+  
+  denom = np.maximum(np.abs(samples), 1e-6)
+  diffs = np.abs(samples[:, :, None] - samples[:, None, :])
+  exp_mape = (diffs / denom[:, :, None]).mean(axis=1)
+  best_idx = exp_mape.argmin(axis=1)
+  y_hat = samples[np.arange(samples.shape[0]), best_idx]
+  ```
 </Accordion>
 
 <Accordion title="GPU memory keeps increasing after multiple regression predictions - what’s happening??">
+  This is due to cached tensors not being cleared between predictions. It occurs primarily in regression because distributional predictions retain more GPU buffers.
 
-This is due to cached tensors not being cleared between predictions. It occurs primarily in regression because distributional predictions retain more GPU buffers.
+  ```python
+  for _ in range(10):
+      y_pred = reg.predict(X)
+      torch.cuda.empty_cache()
+  ```
 
-```python
-for _ in range(10):
-    y_pred = reg.predict(X)
-    torch.cuda.empty_cache()
-```
-
-This prevents gradual VRAM growth until automatic cleanup is added in future releases.
-
+  This prevents gradual VRAM growth until automatic cleanup is added in future releases.
 </Accordion>
 
 ## Related Extensions
 
 <CardGroup cols={3}>
-  <Card
-    title="AutoTabPFN Ensembles"
-    icon="brain"
-    href="/extensions/post-hoc-ensembles"
-  >
+  <Card title="AutoTabPFN Ensembles" icon="brain" href="/extensions/post-hoc-ensembles">
     Automated ensembling of TabPFN models for top accuracy.
   </Card>
-  <Card
-    title="Interpretability"
-    icon="search"
-    href="/extensions/interpretability"
-  >
+  <Card title="Interpretability" icon="search" href="/extensions/interpretability">
     Scalable classification for hundreds of classes with TabPFN.
   </Card>
-  <Card
-    title="Hyperparameter Optimization"
-    icon="cog"
-    href="/extensions/hpo"
-  >
+  <Card title="Hyperparameter Optimization" icon="cog" href="/extensions/hpo">
     Automated hyper-parameter tuning for TabPFN models.
   </Card>
 </CardGroup>

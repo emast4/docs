@@ -67,6 +67,17 @@ print(f"✅ Model trained: {model_id}")
 
 The API returns a unique `model_id` - use this ID for subsequent prediction requests.
 
+<Warning>
+**Dataset Size Limits**
+
+The Prior Labs API currently has the following limits:
+
+- **Per Request Limit**: Maximum of 20 million cells per request (e.g., 50K rows × 400 columns)
+- **Daily Limit**: Total of 50 million cells per day
+
+Plan your data uploads accordingly to stay within these limits.
+</Warning>
+
 ## 4. Next Steps
 
 Refer to the [POST /v1/predict](/api-reference/prediction/run-predictions) endpoint in the API Reference for detailed request formats, parameters, and response examples.

@@ -57,7 +57,7 @@ The `AutoTabPFNRegressor` automatically builds ensembles of strong models to max
 - Balances accuracy vs. latency with the `max_time` parameter.
 
 ```python
-from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNRegressor
+from tabpfn_extensions.post-hoc-ensembles.sklearn_interface import AutoTabPFNRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
 reg = AutoTabPFNRegressor(max_time=30)  # runtime budget in seconds
@@ -117,7 +117,7 @@ This prevents gradual VRAM growth until automatic cleanup is added in future rel
   <Card
     title="AutoTabPFN Ensembles"
     icon="brain"
-    href="/extensions/post_hoc_ensembles"
+    href="/extensions/post-hoc-ensembles"
   >
     Automated ensembling of TabPFN models for top accuracy.
   </Card>

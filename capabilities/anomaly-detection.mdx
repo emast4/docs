@@ -1,0 +1,65 @@
+---
+title: "Anomaly Detection"
+description: "Detect rare and anomalous samples using TabPFN’s unsupervised extension."
+---
+
+The [**TabPFN Unsupervised Extension**](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/unsupervised) brings TabPFN’s foundation-model reasoning to unsupervised anomaly detection.
+Instead of relying on labels, it models the **joint probability of all features** - allowing the system to identify samples that are unlikely under the learned data distribution.
+
+TabPFN estimates the likelihood of each sample under its learned distribution. Samples with **low joint probability** are considered **anomalous** or **outliers**.
+
+The model combines multiple TabPFN instances to capture dependencies between numerical and categorical features, providing **robust, label-free anomaly detection**.
+
+## Key Capabilities
+
+- **Joint probability scoring:** Outlier scores are based on the sample’s overall feature likelihood.
+- **Mixed-type support:** Handles both numerical and categorical columns automatically.
+- **Permutation averaging:** Reduces bias from feature ordering by averaging over multiple random permutations.
+- **Probabilistic scoring:** Outputs calibrated, interpretable anomaly likelihoods.
+- **Unified interface:** Works seamlessly with the same TabPFN classifiers and regressors used for supervised tasks.
+
+## How It Works
+
+TabPFN decomposes the joint feature probability using the chain rule:
+
+$$P(X) = \prod_{i=1}^{d} P(X_i \mid X_{<i})$$
+
+Each conditional term is predicted using a TabPFN model:
+
+* **Continuous features:** via probability density (PDF)
+* **Categorical features:** via probability mass function (PMF)
+
+The model sums log-probabilities across features to produce a sample-level log-likelihood score.
+Multiple random permutations are averaged to ensure stability across different feature orderings.
+
+## Example: Detecting Anomalies in Breast Cancer Data
+
+```python
+import torch
+from sklearn.datasets import load_breast_cancer
+from tabpfn_extensions import unsupervised
+
+# Load dataset
+df = load_breast_cancer(return_X_y=False)
+X = df["data"]
+attribute_names = df["feature_names"]
+
+# Initialize models
+clf = unsupervised.TabPFNClassifier(n_estimators=4)
+reg = unsupervised.TabPFNRegressor(n_estimators=4)
+model_unsupervised = unsupervised.TabPFNUnsupervisedModel(
+    tabpfn_clf=clf, tabpfn_reg=reg
+)
+
+# Compute anomaly scores
+scores = model_unsupervised.outliers(
+    torch.tensor(X, dtype=torch.float32),
+    n_permutations=10,
+)
+
+print("Outlier scores:", scores[:10])
+```
+
+<Card title="Google Colab Example" icon="book" horizontal arrow="true" href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#scrollTo=_aoNg2_K4k6E">
+Check out our Google Colab for a detailed tutorial on anomaly detection using TabPFN.
+</Card>

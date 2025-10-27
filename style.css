@@ -105,3 +105,54 @@ a {
 /* transform: scale(0.7) !important; */ /* 70% - Small */
 /* transform: scale(0.8) !important; */ /* 80% - Current setting */
 /* transform: scale(0.9) !important; */ /* 90% - Slightly smaller */
+
+/* Custom CSS for Mintlify Documentation */
+
+/* Reduce font size of navigation group titles */
+.sidebar-group-title {
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Alternative selector if the above doesn't work */
+[data-testid="sidebar-group-title"] {
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Another alternative selector */
+.sidebar .group-title {
+  font-size: 0.5rem !important;
+  font-weight: 600 !important;
+}
+
+/* Optional: Also reduce spacing around group titles */
+.sidebar-group-title {
+  margin-bottom: 0.5rem !important;
+  margin-top: 1rem !important;
+}
+
+/* Table styling for 2-column tables - fixed width, equal columns */
+.table-container-dc3e57e5 {
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+
+.table-container-dc3e57e5 table {
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+
+.table-container-dc3e57e5 table th:first-child,
+.table-container-dc3e57e5 table td:first-child {
+  width: 50% !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+  padding-right: 1rem !important;
+}
+
+.table-container-dc3e57e5 table th:nth-child(2),
+.table-container-dc3e57e5 table td:nth-child(2) {
+  width: 50% !important;
+  text-align: left !important;
+}

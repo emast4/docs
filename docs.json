@@ -7,7 +7,7 @@
     "light": "#ffffff",
     "dark": "#1e293b"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "appearance": {
     "default": "light",
     "strict": true
@@ -55,27 +55,23 @@
             "pages": [
               "capabilities/classification",
               "capabilities/regression",
-              {
-                "group": "Time Series",
-                "pages": [
-                  "capabilities/forecasting",
-                  "capabilities/anomaly_detection"
-                ]
-              },
-              "capabilities/fine_tuning"
+              "capabilities/fine-tuning",
+              "capabilities/forecasting",
+              "capabilities/anomaly-detection"
             ]
           },
           {
             "group": "Extensions",
             "icon": "puzzle-piece",
             "pages": [
-              "extensions/many_class",
-              "extensions/post_hoc_ensembles",
+              "extensions/post-hoc-ensembles",
               "extensions/interpretability",
+              "extensions/many-class",
               {
                 "group": "More Extensions",
                 "pages": [
-                  "extensions/hpo"
+                  "extensions/hpo",
+                  "extensions/embeddings"
                 ]
               }
             ]
@@ -84,9 +80,10 @@
             "group": "Use Cases",
             "icon": "lightbulb",
             "pages": [
-              "use-cases/classification",
-              "use-cases/regression",
-              "use-cases/forecasting"
+              "use-cases/anomaly-detection",
+              "use-cases/credit-fraud",
+              "use-cases/customer-churn",
+              "use-cases/drug-response"
             ]
           }
         ]

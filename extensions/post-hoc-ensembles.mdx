@@ -17,10 +17,10 @@ How it works:
 
 **The result**: a meta-ensemble of TabPFNs tuned automatically for your dataset.
 
-To install the extension, include the `post_hoc_ensembles` extras module:
+To install the extension, include the `post-hoc-ensembles` extras module:
 
 ```bash
-pip install "tabpfn-extensions[post_hoc_ensembles]"
+pip install "tabpfn-extensions[post-hoc-ensembles]"
 ```
 
 <Note>This installs all dependencies, including AutoGluon and the TabPFN core library.</Note>
@@ -30,7 +30,7 @@ pip install "tabpfn-extensions[post_hoc_ensembles]"
 Here’s a quick example showing how to build an AutoTabPFN ensemble for classification.
 
 ```python
-from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNClassifier
+from tabpfn_extensions.post-hoc-ensembles.sklearn_interface import AutoTabPFNClassifier
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, accuracy_score

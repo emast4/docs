@@ -99,10 +99,7 @@
       },
       {
         "tab": "API reference",
-        "openapi": "api-reference/openapi.json",
-        "pages": [
-          "api-reference/security"
-        ]
+        "openapi": "api-reference/openapi.json"
       }
     ]
   },

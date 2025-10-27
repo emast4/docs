@@ -3,70 +3,65 @@ title: "Credit Fraud Detection"
 description: "Detect fraudulent transactions in real-time using TabPFN with high accuracy and minimal false positives."
 ---
 
-Transform transaction complexity into fraud protection. Extract payment patterns, user behavior, and banking data to predict fraudulent transactions in real-time - protecting customers and reducing losses.
+## Start With a Template
 
-The following table summarizes key data types leveraged when building credit fraud detection models:
+[Link to "cookbook" (i.e. isolate notebook on credit fraud detection)]
+
+## How It Works
+
+Detect fraudulent transactions using payment patterns and behavioral data. TabPFN analyzes transaction amounts, merchant categories, geographic patterns, and user behavior to identify fraud risk in real-time.
+
+The following table summarizes key data types leveraged when building credit fraud detection models. Integrating both transaction-level and behavioral data enables TabPFN to capture complex fraud signals, supporting highly accurate and timely fraud detection.
 
 <div className="table-container-dc3e57e5">
-
-| Transaction Patterns        | User Behavior           |
-|----------------------------|-------------------------|
-| Amount and frequency       | Login patterns          |
-| Merchant categories        | Session behavior        |
-| Geographic locations       | Account changes         |
+| Transaction Patterns | User Behavior    |
+| -------------------- | ---------------- |
+| Amount and frequency | Login patterns   |
+| Merchant categories  | Session behavior |
+| Geographic locations | Account changes  |
 
 </div>
 
-Integrating both transaction-level and behavioral data enables TabPFN to capture complex fraud signals, supporting highly accurate and timely fraud detection.
+## Why Finance Teams Choose TabPFN
 
-## Why Fraud Teams Choose TabPFN
+### **Multivariate Time Series Forecasting**
 
-### Real-Time Fraud Detection
+- Combines market data, alternative datasets, and economic indicators in single model
+- TabPFN-TS handles temporal financial data through zero-shot inference
+- Processes non-stationary time series and structural breaks without retraining
 
-Every transaction contains fraud signals. TabPFN extracts fraud risk scores from payment patterns, device data, and behavioral anomalies - complete with confidence scores and risk factors for immediate action.
+### **Model Explainability and Compliance**
 
-### Reduce False Positives
+- Attention weights provide feature importance for regulatory model validation
+- Calibrated probability outputs support quantitative risk frameworks
+- Compatible with audit trail requirements for financial model governance
 
-Stop blocking legitimate customers. TabPFN's sophisticated pattern recognition reduces false positives while maintaining high fraud detection rates, improving customer experience and reducing revenue loss.
+### **In-Context Learning**
+
+- Zero-shot inference without gradient descent or hyperparameter optimization
+- Predictions on new market conditions without model retraining
+- Minimal data preprocessing and feature engineering requirements
+
+## **Frequently Asked Questions**
 
 <Accordion title="How does TabPFN enhance fraud detection?">
-
-TabPFN automatically analyzes complex transaction patterns and user behavior to identify fraudulent activities. This helps fraud teams catch more fraud while reducing false positives that block legitimate customers.
+  TabPFN's pretraining on synthetic datasets with varying fraud rates provides robust performance on imbalanced data. The model produces calibrated probabilities that enable optimal threshold selection for fraud/legitimate classification without additional sampling techniques.
 </Accordion>
 
 <Accordion title="Can TabPFN work with real-time transactions?">
-
-Yes! TabPFN processes transactions in milliseconds, making it suitable for real-time fraud detection at payment processing scale.
+  TabPFN processes individual transactions in sub-millisecond inference time on GPU infrastructure. The model supports batch processing for high-throughput scenarios (\>10K transactions/second) and integrates with streaming payment processing pipelines.
 </Accordion>
 
-<Accordion title="How accurate is TabPFN for fraud detection?">
-
-Leading processors achieved 94.2% accuracy with significant reduction in false positive rates. Performance varies by transaction volume and fraud patterns.
-</Accordion>
-
-<Accordion title="Can I integrate TabPFN with payment systems?">
-
-Yes. Use our API to automatically score transactions in real-time through payment gateways, card networks, and fraud management platforms.
-</Accordion>
-
-## Applications
+## Related Use-Cases
 
 <CardGroup cols={3}>
-  <Card
-    title="Portfolio Optimization"
-  >
-    Asset allocation and risk management by predicting market patterns and optimizing investment strategies.
+  <Card title="Portfolio Optimization">
+    Automated underwriting and loan approval decisions using borrower profiles, financial history, and alternative data sources for enhanced risk prediction.
   </Card>
-  
-  <Card
-    title="Risk Management"
-  >
-    Downside protection and hedging through early identification of risk factors and market anomalies.
+  <Card title="Portfolio Anomaly Detection">
+    Real-time identification of unusual trading patterns, position concentrations, and market exposures for proactive risk management.
   </Card>
-  
-  <Card
-    title="Alternative Data"
-  >
-    Monetizing unique datasets by extracting valuable insights from unconventional data sources.
+  <Card title="Insurance Claim Analysis">
+    Predict claim likelihood and detect fraudulent submissions using policy data, historical claims, and behavioral patterns.
   </Card>
 </CardGroup>

@@ -3,74 +3,70 @@ title: "Customer Churn"
 description: "Predict customer churn risk and enable proactive retention campaigns using TabPFN."
 ---
 
-Transform customer behavior into retention opportunities. Extract usage patterns, billing history, support interactions, and engagement metrics to predict which customers are at risk of churning - enabling proactive retention campaigns.
+## Start With a Template
 
-The following table summarizes key signals leveraged when building customer churn prediction models:
+[Link to "cookbook" (i.e. isolate notebook on customer churn)]
+
+## How It Works
+
+Predict customer churn using behavioral and engagement data. TabPFN analyzes usage patterns, feature adoption metrics, support interactions, and billing history to identify churn risk through zero-shot inference on customer lifecycle data.
+
+The following table summarizes key signals leveraged when building customer churn prediction models. Integrating behavioral and health signals enables TabPFN to capture complex churn patterns, supporting data-driven retention strategies with quantified risk scores.
 
 <div className="table-container-dc3e57e5">
-
-| Usage Patterns             | Customer Health                    |
-|----------------------------|------------------------------------|
-| Login frequency            | Support ticket volume               |
-| Feature adoption           | Billing issues                      |
-| Session duration           | Onboarding completion               |
-| Time-to-value metrics      | Training progress                   |
+| Usage Patterns        | Customer Health       |
+| --------------------- | --------------------- |
+| Login frequency       | Support ticket volume |
+| Feature adoption      | Billing issues        |
+| Session duration      | Onboarding completion |
+| Time-to-value metrics | Training progress     |
 
 </div>
 
-## Why Growth Teams Choose TabPFN
+## Why Churn Modeling Teams Choose TabPFN
 
-### Turn Data into Retention
+### **Real-Time Churn Risk Scoring**
 
-Every customer interaction reveals retention insights. TabPFN extracts churn risk scores from usage patterns, support tickets, and engagement data - complete with risk factors and intervention recommendations.
+- Process customer behavioral data through zero-shot inference for immediate risk assessment
+- Generate calibrated probability scores for churn likelihood across customer segments
+- Handle high-dimensional feature spaces without feature engineering overhead
 
-### Proactive Customer Success
+### **Multivariate Customer Analysis**
 
-Stop losing customers to reactive support. TabPFN identifies at-risk customers weeks before they churn, ensuring your success team can intervene with targeted retention campaigns.
+- Model complex interactions between usage patterns, engagement metrics, and support data
+- Attention mechanisms identify key behavioral signals driving churn risk
+- Robust performance on sparse customer data and irregular usage patterns
 
-<Accordion title="How does TabPFN enhance churn prediction?">
+### **In-Context Learning for Customer Success**
 
-TabPFN automatically analyzes complex usage patterns and customer behavior to predict churn risk. This helps customer success teams intervene before customers leave.
+- Zero-shot adaptation to new customer segments without model retraining
+- Immediate predictions on evolving customer behavior patterns
+- Research-grade performance with minimal data preparation overhead
+
+## **Frequently Asked Questions**
+
+<Accordion title="How does TabPFN's attention mechanism identify churn signals?">
+  TabPFN's alternating row-feature attention models complex dependencies between usage patterns, engagement metrics, and customer health indicators, producing interpretable feature importance scores for churn risk analysis.
 </Accordion>
 
-<Accordion title="Can TabPFN work with incomplete usage data?">
-
-Yes! TabPFN handles missing usage data and irregular customer behavior patterns, making it practical for real-world SaaS environments.
+<Accordion title="Can TabPFN handle sparse customer behavioral data?">
+  Yes! TabPFN's pretraining on synthetic datasets with missing value patterns enables robust inference on incomplete customer records, common in real-world SaaS analytics environments.
 </Accordion>
 
-<Accordion title="How accurate is TabPFN for churn prediction?">
-
-Typical improvements from 78% to 89% accuracy with 30% reduction in churn through targeted retention campaigns. Results vary by business model and data quality.
-</Accordion>
-
-<Accordion title="Can I integrate TabPFN with customer success platforms?">
-
-Yes. Use our API to automatically score customers in Gainsight, ChurnZero, and other CS platforms. Keep churn scores updated as new usage data becomes available.
-</Accordion>
-
-<Accordion title="How does TabPFN help with customer segmentation?">
-
-Extract detailed customer risk profiles and behavior patterns to create targeted retention campaigns for different customer segments and use cases.
+<Accordion title="What deployment options support real-time customer scoring?">
+  TabPFN integrates with customer success platforms through REST API for real-time churn scoring, batch processing for cohort analysis, and on-premises deployment for data privacy requirements.
 </Accordion>
 
 ## Applications
 
 <CardGroup cols={3}>
-  <Card
-    title="Lead Scoring"
-  >
+  <Card title="Lead Scoring">
     Sales pipeline optimization by predicting lead conversion probability and prioritizing high-value prospects.
   </Card>
-  
-  <Card
-    title="Customer Segmentation"
-  >
+  <Card title="Customer Segmentation">
     Targeted marketing campaigns by identifying distinct customer groups based on behavior and preferences.
   </Card>
-  
-  <Card
-    title="Product Analytics"
-  >
+  <Card title="Product Analytics">
     Feature adoption and engagement tracking to understand user behavior and improve product experiences.
   </Card>
 </CardGroup>

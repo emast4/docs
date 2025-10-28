@@ -1,38 +1,14 @@
 ---
-title: "TabPFN-2.5"
+title: "Overview"
 description: "Explore all available models and compare their capabilities."
 ---
 
-**TabPFN** foundation models are built for structured data - delivering classification, regression, and forecasting with zero-shot accuracy in seconds. Each model is optimized for different use cases, from research to large-scale production systems.
 
-## Our Flagship Model
+**TabPFN** foundation models are purpose-built for structured data - delivering classification, regression, and forecasting with zero-shot accuracy in seconds. Each model is optimized for different applications, from research exploration to large-scale production systems.
 
-**TabPFN-2.5** is the latest generation of Prior Labs’ tabular foundation models - delivering state-of-the-art zero-shot performance across classification and regression tasks, with scalability up to **50,000** samples and no training required. It extends the original TabPFN v2 architecture with deeper layers, broader synthetic priors, and advanced preprocessing - providing the fastest and most accurate TabPFN model yet.
+TabPFN-2.5 is the upcoming generation of our tabular foundation models, designed to push state-of-the-art zero-shot performance across classification and regression tasks. Detailed documentation and release notes will be available soon.
 
-- **Zero-shot SOTA performance**: Matches or surpasses tuned AutoGluon 1.4 ensembles in just 2.8 seconds, compared to 4 hours of tuning.
-- **Scales up to 50 k samples**:  Efficient inference on large tabular datasets using multi-GPU parallelism.
-- **18-layer transformer** - Deeper architecture improves generalization and calibration across diverse data types.
-- **Enhanced robustness** - Combines robust scaling, soft clipping, quantile transforms, and SVD features for stability on outlier-heavy datasets.
-- **Meta-optimized by TabPFN** - Its own hyperparameters were optimized using TabPFN v2 as a surrogate model, enabling faster, more efficient development through in-context optimization.
-
-<Warning>
-  **Commercial use restrictions**
-
-  The TabPFN-2.5 weights hosted on Hugging Face and GitHub are provided for research and non-commercial use only. For commercial licensing or large-scale deployment, please [contact us](mailto:hello@priorlabs.ai).
-</Warning>
-
-### Architecture
-
-TabPFN-2.5 retains the alternating attention architecture introduced in TabPFN v2 - attending over both rows and features - while scaling to 18 transformer layers for improved expressivity and calibration.
-
-Key improvements include:
-
-- **Broader synthetic training distribution**: covers more diverse feature types and statistical structures.
-- **Optimized feature transformations**: robust scaling and quantile mappings improve stability under noise and outliers.
-- **SVD-based augmentation**: adds global structure awareness for high-dimensional datasets.
-- **Reduced memory footprint**: removes redundant feature copies, cutting memory use nearly in half.
-
-## Other Models
+## Model Versions
 
 <CardGroup cols={2}>
   <Card title="TabPFN-2" href="/models/tabpfn-2">

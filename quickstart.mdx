@@ -54,6 +54,40 @@ You can use it either through a REST API or our Python SDK.
   You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected. For more information, visit the [API Reference](/api-reference/getting-started).
 </Warning>
 
+#### Using the Python SDK
+
+<CodeGroup>
+```python title="Classification"
+import tabpfn_client
+from tabpfn_client import TabPFNClassifier
+
+# Authenticate using your Prior Labs token
+tabpfn_client.set_access_token("YOUR_API_KEY")
+
+# Use TabPFN like any scikit-learn model
+model = TabPFNClassifier()
+model.fit(X_train, y_train)
+
+# Get predictions
+preds = model.predict(X_test)
+```
+
+```python title="Regression"
+import tabpfn_client
+from tabpfn_client import TabPFNRegressor
+
+# Authenticate using your Prior Labs token
+tabpfn_client.set_access_token("YOUR_API_KEY")
+
+# Use TabPFN like any scikit-learn model
+model = TabPFNRegressor()
+model.fit(X_train, y_train)
+
+# Get predictions
+preds = model.predict(X_test)
+```
+</CodeGroup>
+
 #### Using the REST API
 
 First, define your dataset paths and authentication details. This allows you to reuse them across fit and predict calls.
@@ -168,40 +202,6 @@ print(json.dumps(predict_response.json(), indent=2))
 <Card title="API Reference" icon="book" horizontal href="/api-reference/getting-started">
   You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/getting-started), which also includes detailed endpoint descriptions and authentication examples.
 </Card>
-
-#### Using the Python SDK
-
-<CodeGroup>
-```python title="Classification"
-import tabpfn_client
-from tabpfn_client import TabPFNClassifier
-
-# Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
-
-# Use TabPFN like any scikit-learn model
-model = TabPFNClassifier()
-model.fit(X_train, y_train)
-
-# Get predictions
-preds = model.predict(X_test)
-```
-
-```python title="Regression"
-import tabpfn_client
-from tabpfn_client import TabPFNRegressor
-
-# Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
-
-# Use TabPFN like any scikit-learn model
-model = TabPFNRegressor()
-model.fit(X_train, y_train)
-
-# Get predictions
-preds = model.predict(X_test)
-```
-</CodeGroup>
 
 <CardGroup cols={2}>
   <Card title="API Reference" icon="book" href="/api-reference">

@@ -76,7 +76,8 @@
                 "group": "All Extensions",
                 "pages": [
                   "extensions/hpo",
-                  "extensions/embeddings"
+                  "extensions/embeddings",
+                  "extensions/rf-pfn"
                 ]
               }
             ]

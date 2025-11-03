@@ -1,238 +1,174 @@
 ---
-title: "Quickstart"
-description: "Get started with TabPFN in minutes."
+title: “Quickstart”
+description: “Get started with TabPFN in minutes.”
 ---
-
 ## How to Use TabPFN
-
-TabPFN can be used in two ways - depending on your workflow and compute setup.
-
-Whether you're experimenting locally, integrating into a pipeline, or deploying at scale, there's a path that fits.
-
-<div className="table-container-dc3e57e5">
-
-| Local Package | API Access |
-|--------------|------------|
-| Full control, local inference | Managed infrastructure, no setup |
-| Requires GPU (T4+ recommended) | Works from any environment |
-| Best for research & experimentation | Best for production & teams |
-
+TabPFN can be used in two ways - depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, then get our non-commercial OSS package on Hugging Face.
+<div className=“table-container-dc3e57e5”>
+| OSS Package                       | API Access                       |
+| ----------------------------------- | -------------------------------- |
+| Full control, local inference       | Managed infrastructure, no setup |
+| Requires GPU (T4+ recommended)      | Works from any environment       |
+| Best for research & experimentation | Best for production & teams      |
 </div>
-
 ### 1. Get Your Access Token
-
-To get you started, you'll need an access token to authenticate with the API or SDK. Here's how to get one:
-
+To get you started, you’ll need an access token to authenticate with the API or SDK. Here’s how to get one:
 1. Visit [ux.priorlabs.ai](https://ux.priorlabs.ai) and sign up/in to your Prior Labs account.
 2. Complete your account setup by entering the required details.
 3. Navigate to **Account → Access Tokens**.
 4. Click **Unmask** to reveal your personal API token, then **copy** it securely.
-
 <Warning>
-Your access token grants full API access to your account. Store it securely and **never share or commit it to version control**.
+  Your access token grants full API access to your account. Store it securely and **never share or commit it to version control**.
 </Warning>
-
-#### Open Source Package
-
-**Best for**: researchers, ML practitioners, and engineers with local GPU or cluster access.
-
-TabPFN is available as an open-source Python package on [GitHub](https://github.com/priorlabs/tabpfn). It provides the full model locally, giving you complete control over inference and experimentation.
-
+#### OSS Package
+**Best for**: researchers, ML practitioners, and engineers with GPU availability.
+TabPFN is available as an open-source Python package for non-commercial use only on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the full model locally, giving you complete control over your data and experimentation.
 ```bash
 pip install tabpfn
 ```
-
 ```python
 from tabpfn import TabPFNClassifier
-
 model = TabPFNClassifier()
 model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
-
 <Note>
   GPU recommended (e.g., NVIDIA T4 at minimum) or A100/H100 for optimal inference speed.
 </Note>
-
 #### TabPFN API
-
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure.
-
 The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning.
-
 You can use it either through a REST API or our Python SDK.
-
 <Warning>
   You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected. For more information, visit the [API Reference](/api-reference/getting-started).
 </Warning>
-
 #### Using the Python SDK
-
 <CodeGroup>
-```python title="Classification"
+```python Classification
 import tabpfn_client
 from tabpfn_client import TabPFNClassifier
-
 # Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
-
+tabpfn_client.set_access_token(“YOUR_API_KEY”)
 # Use TabPFN like any scikit-learn model
 model = TabPFNClassifier()
 model.fit(X_train, y_train)
-
 # Get predictions
 preds = model.predict(X_test)
 ```
-
-```python title="Regression"
+```python Regression
 import tabpfn_client
 from tabpfn_client import TabPFNRegressor
-
 # Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
-
+tabpfn_client.set_access_token(“YOUR_API_KEY”)
 # Use TabPFN like any scikit-learn model
 model = TabPFNRegressor()
 model.fit(X_train, y_train)
-
 # Get predictions
 preds = model.predict(X_test)
 ```
 </CodeGroup>
-
 After making predictions with a TabPFN model you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a `.last_meta` attribute containing this information:
-
 ```python
 # After model.predict():
 meta = model.last_meta
-
 print(meta)
 # Example output:
-# {'model_version': 'v2', 'info': 'Mi4yLjB8MjAyNS0xMC0zMVQxMjowMTo0My42Mzc3ODcrMDA6MDA='}
+# {‘model_version’: ‘v2’, ‘info’: ’Mi4yLjB8MjAyNS0xMC0zMVQxMjowMTo0My42Mzc3ODcrMDA6MDA=’}
 ```
-
 This attribute updates each time you `.predict()`.
-
 #### Using the REST API
-
 First, define your dataset paths and authentication details. This allows you to reuse them across fit and predict calls.
-
 ```python
 import os, json, requests
-
 # Define your file paths
-train_path = "train.csv"   # path to your training dataset
-test_path = "test.csv"     # path to your test dataset
-
+train_path = “train.csv”   # path to your training dataset
+test_path = “test.csv”     # path to your test dataset
 # Get your API key from the environment
-api_key = os.getenv("PRIORLABS_API_KEY")
-
-headers = {"Authorization": f"Bearer {api_key}"}
+api_key = os.getenv(“PRIORLABS_API_KEY”)
+headers = {“Authorization”: f”Bearer {api_key}“}
 ```
-
 Next, upload your training dataset to the `/v1/fit` endpoint. The API automatically preprocesses the data.
-
 <CodeGroup>
-
-```python title="Classification"
-payload = {"task": "classification"}
-
+```python Classification
+payload = {“task”: “classification”}
 files = {
-    "data": (None, json.dumps(payload), "application/json"),
-    "dataset_file": (train_path, open(train_path, "rb")),
+    “data”: (None, json.dumps(payload), “application/json”),
+    “dataset_file”: (train_path, open(train_path, “rb”)),
 }
-
 fit_response = requests.post(
-    "https://api.priorlabs.ai/v1/fit",
+    “https://api.priorlabs.ai/v1/fit”,
     headers=headers,
     files=files,
 )
-
-model_id = fit_response.json().get("model_id")
-print(f"✅ Model trained: {model_id}")
+model_id = fit_response.json().get(“model_id”)
+print(f”:white_check_mark: Model trained: {model_id}“)
 ```
-
-```python title="Regression"
-payload = {"task": "regression"}
-
+```python Regression
+payload = {“task”: “regression”}
 files = {
-    "data": (None, json.dumps(payload), "application/json"),
-    "dataset_file": (train_path, open(train_path, "rb")),
+    “data”: (None, json.dumps(payload), “application/json”),
+    “dataset_file”: (train_path, open(train_path, “rb”)),
 }
-
 fit_response = requests.post(
-    "https://api.priorlabs.ai/v1/fit",
+    “https://api.priorlabs.ai/v1/fit”,
     headers=headers,
     files=files,
 )
-
-model_id = fit_response.json().get("model_id")
-print(f"✅ Model trained: {model_id}")
+model_id = fit_response.json().get(“model_id”)
+print(f”:white_check_mark: Model trained: {model_id}“)
 ```
 </CodeGroup>
-
 Once fitted your model using in-context learning, send your test dataset to the `/v1/predict` endpoint using the returned `model_id`. You’ll receive predictions and/or probabilities in JSON format.
-
 <CodeGroup>
-```python title="Classification"
+```python Classification
 payload = {
-    "task": "classification",
-    "model_id": model_id,
-    "params": {
-      "output_type": "preds"
+    “task”: “classification”,
+    “model_id”: model_id,
+    “params”: {
+      “output_type”: “preds”
     }
 }
-
 files = {
-    "data": (None, json.dumps(payload), "application/json"),
-    "file": (test_path, open(test_path, "rb")),
+    “data”: (None, json.dumps(payload), “application/json”),
+    “file”: (test_path, open(test_path, “rb”)),
 }
-
 predict_response = requests.post(
-    "https://api.priorlabs.ai/v1/predict",
+    “https://api.priorlabs.ai/v1/predict”,
     headers=headers,
     files=files,
 )
-
-print("✅ Predictions:")
+print(“:white_check_mark: Predictions:“)
 print(json.dumps(predict_response.json(), indent=2))
 ```
-
-```python title="Regression"
+```python Regression
 payload = {
-    "task": "regression",
-    "model_id": model_id,
-    "params": {
-      "output_type": "mean"
+    “task”: “regression”,
+    “model_id”: model_id,
+    “params”: {
+      “output_type”: “mean”
     }
 }
-
 files = {
-    "data": (None, json.dumps(payload), "application/json"),
-    "file": (test_path, open(test_path, "rb")),
+    “data”: (None, json.dumps(payload), “application/json”),
+    “file”: (test_path, open(test_path, “rb”)),
 }
-
 predict_response = requests.post(
-    "https://api.priorlabs.ai/v1/predict",
+    “https://api.priorlabs.ai/v1/predict”,
     headers=headers,
     files=files,
 )
-
-print("✅ Predictions:")
+print(“:white_check_mark: Predictions:“)
 print(json.dumps(predict_response.json(), indent=2))
 ```
-
 </CodeGroup>
-
-<Card title="API Reference" icon="book" horizontal href="/api-reference/getting-started">
+<Card title=“API Reference” icon=“book” horizontal href=“/api-reference/getting-started”>
   You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/getting-started), which also includes detailed endpoint descriptions and authentication examples.
 </Card>
-
 <CardGroup cols={2}>
-  <Card title="API Reference" icon="book" href="/api-reference">
-    See the full OpenAPI spec, endpoint details, and request/response formats.
+  <Card title=“API Reference” icon=“book” href=“/api-reference”>
+    See the full API spec, endpoint details, and request/response formats.
   </Card>
-  <Card title="SDKs" icon="code" href="/sdk/python">
-    View available SDKs for Python and JavaScript, usage instructions, and code samples.
+  <Card title=“SDKs” icon=“code” href=“/sdk/python”>
+    View available Python SDK, usage instructions, and code samples.
   </Card>
 </CardGroup>

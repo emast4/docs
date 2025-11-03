@@ -4,7 +4,7 @@ description: "Get started with TabPFN in minutes."
 ---
 ## How to Use TabPFN
 TabPFN can be used in two ways - depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, then get our non-commercial OSS package on Hugging Face.
-<div className=“table-container-dc3e57e5">
+<div className="table-container-dc3e57e5">
 | OSS Package                       | API Access                       |
 | ----------------------------------- | -------------------------------- |
 | Full control, local inference       | Managed infrastructure, no setup |
@@ -48,7 +48,7 @@ You can use it either through a REST API or our Python SDK.
 import tabpfn_client
 from tabpfn_client import TabPFNClassifier
 # Authenticate using your Prior Labs token
-tabpfn_client.set_access_token(“YOUR_API_KEY")
+tabpfn_client.set_access_token("YOUR_API_KEY")
 # Use TabPFN like any scikit-learn model
 model = TabPFNClassifier()
 model.fit(X_train, y_train)
@@ -59,7 +59,7 @@ preds = model.predict(X_test)
 import tabpfn_client
 from tabpfn_client import TabPFNRegressor
 # Authenticate using your Prior Labs token
-tabpfn_client.set_access_token(“YOUR_API_KEY")
+tabpfn_client.set_access_token("YOUR_API_KEY")
 # Use TabPFN like any scikit-learn model
 model = TabPFNRegressor()
 model.fit(X_train, y_train)
@@ -81,94 +81,94 @@ First, define your dataset paths and authentication details. This allows you to 
 ```python
 import os, json, requests
 # Define your file paths
-train_path = “train.csv"   # path to your training dataset
-test_path = “test.csv"     # path to your test dataset
+train_path = "train.csv"   # path to your training dataset
+test_path = "test.csv"     # path to your test dataset
 # Get your API key from the environment
-api_key = os.getenv(“PRIORLABS_API_KEY")
-headers = {“Authorization": f"Bearer {api_key}“}
+api_key = os.getenv("PRIORLABS_API_KEY")
+headers = {"Authorization": f"Bearer {api_key}"}
 ```
 Next, upload your training dataset to the `/v1/fit` endpoint. The API automatically preprocesses the data.
 <CodeGroup>
 ```python Classification
-payload = {“task": “classification"}
+payload = {"task": "classification"}
 files = {
-    “data": (None, json.dumps(payload), “application/json"),
-    “dataset_file": (train_path, open(train_path, “rb")),
+    "data": (None, json.dumps(payload), "application/json"),
+    "dataset_file": (train_path, open(train_path, "rb")),
 }
 fit_response = requests.post(
-    “https://api.priorlabs.ai/v1/fit",
+    "https://api.priorlabs.ai/v1/fit",
     headers=headers,
     files=files,
 )
-model_id = fit_response.json().get(“model_id")
-print(f":white_check_mark: Model trained: {model_id}“)
+model_id = fit_response.json().get("model_id")
+print(f":white_check_mark: Model trained: {model_id}")
 ```
 ```python Regression
-payload = {“task": “regression"}
+payload = {"task": "regression"}
 files = {
-    “data": (None, json.dumps(payload), “application/json"),
-    “dataset_file": (train_path, open(train_path, “rb")),
+    "data": (None, json.dumps(payload), "application/json"),
+    "dataset_file": (train_path, open(train_path, "rb")),
 }
 fit_response = requests.post(
-    “https://api.priorlabs.ai/v1/fit",
+    "https://api.priorlabs.ai/v1/fit",
     headers=headers,
     files=files,
 )
-model_id = fit_response.json().get(“model_id")
-print(f":white_check_mark: Model trained: {model_id}“)
+model_id = fit_response.json().get("model_id")
+print(f":white_check_mark: Model trained: {model_id}")
 ```
 </CodeGroup>
 Once fitted your model using in-context learning, send your test dataset to the `/v1/predict` endpoint using the returned `model_id`. You’ll receive predictions and/or probabilities in JSON format.
 <CodeGroup>
 ```python Classification
 payload = {
-    “task": “classification",
-    “model_id": model_id,
-    “params": {
-      “output_type": “preds"
+    "task": "classification",
+    "model_id": model_id,
+    "params": {
+      "output_type": "preds"
     }
 }
 files = {
-    “data": (None, json.dumps(payload), “application/json"),
-    “file": (test_path, open(test_path, “rb")),
+    "data": (None, json.dumps(payload), "application/json"),
+    "file": (test_path, open(test_path, "rb")),
 }
 predict_response = requests.post(
-    “https://api.priorlabs.ai/v1/predict",
+    "https://api.priorlabs.ai/v1/predict",
     headers=headers,
     files=files,
 )
-print(“:white_check_mark: Predictions:“)
+print(":white_check_mark: Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
 ```python Regression
 payload = {
-    “task": “regression",
-    “model_id": model_id,
-    “params": {
-      “output_type": “mean"
+    "task": "regression",
+    "model_id": model_id,
+    "params": {
+      "output_type": "mean"
     }
 }
 files = {
-    “data": (None, json.dumps(payload), “application/json"),
-    “file": (test_path, open(test_path, “rb")),
+    "data": (None, json.dumps(payload), "application/json"),
+    "file": (test_path, open(test_path, "rb")),
 }
 predict_response = requests.post(
-    “https://api.priorlabs.ai/v1/predict",
+    "https://api.priorlabs.ai/v1/predict",
     headers=headers,
     files=files,
 )
-print(“:white_check_mark: Predictions:“)
+print(":white_check_mark: Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
 </CodeGroup>
-<Card title=“API Reference" icon=“book" horizontal href=“/api-reference/getting-started">
+<Card title="API Reference" icon="book" horizontal href="/api-reference/getting-started">
   You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/getting-started), which also includes detailed endpoint descriptions and authentication examples.
 </Card>
 <CardGroup cols={2}>
-  <Card title=“API Reference" icon=“book" href=“/api-reference">
+  <Card title="API Reference" icon="book" href="/api-reference">
     See the full API spec, endpoint details, and request/response formats.
   </Card>
-  <Card title=“SDKs" icon=“code" href=“/sdk/python">
+  <Card title="SDKs" icon="code" href="/sdk/python">
     View available Python SDK, usage instructions, and code samples.
   </Card>
 </CardGroup>

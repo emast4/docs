@@ -1,20 +1,20 @@
 ---
 title: "TabPFN-2"
-description: "The original open-source foundation model for tabular learning."
+description: "The original open-source foundation model for tabular data."
 ---
 
-TabPFN-2 is the original foundation model for tabular data - the model that introduced zero-shot learning to structured datasets and demonstrated that transformers can outperform traditional ML methods without any training.
+TabPFN-2 is the original foundation model for tabular data.
 
-Published in [Nature (2024)](https://www.nature.com/articles/s41586-024-08328-6), it remains one of the most reproducible and accessible TabPFN models, fully open source and available for commercial use.
+Published in [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6), it delivers state-of-the-art performance for datasets with less than 10000 samples and 500 features & remains one of the most reproducible and accessible TabPFN models, fully open source and available for commercial use.
 
 - **Academic foundation** - First large-scale pretrained transformer for tabular data, establishing the “foundation model" paradigm for structured learning.
 - **Zero-shot accuracy** - Outperforms tuned gradient-boosted trees and AutoML baselines on datasets up to 10 000 samples, predicting in seconds rather than hours.
-- **Compact and efficient** - Runs comfortably on a single GPU such as an NVIDIA P4 or T4; designed for accessibility and reproducibility.
-- **Robust to real-world noise** - Handles missing values, categorical variables, and outliers.
+- **Compact and efficient** - Runs comfortably on a single GPU such as an NVIDIA RTX, P4 or T4; designed for accessibility and reproducibility.
+- **Robust to real-world noise** - Handles missing values, categorical variables, robust to uninformative features and outliers.
 
 ## Architecture
 
-TabPFN-2 introduced the alternating-attention transformer architecture - a design that alternates attention over rows (samples) and features to model both inter-sample and inter-feature dependencies efficiently.
+TabPFN-2 introduced the quadratic attention transformer architecture - a design that alternates attention over rows and columns to model both inter-sample and inter-feature dependencies efficiently.
 
 Key characteristics:
 

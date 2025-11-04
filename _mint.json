@@ -27,10 +27,6 @@
       "url": "mailto:hello@priorlabs.ai"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Try for Free",
-    "url": "https://ux.priorlabs.ai"
-  },
   "anchors": [
     {
       "name": "GitHub",

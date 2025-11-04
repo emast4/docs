@@ -25,7 +25,8 @@
         "tab": "Documentation",
         "menu": [
           { "item": "Home", "page": "overview", "icon": "book-open" },
-          { "item": "Quickstart", "page": "quickstart" }
+          { "item": "Quickstart", "page": "quickstart" },
+          { "item": "FAQ", "page": "faq", "icon": "question-circle" }
         ],
         "groups": [
           {

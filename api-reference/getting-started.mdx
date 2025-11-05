@@ -17,7 +17,7 @@ This guide walks you through how to authenticate, upload your data, and make you
 4. Click **Unmask** to reveal your personal API token, then **copy** it securely.
 
 <Warning>
-Your access token grants full API access to your account. Store it securely and **never share or commit it to version control**.
+  Your access token grants full API access to your account. Store it securely and **never share or commit it to version control**.
 </Warning>
 
 ## 2. Set Up Authentication
@@ -68,14 +68,14 @@ print(f"✅ Model trained: {model_id}")
 The API returns a unique `model_id` - use this ID for subsequent prediction requests.
 
 <Warning>
-**Dataset Size Limits**
+  **Dataset Size Limits**
 
-The Prior Labs API currently has the following limits:
+  The Prior Labs API currently has the following limits:
 
-- **Per Request Limit**: Maximum of 20 million cells per request (e.g., 50K rows × 500400 columns)
-- **Daily Limit**: Total of 100 million cells per day
+  - **Per Request Limit**: Maximum of 20 million cells per request (e.g., 50K rows × 500400 columns)
+  - **Daily Limit**: Total of 100 million cells per day
 
-Plan your data uploads accordingly to stay within these limits.
+  Plan your data uploads accordingly to stay within these limits.
 </Warning>
 
 ## 4. Next Steps
@@ -86,12 +86,11 @@ Refer to the [POST /v1/predict](/api-reference/prediction/run-predictions) endpo
 
 ### Security Reminder
 
-* Keep your access token private and rotate it periodically.
-* All requests are **fully encrypted in transit (TLS 1.2+)**.
-* Prior Labs **does not store or share** your datasets without your consent.
+- Keep your access token private and rotate it periodically.
+- All requests are **fully encrypted in transit (TLS 1.2+)**.
+- Prior Labs **does not store or share** your datasets without your consent.
 
-For questions about authentication, access tokens, or API onboarding, contact us at:
-[hello@priorlabs.ai](mailto:hello@priorlabs.ai)
+For questions about authentication, access tokens, or API onboarding, contact us at: [hello@priorlabs.ai](mailto:hello@priorlabs.ai)
 
 <Card title="FAQ" icon="question-circle" horizontal href="/faq">
   Have questions? Check out the FAQ for answers to common topics about GPUs, limits, API usage, and more.

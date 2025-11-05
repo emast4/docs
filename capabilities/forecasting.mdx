@@ -41,10 +41,15 @@ pred = predictor.predict(train, test)
 
 ## Key Features
 
-- **Point and probabilistic outputs:** Produces accurate mean, median, and quantile forecasts directly from TabPFN’s predictive distribution.
-- **Supports exogenous variables:** Easily integrates external regressors or covariates as additional table columns.
-- **Lightweight model:** Achieves state-of-the-art results with just 11M parameters (40× smaller than some foundation models).
-- **Fast, no-GPU inference:** Works locally or via the `tabpfn-client`, requiring no dedicated hardware.
+-   **Zero-Shot Forecasting**: Generate instant forecasts (such as mean and median) with **no model training required**.
+    
+-   **Probabilistic Forecasting**: Natively produces **quantile forecasts** and **confidence intervals** for robust uncertainty quantification.
+    
+-   **Advanced Data Handling**: Seamlessly integrates **exogenous variables** (external regressors), **multiple time series** and **missing data**, automatically handling temporal patterns like trends and seasonality.
+    
+-   **Lightweight & Fast**: Achieves state-of-the-art results with a highly compact 11M parameter model (40× smaller than some foundation models), enabling rapid inference on a local CPU or via the `tabpfn-client` with **no GPU required**.
+
+
 
 
 <Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/tabpfn-time-series/blob/main/demo.ipynb">

@@ -13,9 +13,12 @@ TabPFN can be used in two ways, depending on your workflow and compute setup. Us
 | Full control, local inference                                                      | Managed infrastructure, no setup                 |
 | Requires GPU, Python and PyTorch                                                   | Only Internet Access Needed, Python not required |
 | Best for research & experimentation                                                | Best for production & teams                      |
-| TabPFN-2.5 available for non-commercial use,<br />TabPFN-2 available for any usage | Commercial use allowed                           |
 
 </div>
+
+<Info>
+Please note that TabPFN-2.5 is available only for **non-commercial use** whereas TabPFN-2 available for any usage.
+</Info>
 
 #### OSS Package
 
@@ -74,7 +77,33 @@ preds = model.predict(X_test)
 
 </CodeGroup>
 
-### Authentification
+**Access TabPFN-2.5**
+
+In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.: 
+```bash
+pip install -U tabpfn-client
+```
+
+If you do this, you'll immediately have access to TabPFN 2.5. Here are some examples:
+
+```python
+# By default use TabPFN-2.5
+model = TabPFNClassifier(n_estimators=4)
+
+# Specify an exact model checkpoint
+model = TabPFNClassifier(n_estimators=4, model_path="v2.5_default")
+
+# Use previous TabPFN-2 model weights
+model = TabPFNClassifier(n_estimators=4, model_path="v2_default")
+```
+
+We also provide a convinience method for listing the available models:
+
+```python
+model.list_available_models()
+```
+
+**Authentification**
 
 To authenticate you can run a prediction, which will prompt you to sign in if needed. To log in programmatically, follow these steps:
 

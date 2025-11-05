@@ -9,7 +9,7 @@ TabPFN extends beyond tabular and regression tasks—it can perform zero-shot ti
 
 ## Getting Started
 
-In the next few minutes, you'll use TabPFN to forecast a time series dataset - no training or GPU required. You'll load data, extract features automatically, and generate both point and probabilistic forecasts.
+The following example shows how to forecast a time series dataset (with no training or GPU required) by loading data, automatically extracting features, and generating both point and probabilistic forecasts.
 
 ```python
 # Import all required components for data handling, feature engineering, and prediction
@@ -43,13 +43,10 @@ pred = predictor.predict(train, test)
 
 ## Key Features
 
--   **Zero-Shot Forecasting**: Generate instant forecasts (such as mean and median) with **no model training required**.
-    
--   **Probabilistic Forecasting**: Natively produces **quantile forecasts** and **confidence intervals** for robust uncertainty quantification.
-    
--   **Advanced Data Handling**: Seamlessly integrates **exogenous variables** (external regressors), **multiple time series** and **missing data**, automatically handling temporal patterns like trends and seasonality.
-    
--   **Lightweight & Fast**: Achieves state-of-the-art results with a highly compact 11M parameter model (40× smaller than some foundation models), enabling rapid inference on a local CPU or via the `tabpfn-client` with **no GPU required**.
+- **Zero-Shot Forecasting**: Generate instant forecasts (such as mean and median) with **no model training required**.
+- **Probabilistic Forecasting**: Natively produces **quantile forecasts** and **confidence intervals** for robust uncertainty quantification.
+- **Advanced Data Handling**: Seamlessly integrates **exogenous variables** (external regressors), **multiple time series** and **missing data**, automatically handling temporal patterns like trends and seasonality.
+- **Lightweight & Fast**: Achieves state-of-the-art results with a highly compact \<20M parameter model (40× smaller than some foundation models), enabling rapid inference on a local CPU or via the `tabpfn-client` with **no GPU required**.
 
 You can find the TabPFN Time Series source code and latest updates on [GitHub](https://github.com/PriorLabs/tabpfn-time-series).
 

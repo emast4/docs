@@ -19,11 +19,13 @@ TabPFN can be used in two ways, depending on your workflow and compute setup. Us
 
 #### OSS Package
 
-**Best for**: researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package for non-commercial use on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the full model locally, giving you complete control over your data and experimentation.
+**Best for**: researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the full model locally, giving you complete control over your data and experimentation.
 
 ```bash
 pip install tabpfn
 ```
+
+Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN)
 
 ```python
 from tabpfn import TabPFNClassifier
@@ -41,6 +43,12 @@ preds = model.predict(X_test)
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning. You can use it either through a REST API or our Python SDK.
 
 #### Using the Python SDK (API Client)
+
+```bash
+pip install tabpfn-client
+```
+
+Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN-client)
 
 <CodeGroup>
 

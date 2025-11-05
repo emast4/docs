@@ -3,7 +3,7 @@ title: "AutoTabPFN Ensembles"
 description: "Learn about AutoTabPFN post-hoc ensembles using AutoGluon."
 ---
 
-This extension leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling. The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers.
+This [extension](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/post_hoc_ensembles) leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling. The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers.
 
 How it works:
 
@@ -53,7 +53,7 @@ print("ROC AUC:", roc_auc_score(y_test, probas[:, 1]), "Accuracy:", accuracy_sco
 
 ### Core Parameters
 
-The interface is `sklearn` compatible and built around two parameter sets: AutoGluon control parameters and TabPFN model parameters.
+The interface is `sklearn` compatible and built around two parameter sets: AutoGluon control parameters and TabPFN model parameters. See the [github](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/post_hoc_ensembles) for more details.
 
 #### AutoGluon Parameters
 

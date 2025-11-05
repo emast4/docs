@@ -21,7 +21,7 @@ Once installed, you can easily combine TabPFN with decision trees or random fore
 
 ### Random Forest
 
-Train a Random Forest where each tree uses TabPFN models at its leaves for adaptive, high-quality predictions.
+Train a Random Forest where each tree uses TabPFN models at its leaves for adaptive predictions via [`RandomForestTabPFNRegressor`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/rf_pfn/sklearn_based_random_forest_tabpfn.py) and [`RandomForestTabPFNClassifier`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/rf_pfn/sklearn_based_random_forest_tabpfn.py).
 
 <CodeGroup>
 
@@ -57,7 +57,7 @@ proba = rf_clf.predict_proba(X_test)
 
 ### Decision Trees
 
-Train standalone Decision Trees that delegate predictions at each leaf (or node) to TabPFN, combining tree interpretability with neural accuracy.
+Train standalone Decision Trees that delegate predictions at each leaf (or node) to TabPFN with [`DecisionTreeTabPFNRegressor`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/rf_pfn/sklearn_based_decision_tree_tabpfn.py) and [`DecisionTreeTabPFNClassifier`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/rf_pfn/sklearn_based_decision_tree_tabpfn.py).
 
 <CodeGroup>
 

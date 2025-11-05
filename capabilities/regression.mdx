@@ -77,12 +77,11 @@ for q, q_pred in zip(quantiles, quantile_predictions):
 
 ## Key Features
 
-- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
 - **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
 - **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
 - **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions - available via our API only.
 - **Minimal preprocessing:** Works directly with raw numerical and categorical data.
-- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
+- **Fast inference:** Predictions complete in seconds, even on mid-range GPUs.
 
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
   TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.

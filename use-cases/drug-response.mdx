@@ -24,7 +24,7 @@ The following table summarizes common data types used when building drug respons
 ### **Robust Performance on Clinical Data Sparsity**
 
 - Handles missing genomic markers and incomplete clinical records natively
-- Zero-shot inference on out-of-distribution patient populations
+- Inference on out-of-distribution patient populations
 - Stable predictions with small cohort sizes (≤10k samples) where traditional ML overfits
 
 ### **Domain Adaptation Through Fine-Tuning**
@@ -35,7 +35,7 @@ The following table summarizes common data types used when building drug respons
 
 ### **Unified Transformer Architecture**
 
-- Single 18-layer alternating attention model handles classification and regression tasks
+- Single model that handles classification and regression tasks
 - Replace ensemble pipelines with one foundation model across prediction workflows
 - Eliminates model selection and hyperparameter optimization overhead
 
@@ -55,9 +55,6 @@ The following table summarizes common data types used when building drug respons
 
 <Accordion title="Can TabPFN work with incomplete patient data?">
   Yes! TabPFN handles missing values and incomplete records automatically, making it practical for real-world clinical settings where complete data isn't always available.
-
-  - Pretrained on synthetic datasets with realistic missing value patterns
-  - Native support for `pd.NA` and mixed data types without imputation pipelines
 </Accordion>
 
 ## Related Use Cases

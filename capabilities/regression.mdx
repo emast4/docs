@@ -37,7 +37,7 @@ print("R²:", r2_score(y_test, preds))
 
 ## Understanding Predictions
 
-The `TabPFNRegressor.predict()` method is powerful and can return different types of predictions based on the `output_type` parameter.
+The `TabPFNRegressor.predict()` method can return different types of predictions based on the `output_type` parameter.
 
 ### Point Predictions (Mean, Median, Mode)
 
@@ -93,12 +93,11 @@ full_outputs = model.predict(X_test, output_type="full")
 
 ## Key Features
 
-- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
-- **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
+- **Training in seconds:** Generates predictions in a single forward pass using the provided context window.
+- **Calibrated uncertainty:** Produces mean, median, or quantile-based predictions for confidence estimation.
 - **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
 - **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
 - **Minimal preprocessing:** Works directly with raw numerical and categorical data.
-- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
   TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.

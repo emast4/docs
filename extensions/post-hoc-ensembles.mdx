@@ -3,9 +3,7 @@ title: "AutoTabPFN Ensembles"
 description: "Learn about AutoTabPFN post-hoc ensembles using AutoGluon."
 ---
 
-This extension leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling, delivering state-of-the-art accuracy on tabular classification and regression tasks - all with minimal configuration.
-
-The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers. By combining TabPFN’s zero-shot modeling with AutoGluon’s ensemble optimization, it produces robust predictions that consistently outperform single-model configurations.
+This extension leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling. The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers.
 
 How it works:
 - Randomly sample configurations from the TabPFN hyperparameter space.
@@ -13,7 +11,7 @@ How it works:
 - Use AutoGluon to evaluate, select, and weight the top-performing models.
 - Combine them into a final, optimized meta-ensemble of TabPFNs.
 
-Result: an automatically tuned ensemble of TabPFN models optimized for your dataset - no manual tuning required.
+Result: an automatically tuned ensemble of TabPFN models optimized for your dataset.
 
 ## Getting Started
 
@@ -52,7 +50,7 @@ print("ROC AUC:", roc_auc_score(y_test, probas[:, 1]), "Accuracy:", accuracy_sco
 
 ### Core Parameters
 
-The interface is scikit-learn compatible and built around two parameter sets: AutoGluon control parameters and TabPFN model parameters.
+The interface is `sklearn` compatible and built around two parameter sets: AutoGluon control parameters and TabPFN model parameters.
 
 #### AutoGluon Parameters
 
@@ -74,6 +72,3 @@ The interface is scikit-learn compatible and built around two parameter sets: Au
 
 - Start small: Try `max_time=30` to quickly explore configurations.
 - Use for accuracy-critical tasks: The ensemble adds compute cost but yields higher precision and calibration.
-- Classification vs Regression: Works seamlessly for both AutoTabPFNClassifier and AutoTabPFNRegressor.
-- Parallelism: AutoGluon handles internal parallel execution - no need for manual threading.
-- Reproducibility: Results are deterministic when a random seed is specified.

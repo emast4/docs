@@ -3,7 +3,7 @@ title: "Embeddings"
 description: "Extract latent feature representations from TabPFN models."
 ---
 
-The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a powerful way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, or meta-learning.
+The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a powerful way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for tasks such as clustering, feature analysis, or meta-learning.
 
 The extension supports both **classification** and **regression** models and offers two embedding extraction modes:
 
@@ -21,8 +21,6 @@ Install the embeddings extension:
 ```bash
 pip install "tabpfn-extensions[embedding]"
 ```
-
-## Example
 
 ### 1. Initialize the Extractor
 
@@ -62,7 +60,7 @@ This produces NumPy arrays containing dense vector representations of each sampl
 
 ### 3. Extract Cross-Validated Embeddings
 
-When `n_fold > 0`, _K_-fold cross-validation is applied following the method described in _“A Closer Look at TabPFN v2: Strength, Limitation, and Extension"_ ([arXiv:2502.17361](https://arxiv.org/abs/2502.17361)).
+When `n_fold > 0`, _K_-fold cross-validation is applied following the method described in _"A Closer Look at TabPFN v2: Strength, Limitation, and Extension"_ ([arXiv:2502.17361](https://arxiv.org/abs/2502.17361)).
 
 Larger values of `n_fold` yield more robust embeddings.
 
@@ -83,12 +81,10 @@ Under the hood, this:
 
 ## Key Features
 
-- Extract embeddings from any **TabPFNClassifier** or **TabPFNRegressor**
 - Supports both **standard training** and **K-fold cross-validation**
 - Embedding quality improves with higher `n_fold` values
 - Works with both **classification** and **regression** tasks
 - Compatible with standard NumPy arrays and scikit-learn datasets
-- Implements a clean, unified API for training and embedding extraction
 
 ## Notes
 

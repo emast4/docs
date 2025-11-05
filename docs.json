@@ -15,33 +15,57 @@
   "navigation": {
     "global": {
       "anchors": [
-        { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
-        { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
-        { "anchor": "Colab Demo", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" }
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/priorlabs/tabpfn",
+          "icon": "github"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://discord.com/invite/VJRuU3bSxt",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Colab Demo",
+          "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb",
+          "icon": "book"
+        }
       ]
     },
     "tabs": [
       {
         "tab": "Documentation",
         "menu": [
-          { "item": "Home", "page": "overview", "icon": "book-open" },
-          { "item": "Quickstart", "page": "quickstart" },
-          { "item": "FAQ", "page": "faq", "icon": "question-circle" }
+          {
+            "item": "Home",
+            "page": "overview",
+            "icon": "book-open"
+          },
+          {
+            "item": "Quickstart",
+            "page": "quickstart"
+          },
+          {
+            "item": "FAQ",
+            "page": "faq",
+            "icon": "question-circle"
+          }
         ],
         "groups": [
           {
             "group": "Getting Started",
             "icon": "rocket",
-            "pages": ["overview", "quickstart"]
+            "pages": [
+              "overview",
+              "quickstart"
+            ]
           },
           {
             "group": "Models",
             "icon": "brain-circuit",
             "expanded": false,
             "pages": [
-              "models/overview",
-              "models/tabpfn-2",
-              "models/tabpfn-ts"
+              "models/overview"
             ]
           },
           {
@@ -121,7 +145,10 @@
   },
   "navbar": {
     "links": [
-      { "label": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md" }
+      {
+        "label": "Changelog",
+        "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md"
+      }
     ],
     "primary": {
       "type": "button",

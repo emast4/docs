@@ -1,19 +1,57 @@
 ---
-title: "Overview"
-description: "Explore all available models and compare their capabilities."
+title: "TabPFN Model Overview"
+description: "Compare the different versions of the TabPFN foundation model, from the original v1 to the latest TabPFN-2.5."
 ---
 
-**TabPFN** foundation models are purpose-built for structured data - delivering classification, regression, and forecasting with SOTA accuracy in seconds.
+The following table summarizes the key differences between the major TabPFN releases. The "Max Rows" and "Max Features" represent the recommended maximum dataset sizes the models were designed and evaluated for.
 
-TabPFN-2.5 is the next generation of the tabular foundation model, TabPFN, designed to push state-of-the-art performance across classification and regression tasks. Detailed documentation and release notes will be available soon.
+| Model           | Max Rows | Max Features | Data Type    | License              | Primary Publication                                                 |
+| :-------------- | :------- | :----------- | :----------- | :------------------- | :------------------------------------------------------------------ |
+| **TabPFN (v1)** | 1,000    | 100          | Numeric Only | Apache 2.0           | [ICLR 2023](https://arxiv.org/abs/2207.01848)                       |
+| **TabPFN-2**    | 10,000   | 500          | Mixed        | Prior Labs License\* | [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6) |
+| **TabPFN-2.5**  | 50,000   | 2,000        | Mixed        | Prior Labs License\* | Documentation available soon                                        |
 
-## Model Versions
+_\*The Prior Labs License is based on Apache 2.0 with an additional attribution requirement._
 
-<CardGroup cols={2}>
-  <Card title="TabPFN-2" href="/models/tabpfn-2">
-    The original foundation model for tabular data - published in Nature (2025). Proven academic benchmark for small-and medium-sized datasets.
-  </Card>
-  <Card title="TabPFN-TS" href="/models/tabpfn-ts">
-    TabPFN adapted for time series forecasting - reframing temporal prediction as tabular regression for fast forecasts.
-  </Card>
-</CardGroup>
+---
+
+## 📜 TabPFN (v1)
+
+- **Publication:** "TabPFN: A Transformer That Solves Small Tabular Classification Problems in a Second" (ICLR 2023)
+- **License:** Apache 2.0
+
+This is the original TabPFN model presented at ICLR 2023. It introduced the concept of a Prior-data Fitted Network, proving that a transformer pre-trained on synthetic data could achieve state-of-the-art results on small tabular datasets in under a second.
+
+**Key Limitations:**
+
+- Designed **only for numerical features**.
+- Strictly limited to datasets with **1,000 samples and 100 features**.
+
+---
+
+## 🔬 TabPFN-2
+
+- **Publication:** "Accurate predictions on small data with a tabular foundation model" (Nature, 2025)
+* **License:** [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
+
+TabPFN-2 is the model published in _Nature_ and represents a significant upgrade over v1. It was re-engineered to handle real-world, "messy" data. It remains a powerful and accessible foundation model for small- to medium-sized datasets.
+
+**Key Features:**
+
+- Handles **mixed data types** (numerical and categorical) and **missing values** automatically.
+- Scales to **10,000 samples and 500 features**.
+- Delivers SOTA performance, often outperforming tuned Gradient-Boosted Trees (GBTs) and AutoML systems on datasets within its size limit.
+
+---
+
+## 🚀 TabPFN-2.5
+
+- **Publication:** Detailed documentation and release notes will be available soon.
+* **License:** Model checkpoint under: [Prior Labs Non Commercial License](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE), code under [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
+
+TabPFN-2.5 is the next generation of the tabular foundation model, designed to push state-of-the-art performance and scale to significantly larger datasets. It expands the in-context learning capabilities of TabPFN to a new class of tabular problems.
+
+**Key Features:**
+
+- Scales to **50,000 samples and 2,000 features**.
+- Continues to support **mixed data types** and requires no preprocessing.

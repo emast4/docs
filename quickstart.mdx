@@ -8,12 +8,12 @@ description: "Get started with TabPFN in minutes."
 TabPFN can be used in two ways - depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, then get our non-commercial OSS package on Hugging Face.
 
 <div className="table-container-dc3e57e5">
-| OSS Package                         | API Access                                       |
-| ----------------------------------- | ------------------------------------------------ |
-| Full control, local inference       | Managed infrastructure, no setup                 |
-| Requires GPU, Python and PyTorch    | Only Internet Access Needed, Python not required |
-| Best for research & experimentation | Best for production & teams                      |
-| TabPFN-2.5 available for non-commercial use, TabPFN-2 available for any usage | No Commercial use allowed                      |
+| OSS Package                                                                   | API Access                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------ |
+| Full control, local inference                                                 | Managed infrastructure, no setup                 |
+| Requires GPU, Python and PyTorch                                              | Only Internet Access Needed, Python not required |
+| Best for research & experimentation                                           | Best for production & teams                      |
+| TabPFN-2.5 available for non-commercial use, TabPFN-2 available for any usage | Commercial use allowed                           |
 
 </div>
 
@@ -40,19 +40,13 @@ preds = model.predict(X_test)
 
 **Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning. You can use it either through a REST API or our Python SDK.
 
-<Warning>
-  You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected. For more information, visit the [API Reference](/api-reference/getting-started).
-</Warning>
-
-#### Using the Python SDK
+#### Using the Python SDK (API Client)
 
 <CodeGroup>
 
 ```python Classification
 import tabpfn_client
 from tabpfn_client import TabPFNClassifier
-# Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
 # Use TabPFN like any scikit-learn model
 model = TabPFNClassifier()
 model.fit(X_train, y_train)
@@ -64,8 +58,6 @@ preds = model.predict(X_test)
 ```python Regression
 import tabpfn_client
 from tabpfn_client import TabPFNRegressor
-# Authenticate using your Prior Labs token
-tabpfn_client.set_access_token("YOUR_API_KEY")
 # Use TabPFN like any scikit-learn model
 model = TabPFNRegressor()
 model.fit(X_train, y_train)
@@ -75,19 +67,25 @@ preds = model.predict(X_test)
 
 </CodeGroup>
 
-After making predictions with a TabPFN model you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a `last_meta` attribute containing this information:
+### Authentification
+
+To authenticate you can simply run a prediction - which will ask you to login if you are not authenticated yet. To programmatically login, follow these steps:
 
 ```python
-# After model.predict():
-meta = model.last_meta
-print(meta)
-# Example output:
-# {‘model_version’: ‘v2’, ‘info’: ’Mi4yLjB8MjAyNS0xMC0zMVQxMjowMTo0My42Mzc3ODcrMDA6MDA=’}
+import tabpfn_client
+token = tabpfn_client.get_access_token()
 ```
 
-This attribute updates each time you `.predict()`.
+and login (on another machine) using your access token, skipping the interactive flow, use:
+```python
+tabpfn_client.set_access_token(token)
+```
 
 #### Using the REST API
+
+<Warning>
+  You must **sign up and generate an API key** before making any requests. Requests without valid authentication headers will be rejected. For more information, visit the [API Reference](/api-reference/getting-started).
+</Warning>
 
 First, define your dataset paths and authentication details. This allows you to reuse them across fit and predict calls.
 

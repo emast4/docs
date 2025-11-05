@@ -146,6 +146,10 @@
       {
         "label": "Changelog",
         "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md"
+      },
+      {
+        "label": "About Us",
+        "href": "https://prior-labs.webflow.io/about"
       }
     ],
     "primary": {

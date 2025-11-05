@@ -6,6 +6,7 @@ description: "Learn about AutoTabPFN post-hoc ensembles using AutoGluon."
 This extension leverages [AutoGluon](https://github.com/autogluon/autogluon) to perform hyperparameter search and ensembling. The AutoTabPFN ensemble extension automatically explores the TabPFN hyperparameter space, trains multiple candidate models, and constructs an optimized weighted ensemble from the best performers.
 
 How it works:
+
 - Randomly sample configurations from the TabPFN hyperparameter space.
 - Train a TabPFN model for each sampled configuration (`n_ensemble_models` total).
 - Use AutoGluon to evaluate, select, and weight the top-performing models.
@@ -23,7 +24,9 @@ To install the extension, include the `post-hoc-ensembles` extension:
 pip install "tabpfn-extensions[post-hoc-ensembles]"
 ```
 
-<Note>This installs all dependencies, including AutoGluon and the TabPFN core library.</Note>
+<Note>
+  This installs all dependencies, including AutoGluon and the TabPFN core library.
+</Note>
 
 ```python
 from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNClassifier
@@ -62,11 +65,11 @@ The interface is `sklearn` compatible and built around two parameter sets: AutoG
 
 #### TabPFN Model Parameters
 
-| Parameter                                               | Description                                                                                                                                                              |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **`n_estimators`**                                      | Number of internal transformers to ensemble within each individual TabPFN model. Increasing this can boost performance at the cost of compute time. `(int, default=16)`  |
-| **`balance_probabilities`**                             | Balances class probabilities for imbalanced datasets. Recommended for skewed classification tasks. `(bool, default=False)`                                               |
-| **`ignore_pretraining_limits`**                         | Bypasses TabPFN’s dataset size and feature limits (10k samples / 500 features). Use with caution - performance beyond these limits may degrade. `(bool, default=False)`  |
+| Parameter                       | Description                                                                                                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`n_estimators`**              | Number of internal transformers to ensemble within each individual TabPFN model. Increasing this can boost performance at the cost of compute time. `(int, default=8)` |
+| **`balance_probabilities`**     | Balances class probabilities for imbalanced datasets. Recommended for skewed classification tasks. `(bool, default=False)`                                             |
+| **`ignore_pretraining_limits`** | Bypasses TabPFN’s dataset size and feature limits (50k samples / 2k features). Use with caution - performance beyond these limits may degrade. `(bool, default=False)` |
 
 ## Best Practices
 

@@ -104,13 +104,13 @@ model = TabPFNClassifier(n_estimators=4, model_path="v2.5_default")
 model = TabPFNClassifier(n_estimators=4, model_path="v2_default")
 ```
 
-We also provide a convinience method for listing the available models:
+We also provide a convenience method for listing the available models:
 
 ```python
 model.list_available_models()
 ```
 
-**Authentification**
+**Authentication**
 
 To authenticate you can run a prediction, which will prompt you to sign in if needed. To log in programmatically, follow these steps:
 
@@ -216,7 +216,7 @@ payload = {
 }
 files = {
     "data": (None, json.dumps(payload), "application/json"),
-    "file": (test_path, open(test_path, "rb")),
+    "dataset_file": (test_path, open(test_path, "rb")),
 }
 predict_response = requests.post(
     "https://api.priorlabs.ai/v1/predict",

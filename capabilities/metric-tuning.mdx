@@ -7,18 +7,17 @@ You can calibrate the `TabPFNClassifier`'s output probabilities or tune the deci
 
 ### Automated Tuning
 
-We allow you to automatically optimize your predictions by specifying the metric you care about (`eval_metric`) and enabling tuning (by specifying a `tuning_config`).
-
-When you call `.fit()`, the classifier will:
+We allow you to automatically optimize your predictions by specifying the metric you care about (`eval_metric`) and enabling tuning (by specifying a `tuning_config`) during initialization. When you call `.fit()`, the classifier will:
 
 1. Automatically split the training data into an internal training and validation set.
 2. Fit on the internal training set and make predictions on the validation set.
 3. Find the optimal prediction settings (like temperature and decision thresholds) that maximize your `eval_metric` on the validation set.
 4. Store these optimal settings and apply them automatically during `.predict()` and `.predict_proba()`.
 
+See below for a full example:
+
 ```python
-# Optimize for F1-score
-# This will automatically calibrate temperature and tune decision thresholds
+# Initialize the model with `eval_metric` and `tuning_config`
 model = TabPFNClassifier(
     eval_metric="f1",
     tuning_config={
@@ -27,7 +26,7 @@ model = TabPFNClassifier(
     }
 )
 
-# .fit() now runs the automated tuning process
+# .fit() runs the automated tuning process
 model.fit(X_train, y_train)
 
 # .predict() and .predict_proba() will use the tuned settings

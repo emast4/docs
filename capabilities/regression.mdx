@@ -3,24 +3,21 @@ title: "Regression"
 description: "Learn about TabPFN's regression capabilities."
 ---
 
+TabPFN can also be applied to regression tasks using the [`TabPFNRegressor`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/regressor.py) class. The regressor is built to make forecasts or predict an output distribution that measures uncertainty.
+
 ## Getting Started
 
-TabPFN can also be applied to regression tasks using the [`TabPFNRegressor`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/regressor.py) class. The regressor is built to make forecasts or predict an output distribution that measures uncertainty.
+The following shows a full example of using the `TabPFNRegressor`:
 
 ```python
 from sklearn.datasets import load_diabetes
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
+from tabpfn import TabPFNRegressor
 
 # Load example dataset
 X, y = load_diabetes(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-```
-
-Next, run inference using TabPFN.
-
-```python
-from tabpfn import TabPFNRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 # Initialize and fit
 model = TabPFNRegressor(device="auto")
@@ -74,10 +71,8 @@ quantile_preds = model.predict(X_test,
 
 For advanced use cases, you can retrieve the full predictive distribution.
 
--   `output_type="main"` returns a dictionary containing the mean, median, mode, and default quantiles.
-    
--   `output_type="full"` returns everything in `"main"` plus the raw logits and criterion object, allowing for custom loss calculations (see the FAQ).
-    
+- `output_type="main"` returns a dictionary containing the mean, median, mode, and default quantiles.
+- `output_type="full"` returns everything in `"main"` plus the raw logits and criterion object, allowing for custom loss calculations (see the FAQ).
 
 ```python
 # Get a dictionary of all main prediction types

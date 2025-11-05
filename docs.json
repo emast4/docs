@@ -43,7 +43,8 @@
           },
           {
             "item": "Quickstart",
-            "page": "quickstart"
+            "page": "quickstart",
+            "icon": "rocket"
           },
           {
             "item": "FAQ",
@@ -87,24 +88,11 @@
           },
           {
             "group": "Use Cases",
-            "icon": "lightbulb",
             "pages": [
-              {
-                "label": "Industrials",
-                "href": "https://prior-labs.webflow.io/industries/industrials"
-              },
-              {
-                "label": "Healthcare",
-                "href": "https://prior-labs.webflow.io/industries/healthcare"
-              },
-              {
-                "label": "Energy",
-                "href": "https://prior-labs.webflow.io/industries/energy"
-              },
-              {
-                "label": "Finance",
-                "href": "https://prior-labs.webflow.io/industries/finance"
-              }
+              "use-cases/industrial",
+              "use-cases/healthcare",
+              "use-cases/energy",
+              "use-cases/finance"
             ]
           }
         ]

@@ -57,15 +57,8 @@
             "icon": "rocket",
             "pages": [
               "overview",
-              "quickstart"
-            ]
-          },
-          {
-            "group": "Models",
-            "icon": "brain-circuit",
-            "expanded": false,
-            "pages": [
-              "models/overview"
+              "quickstart",
+              "models"
             ]
           },
           {

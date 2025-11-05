@@ -70,7 +70,9 @@
               "capabilities/forecasting",
               "capabilities/anomaly-detection",
               "capabilities/data-generation",
-              "capabilities/fine-tuning"
+              "capabilities/fine-tuning",
+              "capabilities/interpretability",
+              "capabilities/embeddings"
             ]
           },
           {
@@ -78,16 +80,9 @@
             "icon": "puzzle-piece",
             "pages": [
               "extensions/post-hoc-ensembles",
-              "extensions/interpretability",
               "extensions/many-class",
-              {
-                "group": "All Extensions",
-                "pages": [
-                  "extensions/hpo",
-                  "extensions/embeddings",
-                  "extensions/rf-pfn"
-                ]
-              }
+              "extensions/hpo",
+              "extensions/rf-pfn"
             ]
           },
           {

@@ -3,9 +3,9 @@ title: "Hyperparameter Optimization"
 description: "Automatic hyperparameter tuning for TabPFN."
 ---
 
-The Hyperparameter Optimization (HPO) extension provides automatic hyperparameter tuning for TabPFN models using Bayesian optimization (via Hyperopt). It finds the optimal configuration for both TabPFN model parameters and inference settings, improving predictive performance across classification and regression tasks.
+The [Hyperparameter Optimization (HPO) Extension](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/hpo) provides automatic hyperparameter tuning for TabPFN models using Bayesian optimization (via [Hyperopt](https://github.com/hyperopt/hyperopt)). It finds the optimal configuration for both TabPFN model parameters and inference settings, improving predictive performance across classification and regression tasks.
 
-TabPFN models don’t require tuning for strong performance. However, for specific datasets, model variants, or evaluation goals, fine-tuning hyperparameters can further improve accuracy, calibration, and robustness. The HPO extension automates this process using a Bayesian search strategy that intelligently explores the parameter space to find the best-performing configuration.
+TabPFN models typically don’t require tuning for strong performance. However, for specific datasets or evaluation goals, fine-tuning hyperparameters can further improve accuracy, calibration, and robustness.
 
 ## Getting Started
 
@@ -15,7 +15,7 @@ Install the `hpo` extension:
 pip install "tabpfn-extensions[hpo]"
 ```
 
-And then automatically tune a TabPFN classifier using Bayesian optimization with just a few lines of code.
+Then, automatically tune a TabPFN classifier using Bayesian optimization with just a few lines of code.
 
 ```python
 from tabpfn_extensions.hpo import TunedTabPFNClassifier
@@ -30,7 +30,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 tuned_clf = TunedTabPFNClassifier(
     n_trials=50,                       # Number of configurations to explore
     metric="accuracy",                 # Metric to optimize
-    categorical_feature_indices=[0, 2],# Categorical feature columns
     random_state=42                    # Ensures reproducibility
 )
 
@@ -56,7 +55,7 @@ y_pred = tuned_clf.predict(X_test)
 
 | Model                       | Description                                                                      |
 | --------------------------- | -------------------------------------------------------------------------------- |
-| **`TunedTabPFNClassifier`** | TabPFN classifier with automatic hyperparameter tuning and categorical handling. |
+| **`TunedTabPFNClassifier`** | TabPFN classifier with automatic hyperparameter tuning for classification tasks. |
 | **`TunedTabPFNRegressor`**  | TabPFN regressor with automatic tuning for continuous prediction tasks.          |
 
 ## How it Works
@@ -76,6 +75,5 @@ Each run is fully reproducible, with built-in logging and random seed control.
 
 - Optimized search spaces for classification and regression tasks
 - Support for multiple evaluation metrics - _accuracy_, _ROC-AUC_, _F1_, _RMSE_, _MAE_
-- Proper handling of categorical features via automatic encoding
 - Built-in validation and stratification for reliable performance estimation
-- Configurable search algorithms - TPE (Bayesian) or Random Search
+- Configurable search algorithms - TPE (Bayesian, the default) or Random Search

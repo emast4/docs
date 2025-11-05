@@ -23,13 +23,6 @@ pip install "tabpfn-extensions[interpretability]"
 
 Then, use SHAP with any trained TabPFN model:
 
-<iframe 
-  frameBorder="0" 
-  scrolling="no" 
-  allow="clipboard-write" 
-  style={{ width: '100%', height: '772px' }} 
-  src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FPriorLabs%2Ftabpfn-extensions%2Fblob%2Fmain%2Fexamples%2Finterpretability%2Fshap_example.py&style=github&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on">
-</iframe>
 ```python
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
@@ -70,9 +63,6 @@ fig = interpretability.shap.plot_shap(shap_values)
 | **`get_shap_values`** | Calculates SHAP values for the provided model and data subset. |
 | **`plot_shap`** | Generates an interactive visualization showing feature contributions for each prediction. |
 
-## Advanced Use Cases
-
-- **Per-sample explainability**: inspect individual predictions to see why the model produced a specific output.
-- **Global interpretability**: aggregate SHAP values across samples to rank features by importance.
-- **Feature interaction analysis**: identify features that amplify or offset contributions.
-- **Model comparison**: use SHAP to compare explanations between TabPFN variants.
+<Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#interpretability">
+  Check out our Google Colab for a demo.
+</Card>

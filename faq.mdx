@@ -5,7 +5,7 @@ title: "FAQ"
 Whether you’re just getting started with TabPFN or pushing it into production, this FAQ highlights practical answers to common questions about model limits, performance, reproducibility, and API best practices.
 
 <Accordion title="What GPUs does TabPFN require at minimum?">
-  At minimum, TabPFN requires an NVIDIA T4 GPU to run efficiently. For best performance, we recommend A100 or H100 GPUs. CPU and MPS (Apple Silicon) execution are supported for experimentation, but GPUs provide the best throughput for production workloads and larger tables.
+  At minimum, TabPFN requires an NVIDIA T4 GPU to run efficiently. For best performance, we recommend A100 or H100 GPUs. CPU and MPS (Apple Silicon) execution are supported experimentally, but GPUs provide the best throughput for production workloads and larger tables.
 </Accordion>
 
 <Accordion title="What are TabPFN’s practical limits for context size and features?">
@@ -18,29 +18,11 @@ Whether you’re just getting started with TabPFN or pushing it into production,
 </Accordion>
 
 <Accordion title="How are text features handled?">
-  Our API automatically detects text features and includes their semantic meaning into our prediction. The local package version encodes text as numerical categories and does not include semantic meaning.
+  In the local package version text features are encoded as categoricals without considering their semantic meaning. Our API automatically detects text features and includes their semantic meaning into our prediction. The local package version encodes text as numerical categories and does not include semantic meaning.
 </Accordion>
 
-<Accordion title="What are the API rate limits?">
-  The current API rate limits are **100 million cells** per day, where a “cell” is computed as:
-
-  ```python
-  api_cost = max((num_train_rows + num_test_rows) * num_cols * n_estimators, 5000)
-  ```
-
-  These limits automatically reset every 24 hours. If you require further credits, please fill out this [form](https://forms.gle/2xbHnkxbpb7BtpE47).
-</Accordion>
-
-<Accordion title="How do I know which TabPFN model version am I using?">
-  After making predictions with a TabPFN model you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a .last_meta attribute containing this information:
-
-  ```python
-  # After model.predict():
-  meta = model.last_meta
-  print(meta)
-  # Example output:
-  # {‘model_version’: ‘v2’, ‘info’: ’Mi4yLjB8MjAyNS0xMC0zMVQxMjowMTo0My42Mzc3ODcrMDA6MDA=’}
-  ```
+<Accordion title="How are date features handled?">
+  In the local package version date features are encoded as categoricals without considering their semantic meaning. Our API automatically detects date features and creates an optimized embedding.
 </Accordion>
 
 <Accordion title="How reproducible are TabPFN results across runs and devices?">
@@ -53,4 +35,26 @@ Whether you’re just getting started with TabPFN or pushing it into production,
 
 <Accordion title="My run is ”slow” on thousands of rows - what controls the fit/predict trade-off?">
   By default TabPFN performs most of its fitting inside the predict() step (that’s how it simulates Bayesian posterior inference). That means latency scales roughly with the number of training rows. For fast inference we can create a tree- or small MLP based model that yields almost the same accuracy as TabPFN. Contact [sales@priorlabs.ai](mailto:sales@priorlabs.ai) to access this solution.
+</Accordion>
+
+<Accordion title="What are the API rate limits?">
+  The current API rate limits are **100 million cells** per day, where a “cell” is computed as:
+
+  ```python
+  api_cost = max((num_train_rows + num_test_rows) * num_cols * n_estimators, 5000)
+  ```
+
+  These limits automatically reset every 24 hours. If you require further credits, please fill out this [form](https://forms.gle/2xbHnkxbpb7BtpE47).
+</Accordion>
+
+<Accordion title="How do I know which TabPFN model version am I using in the TabPFN API Client?">
+  After making predictions with a TabPFN model using the client you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a .last_meta attribute containing this information:
+
+  ```python
+  # After model.predict():
+  meta = model.last_meta
+  print(meta)
+  # Example output:
+  # {‘model_version’: ‘v2’, ‘info’: ’Mi4yLjB8MjAyNS0xMC0zMVQxMjowMTo0My42Mzc3ODcrMDA6MDA=’}
+  ```
 </Accordion>

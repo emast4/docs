@@ -46,5 +46,5 @@ We welcome contributions to improve the Prior Labs documentation!
 
 ## Contact
 
-For questions or support, reach us at **[hello@priorlabs.ai](mailto:support@priorlabs.ai)** or via our official [Discord server](https://discord.com/invite/VJRuU3bSxt). 
+For questions or support, reach us at **[hello@priorlabs.ai](mailto:hello@priorlabs.ai)** or via our official [Discord server](https://discord.com/invite/VJRuU3bSxt).
 Learn more at [priorlabs.ai](https://priorlabs.ai).

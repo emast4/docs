@@ -3,21 +3,18 @@ title: "RF-PFN"
 description: "Hybrid Decision Trees and Random Forests for TabPFN"
 ---
 
-Hybrid Decision Trees and Random Forests that delegate leaf (or node) predictions to TabPFN models for strong tabular performance while keeping tree structure and interpretability.
+The [RF-PFN Extension](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/rf_pfn) can be when you want the structure and interpretability of decision trees or random forests combined with the high predictive power of TabPFN on tabular data-especially for tasks where standard tree models underperform but full neural networks are too opaque or data-hungry.
 
-Use RF-PFN when you want the structure of decision trees or random forests combined with the high predictive power of TabPFN on tabular data-especially for tasks where standard tree models underperform but full neural networks are too opaque or data-hungry.
+What is RF-PFN?
 
-Why RF-PFN?
 - Uses `scikit-learn` tree splits, but fits TabPFN models at each node or leaf.
 - Optionally prunes or refits nodes using validation-based performance checks.
-- Averages logits or probabilities across nodes and trees with built-in fallbacks.
-- Works seamlessly with `allow_nan`, `sample_weight`, and estimator tags.
+- Works with the typical parameters for tree-based methods.
 
 ## Getting Started
 
-Here’s a quick example showing how to build an AutoTabPFN ensemble for classification using the RF-PFN extension.
-
 To install the extension, include the `rf-pfn` extra:
+
 ```bash
 pip install "tabpfn-extensions[rf-pfn]"
 ```
@@ -29,41 +26,35 @@ Once installed, you can easily combine TabPFN with decision trees or random fore
 Train a Random Forest where each tree uses TabPFN models at its leaves for adaptive, high-quality predictions.
 
 <CodeGroup>
-```python title="Regression"
+
+```python Regression
 from tabpfn import TabPFNRegressor
 from tabpfn_extensions.rf_pfn import RandomForestTabPFNRegressor
 
 reg = TabPFNRegressor()
 
-rf_reg = RandomForestTabPFNRegressor(
-    tabpfn=reg,
-    n_estimators=8,
-    max_depth=5,
-    bootstrap=True,
-    adaptive_tree=True,
-    rf_average_logits=False,  # regression uses raw averages
-)
+# Simply wrap the base TabPFN estimator with the RF extension
+rf_reg = RandomForestTabPFNRegressor(tabpfn=reg)
+
 rf_reg.fit(X_train, y_train)
 y_hat = rf_reg.predict(X_test)
 ```
 
-```python title="Classification"
+
+```python Classification
 from tabpfn import TabPFNClassifier
 from tabpfn_extensions.rf_pfn import RandomForestTabPFNClassifier
 
 clf = TabPFNClassifier()
 
-rf_timeboxed = RandomForestTabPFNClassifier(
-    tabpfn=clf,
-    n_estimators=8,
-    max_depth=5,
-    rf_average_logits=True,
-    dt_average_logits=True,
-    max_predict_time=2,  # seconds - early stops averaging if exceeded
-)
-rf_timeboxed.fit(X, y)
-pred = rf_timeboxed.predict(X[:10])
+# Simply wrap the base TabPFN estimator with the RF extension
+rf_clf = RandomForestTabPFNClassifier(tabpfn=clf)
+
+rf_clf.fit(X, y)
+pred = rf_clf.predict(X_test)
+proba = rf_clf.predict_proba(X_test)
 ```
+
 </CodeGroup>
 
 ### Decision Trees
@@ -71,68 +62,63 @@ pred = rf_timeboxed.predict(X[:10])
 Train standalone Decision Trees that delegate predictions at each leaf (or node) to TabPFN, combining tree interpretability with neural accuracy.
 
 <CodeGroup>
-```python title="Regression"
+
+```python Regression
 from tabpfn import TabPFNRegressor
 from tabpfn_extensions.rf_pfn import DecisionTreeTabPFNRegressor
 
 reg = TabPFNRegressor()
 
-dt_reg = DecisionTreeTabPFNRegressor(
-    tabpfn=reg,
-    max_depth=5,
-    min_samples_split=1000,
-    adaptive_tree=True,
-)
+# Simply wrap the base TabPFN estimator with the RF extension
+dt_reg = DecisionTreeTabPFNRegressor(tabpfn=reg)
+
 dt_reg.fit(X_train, y_train)
 y_hat = dt_reg.predict(X_test)
 ```
 
-```python title="Classification"
+
+```python Classification
 from tabpfn import TabPFNClassifier
 from tabpfn_extensions.rf_pfn import DecisionTreeTabPFNClassifier
 
 clf = TabPFNClassifier()
 
-dt_clf = DecisionTreeTabPFNClassifier(
-    tabpfn=clf,
-    max_depth=4,
-    min_samples_split=1000,
-    fit_nodes=True,
-    adaptive_tree=True,
-    average_logits=True,  # combine predictions via logits
-)
+# Simply wrap the base TabPFN estimator with the RF extension
+dt_clf = DecisionTreeTabPFNClassifier(tabpfn=clf)
+
 dt_clf.fit(X_train, y_train)
 pred = dt_clf.predict(X_test)
 proba = dt_clf.predict_proba(X_test)
 ```
+
 </CodeGroup>
 
 ### Core Parameters
 
+The following only lists the core parameters. For more details see the [rf_pfn](https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/rf_pfn) extension in github.
+
 #### Random Forest
 
-| Param               | Meaning (per code)                                                 | Default                   |
-| ------------------- | ------------------------------------------------------------------ | ------------------------- |
-| `tabpfn`            | Required TabPFN model                                              | -                         |
-| `n_estimators`      | Number of trees                                                    | cls: `100`, reg: `16`     |
-| `max_depth`         | Tree depth (per base DT)                                           | cls: `5`, reg: `5`        |
-| `bootstrap`         | Bootstrap samples when fitting trees                               | `True`                    |
-| `rf_average_logits` | Classifier: average logits across trees                            | cls: `True`, reg: `False` |
-| `max_predict_time`  | Stop averaging once time exceeded (seconds)                        | cls: `60`, reg: `-1`      |
-| `min_samples_split` | Split threshold per DT                                             | cls: `1000`, reg: `300`   |
-| `min_samples_leaf`  | Min samples per leaf                                               | `5`                       |
-| `max_features`      | Features considered at split                                       | `"sqrt"`                  |
+| Param                             | Meaning (per code)                          | Default                   |
+| --------------------------------- | ------------------------------------------- | ------------------------- |
+| `tabpfn`                          | Required TabPFN model                       | -                         |
+| `max_depth`                       | Tree depth (per base DT)                    | cls: `5`, reg: `5`        |
+| `bootstrap`                       | Bootstrap samples when fitting trees        | `True`                    |
+| `rf_average_logits`               | Classifier: average logits across trees     | cls: `True`, reg: `False` |
+| `dt_average_logits`               | Classifier: average logits _within_ trees   | `True`                    |
+| `max_predict_time`                | Stop averaging once time exceeded (seconds) | cls: `60`, reg: `-1`      |
+| `min_samples_split`               | Split threshold per DT                      | cls: `1000`, reg: `300`   |
+| `min_samples_leaf`                | Min samples per leaf                        | `5`                       |
+| `max_features`                    | Features considered at split                | `"sqrt"`                  |
+| `fit_nodes`                       | Fit TabPFN at internal nodes                | `True`                    |
 
 #### Decision Trees
 
-| Param                             | Meaning (per code)                                           | Default                             |
-| --------------------------------- | ------------------------------------------------------------ | ----------------------------------- |
-| `tabpfn`                          | Required TabPFN model                                        | -                                   |
-| `max_depth`                       | Max depth                                                    | `None` (DT base)                    |
-| `fit_nodes`                       | Fit TabPFN at internal nodes                                 | `True`                              |
-| `adaptive_tree`                   | Enable holdout-based node update/pruning                     | `True`                              |
-| `adaptive_tree_test_size`         | Validation split fraction                                    | `0.2`                               |
-| `adaptive_tree_min_train_samples` | Min train samples per node                                   | clf: `50`, reg: `50`                |
-| `adaptive_tree_max_train_samples` | Max train samples per node (non-leaf)                        | `2000`                              |
-| `average_logits`                  | Classifier node-level averaging in logits                    | `True` (clf)                        |
-
+| Param                             | Meaning (per code)                        | Default               |
+| --------------------------------- | ----------------------------------------- | --------------------- |
+| `tabpfn`                          | Required TabPFN model                     | -                     |
+| `max_depth`                       | Max depth                                 | `None` (unlimited)    |
+| `min_samples_split`               | Split threshold per DT                    | `1000`                |
+| `min_samples_leaf`                | Min samples per leaf                      | `1`                   |
+| `max_features`                    | Features considered at split              | `None` (all features) |
+| `fit_nodes`                       | Fit TabPFN at internal nodes              | `True`                |

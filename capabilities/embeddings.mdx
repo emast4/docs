@@ -3,15 +3,15 @@ title: "Embeddings"
 description: "Extract latent feature representations from TabPFN models."
 ---
 
-The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a powerful way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, search, or meta-learning.
+The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, search, or meta-learning.
 
-The extension supports both **classification** and **regression** models and offers two embedding extraction modes:
+The extension offers two embedding extraction modes:
 
 - **Vanilla embeddings** - trained on the full dataset
-- **Cross-validated embeddings** - extracted via _K_-fold cross-validation for improved generalization
+- **Cross-validated embeddings** - extracted via _K_-fold cross-validation
 
 <Warning>
-  The embeddings extension is not compatible with the lightweight `tabpfn-client` package since the client does not expose internal model representations.
+  The embeddings extension is not compatible with the `tabpfn-client` package since the client does not expose internal model representations yet.
 </Warning>
 
 ## Getting Started
@@ -81,10 +81,6 @@ Under the hood, this:
 3. Extracts embeddings from the validation partition of each fold
 4. Concatenates all fold embeddings into a unified matrix
 
-## Notes
-
-- When `n_fold >= 2`, embeddings from all folds are concatenated along the feature axis.
-
-<Card title="GitHub Code" icon="book" horizontal href="https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/embedding">
-  Check out our official embeddings GitHub page for more details.
+<Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#interpretability">
+  Check out our Google Colab for a demo.
 </Card>

@@ -15,33 +15,50 @@
   "navigation": {
     "global": {
       "anchors": [
-        { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
-        { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
-        { "anchor": "Colab Demo", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" }
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/priorlabs/tabpfn",
+          "icon": "github"
+        },
+        {
+          "anchor": "Community",
+          "href": "https://discord.com/invite/VJRuU3bSxt",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Colab Demo",
+          "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb",
+          "icon": "book"
+        }
       ]
     },
     "tabs": [
       {
         "tab": "Documentation",
         "menu": [
-          { "item": "Home", "page": "overview", "icon": "book-open" },
-          { "item": "Quickstart", "page": "quickstart" },
-          { "item": "FAQ", "page": "faq", "icon": "question-circle" }
+          {
+            "item": "Home",
+            "page": "overview",
+            "icon": "book-open"
+          },
+          {
+            "item": "Quickstart",
+            "page": "quickstart"
+          },
+          {
+            "item": "FAQ",
+            "page": "faq",
+            "icon": "question-circle"
+          }
         ],
         "groups": [
           {
             "group": "Getting Started",
             "icon": "rocket",
-            "pages": ["overview", "quickstart"]
-          },
-          {
-            "group": "Models",
-            "icon": "brain-circuit",
-            "expanded": false,
             "pages": [
-              "models/overview",
-              "models/tabpfn-2",
-              "models/tabpfn-ts"
+              "overview",
+              "quickstart",
+              "models"
             ]
           },
           {
@@ -53,7 +70,9 @@
               "capabilities/forecasting",
               "capabilities/anomaly-detection",
               "capabilities/data-generation",
-              "capabilities/fine-tuning"
+              "capabilities/fine-tuning",
+              "capabilities/interpretability",
+              "capabilities/embeddings"
             ]
           },
           {
@@ -61,26 +80,31 @@
             "icon": "puzzle-piece",
             "pages": [
               "extensions/post-hoc-ensembles",
-              "extensions/interpretability",
               "extensions/many-class",
-              {
-                "group": "All Extensions",
-                "pages": [
-                  "extensions/hpo",
-                  "extensions/embeddings",
-                  "extensions/rf-pfn"
-                ]
-              }
+              "extensions/hpo",
+              "extensions/rf-pfn"
             ]
           },
           {
             "group": "Use Cases",
             "icon": "lightbulb",
             "pages": [
-              "use-cases/anomaly-detection",
-              "use-cases/credit-fraud",
-              "use-cases/customer-churn",
-              "use-cases/drug-response"
+              {
+                "label": "Industrials",
+                "href": "https://prior-labs.webflow.io/industries/industrials"
+              },
+              {
+                "label": "Healthcare",
+                "href": "https://prior-labs.webflow.io/industries/healthcare"
+              },
+              {
+                "label": "Energy",
+                "href": "https://prior-labs.webflow.io/industries/energy"
+              },
+              {
+                "label": "Finance",
+                "href": "https://prior-labs.webflow.io/industries/finance"
+              }
             ]
           }
         ]
@@ -121,7 +145,10 @@
   },
   "navbar": {
     "links": [
-      { "label": "Changelog", "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md" }
+      {
+        "label": "Changelog",
+        "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md"
+      }
     ],
     "primary": {
       "type": "button",

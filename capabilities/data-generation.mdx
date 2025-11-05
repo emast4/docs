@@ -1,11 +1,13 @@
 ---
 title: "Data Generation"
-description: "Generate realistic synthetic tabular data with TabPFN."
+description: "Generate realistic synthetic tabular data with TabPFN in seconds."
 ---
 
 The Data Generation capability extends TabPFN’s unsupervised modeling system to create realistic synthetic tabular datasets. By modeling feature dependencies and joint probability distributions, TabPFN can generate new samples that follow the same statistical structure as your original data - useful for augmentation, simulation, and masking sensitive data.
 
 ## Getting Started
+
+![Data generation example](/public/datagen.png)
 
 The unsupervised module in `tabpfn-extensions` provides built-in support for synthetic data generation through the `TabPFNUnsupervisedModel`.
 
@@ -63,7 +65,9 @@ The data generation process leverages the same probabilistic modeling used in Ta
 ## Use Cases
 
 Synthetic data generation can be applied across a range of research and engineering tasks:
-
 - Data augmentation - expand limited datasets for training or validation.
 - Privacy-preserving analytics - create realistic datasets without exposing sensitive information.
-- Feature analysis - study relationships between attributes by sampling under different conditions.
+
+<Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#unsupervised-learning">
+  Check out our Google Colab for a demo.
+</Card>

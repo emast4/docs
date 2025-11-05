@@ -64,8 +64,15 @@ print("R²:", r2_score(y_test, preds))
 #### Quantile Regression
 
 ```python
-# Get predictions for specific quantiles
-quantiles = regressor.predict_quantiles(X, quantiles=[0.1, 0.5, 0.9])
+# Predict quantiles
+quantiles = [0.25, 0.5, 0.75]
+quantile_predictions = reg.predict(
+    X_test,
+    output_type="quantiles",
+    quantiles=quantiles,
+)
+for q, q_pred in zip(quantiles, quantile_predictions):
+    print(f"Quantile {q} MAE:", mean_absolute_error(y_test, q_pred))
 ```
 
 ## Key Features

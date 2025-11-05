@@ -9,7 +9,7 @@
   },
   "fonts": {
     "heading": {
-      "family": "DM Sans",
+      "family": "Inter",
       "weight": 700
     },
     "body": {

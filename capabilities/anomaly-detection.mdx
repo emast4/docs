@@ -31,7 +31,8 @@ In the next few minutes, you'll use TabPFN to detect anomalies in a dataset - no
 ```python
 import torch
 from sklearn.datasets import load_breast_cancer
-from tabpfn_extensions import unsupervised
+from tabpfn import TabPFNClassifier, TabPFNRegressor
+from tabpfn_extensions.unsupervised import TabPFNUnsupervisedModel
 
 # Load dataset
 df = load_breast_cancer(return_X_y=False)
@@ -39,13 +40,15 @@ X = df["data"]
 attribute_names = df["feature_names"]
 
 # Initialize models
-clf = unsupervised.TabPFNClassifier(n_estimators=4)
-reg = unsupervised.TabPFNRegressor(n_estimators=4)
-model_unsupervised = unsupervised.TabPFNUnsupervisedModel(
+clf = TabPFNClassifier(n_estimators=4)
+reg = TabPFNRegressor(n_estimators=4)
+model_unsupervised = TabPFNUnsupervisedModel(
     tabpfn_clf=clf, tabpfn_reg=reg
 )
 
 # Compute anomaly scores
+model_unsupervised.fit(X)
+
 scores = model_unsupervised.outliers(
     torch.tensor(X, dtype=torch.float32),
     n_permutations=10,

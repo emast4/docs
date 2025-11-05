@@ -67,7 +67,7 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 </CodeGroup>
-After making predictions with a TabPFN model you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a `.last_meta` attribute containing this information:
+After making predictions with a TabPFN model you can access model-level metadata, such as the exact model version used for inference. Each estimator exposes a `last_meta` attribute containing this information:
 ```python
 # After model.predict():
 meta = model.last_meta

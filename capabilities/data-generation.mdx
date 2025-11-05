@@ -17,7 +17,7 @@ pip install "tabpfn-extensions[unsupervised]"
 
 ```python
 from tabpfn_extensions import unsupervised
-from tabpfn_extensions.unsupervised import experiments
+from tabpfn_extensions.unsupervised.experiments import GenerateSyntheticDataExperiment
 from sklearn.datasets import load_breast_cancer
 import torch
 from tabpfn_extensions import TabPFNClassifier, TabPFNRegressor
@@ -38,7 +38,7 @@ model_unsupervised = unsupervised.TabPFNUnsupervisedModel(
 feature_indices = [4, 6, 12]
 
 # Run synthetic data generation experiment
-experiment = unsupervised.experiments.GenerateSyntheticDataExperiment(
+experiment = GenerateSyntheticDataExperiment(
     task_type="unsupervised"
 )
 

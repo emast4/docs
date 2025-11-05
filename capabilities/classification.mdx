@@ -67,25 +67,6 @@ predictions = classifier.predict(X_test)
   `fit_with_cache` retains preprocessing and significantly speeds up repeated predictions.
 </Accordion>
 
-<Accordion title="How does TabPFN handle missing values?">
-  `TabPFNClassifier` now supports native handling of missing values `pd.NA`. Older versions required manual preprocessing, but the current release integrates this automatically.
-
-  We recommend upgrading to the latest version:
-
-  ```bash
-  pip install -U tabpfn
-  ```
-</Accordion>
-
-<Accordion title="Why is my classifier moving back to CPU after training or prediction?">
-  After each inference, TabPFN’s inference engine automatically moves back to CPU to free GPU memory. While this conserves resources, it slows down repeated predictions and can confuse users expecting persistent GPU behavior.
-
-  ```python
-  # Keeps model on GPU or MPS between predictions
-  estimator.executor_.model = estimator.executor_.model.to("cuda")
-  ```
-</Accordion>
-
 ## Related Extensions
 
 <CardGroup cols={2}>

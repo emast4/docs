@@ -11,7 +11,7 @@ The Interpretability Extension adds SHAP (SHapley Additive exPlanations) support
 
 **Shapley Values**
 
-SHAP values explain a single prediction by attributing the prediction’s deviation from the baseline (mean prediction) to individual features. They provide a consistent, game-theoretic measure of feature influence. Mathematically, each SHAP value represents the marginal contribution of a feature across all possible feature combinations.
+SHAP values explain a single prediction by attributing the prediction's deviation from the baseline (mean prediction) to individual features. They provide a consistent, game-theoretic measure of feature influence. Mathematically, each SHAP value represents the marginal contribution of a feature across all possible feature combinations.
 
 ## Getting Started
 
@@ -23,33 +23,41 @@ pip install "tabpfn-extensions[interpretability]"
 
 Then, use SHAP with any trained TabPFN model:
 
+<iframe 
+  frameBorder="0" 
+  scrolling="no" 
+  allow="clipboard-write" 
+  style={{ width: '100%', height: '772px' }} 
+  src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FPriorLabs%2Ftabpfn-extensions%2Fblob%2Fmain%2Fexamples%2Finterpretability%2Fshap_example.py&style=github&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on">
+</iframe>
 ```python
-from tabpfn import TabPFNClassifier
-from tabpfn_extensions import interpretability
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 
-# Load dataset
+from tabpfn_extensions import TabPFNClassifier, interpretability
+
+# Load example dataset
 data = load_breast_cancer()
 X, y = data.data, data.target
 feature_names = data.feature_names
+n_samples = 50
 
-# Train/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
 
-# Train TabPFN model
+# Initialize and train model
 clf = TabPFNClassifier()
 clf.fit(X_train, y_train)
 
-# Compute SHAP values for the first 50 samples
+# Calculate SHAP values
 shap_values = interpretability.shap.get_shap_values(
     estimator=clf,
-    test_x=X_test[:50],
+    test_x=X_test[:n_samples],
     attribute_names=feature_names,
     algorithm="permutation",
 )
 
-# Visualize feature contributions
+# Create visualization
 fig = interpretability.shap.plot_shap(shap_values)
 ```
 
@@ -57,10 +65,10 @@ fig = interpretability.shap.plot_shap(shap_values)
 
 ### Core Functions
 
-| Function                                                             | Description                                |
-| -------------------------------------------------------------------- | ------------------------------------------ |
-| **`get_shap_values`** | Calculates SHAP values for the provided model and data subset.                            |
-| **`plot_shap`**       | Generates an interactive visualization showing feature contributions for each prediction. |
+| Function | Description |
+| -------- | ----------- |
+| **`get_shap_values`** | Calculates SHAP values for the provided model and data subset. |
+| **`plot_shap`** | Generates an interactive visualization showing feature contributions for each prediction. |
 
 ## Advanced Use Cases
 

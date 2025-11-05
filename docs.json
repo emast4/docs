@@ -17,7 +17,7 @@
       "anchors": [
         { "anchor": "GitHub", "href": "https://github.com/priorlabs/tabpfn", "icon": "github" },
         { "anchor": "Community", "href": "https://discord.com/invite/VJRuU3bSxt", "icon": "discord" },
-        { "anchor": "Cookbooks", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" }
+        { "anchor": "Colab Demo", "href": "https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb", "icon": "book" }
       ]
     },
     "tabs": [

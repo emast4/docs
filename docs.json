@@ -89,7 +89,6 @@
             "group": "Use Cases",
             "icon": "lightbulb",
             "pages": [
-              "use-cases/anomaly-detection",
               "use-cases/credit-fraud",
               "use-cases/customer-churn",
               "use-cases/drug-response"

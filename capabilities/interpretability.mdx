@@ -4,6 +4,7 @@ description: "Explain TabPFN predictions with SHAP values and feature selection.
 ---
 
 The Interpretability Extension adds SHAP (SHapley Additive exPlanations) support to quantify the contribution of each input feature to an individual prediction. Why it matters:
+
 - See which features drive model predictions.
 - Compare feature importance across samples.
 - Debug unexpected model behavior.
@@ -13,8 +14,15 @@ The Interpretability Extension adds SHAP (SHapley Additive exPlanations) support
 
 SHAP values explain a single prediction by attributing the prediction's deviation from the baseline (mean prediction) to individual features. They provide a consistent, game-theoretic measure of feature influence. Mathematically, each SHAP value represents the marginal contribution of a feature across all possible feature combinations.
 
-![Data generation example](/public/shap-1.png)
-![Data generation example](/public/shap-2.png)
+<img
+  src="/public/shap-1.png"
+  alt="Data generation example"
+  style={{ width:"45%" }}
+/> <img
+  src="/public/shap-2.png"
+  alt="Data generation example"
+  style={{ width:"45%" }}
+/>
 
 ## Getting Started
 
@@ -57,14 +65,16 @@ shap_values = interpretability.shap.get_shap_values(
 fig = interpretability.shap.plot_shap(shap_values)
 ```
 
-<Note>SHAP values can be calculated for both classification and regression tasks. The extension supports CPU and GPU execution transparently.</Note>
+<Note>
+  SHAP values can be calculated for both classification and regression tasks. The extension supports CPU and GPU execution transparently.
+</Note>
 
 ### Core Functions
 
-| Function | Description |
-| -------- | ----------- |
-| **`get_shap_values`** | Calculates SHAP values for the provided model and data subset. |
-| **`plot_shap`** | Generates an interactive visualization showing feature contributions for each prediction. |
+| Function              | Description                                                                               |
+| --------------------- | ----------------------------------------------------------------------------------------- |
+| **`get_shap_values`** | Calculates SHAP values for the provided model and data subset.                            |
+| **`plot_shap`**       | Generates an interactive visualization showing feature contributions for each prediction. |
 
 <Card title="Google Colab Example" icon="book" horizontal href="https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb#interpretability">
   Check out our Google Colab for a demo.

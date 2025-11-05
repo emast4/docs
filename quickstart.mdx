@@ -30,6 +30,9 @@ pip install tabpfn
 
 Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN)
 
+Use the [`TabPFNClassifier`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) just like any scikit-learn estimator:
+
+
 ```python
 from tabpfn import TabPFNClassifier
 model = TabPFNClassifier()
@@ -53,6 +56,8 @@ pip install tabpfn-client
 
 Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN-client)
 
+Instantiate the hosted [`tabpfn_client.TabPFNClassifier`](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) for API-backed predictions:
+
 <CodeGroup>
 
 ```python Classification
@@ -64,6 +69,8 @@ model.fit(X_train, y_train)
 # Get predictions
 preds = model.predict(X_test)
 ```
+
+Similarly, the [`tabpfn_client.TabPFNRegressor`](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) mirrors the regression interface:
 
 
 ```python Regression

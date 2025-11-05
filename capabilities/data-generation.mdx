@@ -5,17 +5,17 @@ description: "Generate realistic synthetic tabular data with TabPFN in seconds."
 
 The Data Generation capability extends TabPFN’s unsupervised modeling system to create realistic synthetic tabular datasets. By modeling feature dependencies and joint probability distributions, TabPFN can generate new samples that follow the same statistical structure as your original data - useful for augmentation, simulation, and masking sensitive data.
 
-## Getting Started
-
 ![Data generation example](/public/datagen.png)
 
-The unsupervised module in `tabpfn-extensions` provides built-in support for synthetic data generation through the [`TabPFNUnsupervisedModel`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/unsupervised/unsupervised.py).
+## Getting Started
 
-Install the unsupervised extension:
+Install the `unsupervised` extension:
 
 ```bash
 pip install "tabpfn-extensions[unsupervised]"
 ```
+
+Then, use the [`TabPFNUnsupervisedModel`](https://github.com/PriorLabs/tabpfn-extensions/blob/main/src/tabpfn_extensions/unsupervised/unsupervised.py) with a TabPFN classifier and regressor model to generate new data:
 
 ```python
 from tabpfn_extensions import unsupervised
@@ -58,6 +58,7 @@ results = experiment.run(
 ## How it Works
 
 The data generation process leverages the same probabilistic modeling used in TabPFN’s unsupervised mode:
+
 - Each feature is modeled conditionally on the others.
 - The chain rule of probability is used to estimate the full joint distribution.
 - New samples are drawn using the learned conditional dependencies, controlled by a temperature parameter (`temp`) that influences variability and diversity.
@@ -65,6 +66,7 @@ The data generation process leverages the same probabilistic modeling used in Ta
 ## Use Cases
 
 Synthetic data generation can be applied across a range of research and engineering tasks:
+
 - Data augmentation - expand limited datasets for training or validation.
 - Privacy-preserving analytics - create realistic datasets without exposing sensitive information.
 

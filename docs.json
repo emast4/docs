@@ -90,16 +90,20 @@
             "icon": "lightbulb",
             "pages": [
               {
-                "label": "Credit Fraud",
-                "href": "https://prior-labs.webflow.io/industries/credit-fraud"
+                "label": "Industrials",
+                "href": "https://prior-labs.webflow.io/industries/industrials"
               },
               {
-                "label": "Customer Churn",
-                "href": "https://prior-labs.webflow.io/industries/customer-churn"
+                "label": "Healthcare",
+                "href": "https://prior-labs.webflow.io/industries/healthcare"
               },
               {
-                "label": "Drug Response",
-                "href": "https://prior-labs.webflow.io/industries/drug-response"
+                "label": "Energy",
+                "href": "https://prior-labs.webflow.io/industries/energy"
+              },
+              {
+                "label": "Finance",
+                "href": "https://prior-labs.webflow.io/industries/finance"
               }
             ]
           }

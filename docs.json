@@ -88,7 +88,7 @@
           {
             "group": "Use Cases",
             "icon": "lightbulb",
-            "links": [
+            "pages": [
               {
                 "label": "Industrials",
                 "href": "https://prior-labs.webflow.io/industries/industrials"

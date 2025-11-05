@@ -7,7 +7,7 @@ The Data Generation capability extends TabPFN’s unsupervised modeling system t
 
 ## Getting Started
 
-The unsupervised module in `tabpfn-extensions` provides built-in support for synthetic data generation through the `GenerateSyntheticDataExperiment` class. This experiment uses a `TabPFNUnsupervisedModel`, which internally combines both the `TabPFNClassifier` and `TabPFNRegressor` to handle mixed feature types.
+The unsupervised module in `tabpfn-extensions` provides built-in support for synthetic data generation through the `TabPFNUnsupervisedModel`.
 
 Install the unsupervised extension:
 
@@ -17,7 +17,7 @@ pip install "tabpfn-extensions[unsupervised]"
 
 ```python
 from tabpfn_extensions import unsupervised
-from tabpfn_extensions.unsupervised.experiments import GenerateSyntheticDataExperiment
+from tabpfn_extensions.unsupervised import experiments
 from sklearn.datasets import load_breast_cancer
 import torch
 from tabpfn_extensions import TabPFNClassifier, TabPFNRegressor
@@ -38,7 +38,7 @@ model_unsupervised = unsupervised.TabPFNUnsupervisedModel(
 feature_indices = [4, 6, 12]
 
 # Run synthetic data generation experiment
-experiment = GenerateSyntheticDataExperiment(
+experiment = unsupervised.experiments.GenerateSyntheticDataExperiment(
     task_type="unsupervised"
 )
 

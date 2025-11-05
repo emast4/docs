@@ -3,7 +3,7 @@ title: "Classification"
 description: "Learn about TabPFN's classification capabilities."
 ---
 
-TabPFN provides a powerful interface for classification on tabular data, supporting binary, multi-class, and even text-enhanced inputs. All without model training or hyperparameter tuning.
+TabPFN provides a powerful interface for handling classification tasks on tabular data. The `TabPFNClassifier` class can be used for binary and multi-class classification problems.
 
 ## Getting Started
 
@@ -18,53 +18,110 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 model = TabPFNClassifier(device="cuda")
 model.fit(X_train, y_train)
-preds = model.predict(X_test)
 
+# Predict class labels
+preds = model.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, preds))
+
+# Predict class probabilities
+probs = model.predict_proba(X_test)
+print("Log-Loss:", log_loss(y_test, probs))
 ```
 
-### Advanced Techniques
+## Tuning Predictions for Your Metric
 
-For datasets with more than 10 classes, use the `ManyClassClassifier` extension - available via [Prior Labs Extensions](https://github.com/priorlabs/tabpfn-extensions).
+You can tune the classifier's output probabilities to optimize for specific evaluation metrics. This matters when your metric is not aligned with a maximum probability prediction, e.g. when tuning F1 or balanced accuracy.
 
-It extends TabPFN to large multi-class problems using Error-Correcting Output Codes (ECOC), which:
+### Automated Tuning
 
-- Encodes the multi-class task into multiple binary or small-class subtasks.
-- Trains the base TabPFNClassifier on these subtasks.
-- Decodes the results back into the original class space.
+This is the most powerful way to optimize predictions. You specify the metric you care about (`eval_metric`) and enable tuning (`tuning_config`).
 
-This approach enables TabPFN to scale to hundreds of classes efficiently while maintaining accuracy and calibration.
+When you call `.fit()`, the classifier will:
+
+1.  Automatically split the training data into an internal training and validation set.
+    
+2.  Fit on the internal training set and make predictions on the validation set.
+    
+3.  Find the optimal prediction settings (like temperature and decision thresholds) that maximize your `eval_metric` on the validation set.
+    
+4.  Store these optimal settings and apply them automatically during `.predict()` and `.predict_proba()`.
+    
 
 ```python
-from tabpfn_extensions.manyclass_classifier import ManyClassClassifier
-from tabpfn import TabPFNClassifier
+# Optimize for F1-score
+# This will automatically calibrate temperature and tune decision thresholds
+model = TabPFNClassifier(
+    device="auto",
+    eval_metric="f1",
+    tuning_config={
+        "calibrate_temperature": True,
+        "tune_decision_thresholds": True
+    }
+)
 
-estimator = TabPFNClassifier(device="cuda")
-classifier = ManyClassClassifier(base_estimator=estimator)
-classifier.fit(X_train, y_train)
-predictions = classifier.predict(X_test)
+# .fit() now runs the automated tuning process
+model.fit(X_train, y_train)
+
+# .predict() and .predict_proba() will use the tuned settings
+preds = model.predict(X_test)
 ```
 
-## Key Features
+### What is Being Tuned?
 
-- **Calibrated probabilities:** Outputs reliable class probabilities for uncertainty-aware decision-making.
-- **Robust to noise and missing data:** Handles categorical variables, uninformative columns, and outliers natively.
-- **Text-aware inputs:** This **API only** feature automatically detects textual fields, extracts embeddings, and includes them in the forward pass for classification.
-- **Seamless multi-class support:** Works out-of-the-box for binary and multi-class datasets.
+#### 1\. Temperature Calibration
 
-<Accordion title="How can I improve classification speed, especially on large datasets?">
-  Each `predict()` re-encodes the full training set in-context. Performance depends on:
+-   **What it is:** This finds the optimal `softmax_temperature` to make the model's probabilities as accurate as possible.
+    
+-   **Parameter:** `tuning_config={"calibrate_temperature": True}`
+    
+-   **Best for Metrics:** **Log-Loss**, **Brier Score**, or any metric that relies on well-calibrated probabilities.
+    
+-   **Note:** This overrides the manually-set `softmax_temperature` parameter.
+    
 
-  - Dataset size (e.g. TabPFN-2 is optimized for ≤10k samples)
-  - Fit mode (low_memory vs fit_with_cache)
-  - Device (CPU/MPS/GPU)
+#### 2\. Decision Threshold Tuning
 
-  ```python
-  classifier = TabPFNClassifier(fit_mode="fit_with_cache", device="cuda")
-  ```
+-   **What it is:** This finds the best decision boundary for each class. Instead of just `argmax(probabilities)`, it finds optimal thresholds (e.g., "predict class 1 if prob > 0.4, not 0.5").
+    
+-   **Parameter:** `tuning_config={"tune_decision_thresholds": True}`
+    
+-   **Best for Metrics:** Threshold-sensitive metrics like **F1 Score**, **Balanced Accuracy**, **Precision**, or **Recall**, especially on imbalanced datasets.
+    
 
-  `fit_with_cache` retains preprocessing and significantly speeds up repeated predictions.
-</Accordion>
+* * *
+
+### Manual Tuning
+
+You can still manually set parameters if you don't use `tuning_config`.
+
+#### Manual Temperature
+
+Setting `softmax_temperature` directly (without `tuning_config`) applies a fixed temperature scaling.
+
+-   `softmax_temperature < 1.0`: Makes predictions _more_ confident (sharper probabilities).
+    
+-   `softmax_temperature > 1.0`: Makes predictions _less_ confident (softer probabilities).
+    
+
+```python
+# Manually create a "less confident" model
+calibrated_model = TabPFNClassifier(softmax_temperature=1.5)
+calibrated_model.fit(X_train, y_train)
+calibrated_probs = calibrated_model.predict_proba(X_test)
+```
+
+#### Balancing for Balanced Metrics
+
+Setting `balance_probabilities=True` is a simple heuristic for imbalanced data. It re-weights the output probabilities based on the class frequencies in the training data.
+
+This is a simpler, non-optimized alternative to `eval_metric="balanced_accuracy"` with `tune_decision_thresholds=True`.
+
+```python
+# Use the built-in heuristic for balanced metrics
+balanced_model = TabPFNClassifier(balance_probabilities=True)
+balanced_model.fit(X_train, y_train)
+balanced_preds = balanced_model.predict(X_test)
+```
 
 ## Related Extensions
 

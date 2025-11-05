@@ -3,11 +3,9 @@ title: "Regression"
 description: "Learn about TabPFN's regression capabilities."
 ---
 
-TabPFN provides powerful regression capabilities for predicting continuous numerical values with high accuracy and interpretability.
-
 ## Getting Started
 
-First, load your training and test datasets. The training dataset is used for in-context learning - it’s passed directly into the model’s forward pass, allowing TabPFN to condition its predictions on the data distribution without performing gradient-based optimization. The test dataset is then used for making predictions, leveraging what the model inferred from the context provided by your training data.
+TabPFN can also be applied to regression tasks using the `TabPFNRegressor` class. The regressor is built to make forecasts or predict an output distribution that measures uncertainty.
 
 ```python
 from sklearn.datasets import load_diabetes
@@ -37,9 +35,61 @@ print("MAE:", mean_absolute_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-### Advanced Techniques
+## Understanding Predictions
 
-If you want to squeeze more performance out of TabPFN, here are some techniques that can help - usually with minimal code changes.
+The `TabPFNRegressor.predict()` method is powerful and can return different types of predictions based on the `output_type` parameter.
+
+### Point Predictions (Mean, Median, Mode)
+
+By default, `predict()` returns the **mean** of the predicted distribution. You can also request the `median` or `mode` for different point estimates.
+
+```python
+# Get the mean prediction (default)
+mean_preds = model.predict(X_test, output_type="mean")
+
+# Get the median prediction
+median_preds = model.predict(X_test, output_type="median")
+
+# Get the mode prediction
+mode_preds = model.predict(X_test, output_type="mode")
+```
+
+### Quantile Regression
+
+To perform quantile regression and get predictions for specific quantiles, set `output_type="quantiles"` and pass a list of desired quantiles. This is ideal for estimating prediction intervals.
+
+```python
+# Get predictions for the 10th, 50th (median), and 90th quantiles
+quantile_preds = model.predict(X_test, 
+                               output_type="quantiles", 
+                               quantiles=[0.1, 0.5, 0.9])
+
+# quantile_preds is a list of arrays
+# q10_preds = quantile_preds[0]
+# q50_preds = quantile_preds[1]
+# q90_preds = quantile_preds[2]
+```
+
+### Full Distribution
+
+For advanced use cases, you can retrieve the full predictive distribution.
+
+-   `output_type="main"` returns a dictionary containing the mean, median, mode, and default quantiles.
+    
+-   `output_type="full"` returns everything in `"main"` plus the raw logits and criterion object, allowing for custom loss calculations (see the FAQ).
+    
+
+```python
+# Get a dictionary of all main prediction types
+main_outputs = model.predict(X_test, output_type="main")
+# print(main_outputs.keys()) 
+# > dict_keys(['mean', 'median', 'mode', 'quantiles'])
+
+# Get the full distribution objects for custom analysis
+full_outputs = model.predict(X_test, output_type="full")
+# print(full_outputs.keys())
+# > dict_keys(['mean', 'median', 'mode', 'quantiles', 'criterion', 'logits'])
+```
 
 #### Ensembling
 
@@ -47,10 +97,10 @@ The `AutoTabPFNRegressor` automatically builds ensembles of strong models to max
 
 - Runs an automated hyperparameter search for optimal settings.
 - Builds a Post-Hoc Ensemble (PHE) for improved calibration and performance.
-- Balances accuracy vs. latency with the `max_time` parameter.
+- Balances accuracy vs. runtime with the `max_time` parameter.
 
 ```python
-from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNRegressor
+from tabpfn_extensions.post-hoc-ensembles.sklearn_interface import AutoTabPFNRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
 reg = AutoTabPFNRegressor(max_time=30)  # runtime budget in seconds
@@ -61,27 +111,14 @@ print("MSE:", mean_squared_error(y_test, preds))
 print("R²:", r2_score(y_test, preds))
 ```
 
-#### Quantile Regression
-
-```python
-# Predict quantiles
-quantiles = [0.25, 0.5, 0.75]
-quantile_predictions = reg.predict(
-    X_test,
-    output_type="quantiles",
-    quantiles=quantiles,
-)
-for q, q_pred in zip(quantiles, quantile_predictions):
-    print(f"Quantile {q} MAE:", mean_absolute_error(y_test, q_pred))
-```
-
 ## Key Features
 
+- **Zero-shot regression:** Predicts continuous targets instantly in a single forward pass.
 - **Calibrated uncertainty:** Produces reliable mean, median, or quantile-based predictions for confidence estimation.
 - **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
-- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions - available via our API only.
+- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
 - **Minimal preprocessing:** Works directly with raw numerical and categorical data.
-- **Fast inference:** Predictions complete in seconds, even on mid-range GPUs.
+- **Fast inference:** Zero-shot predictions complete in seconds, even on mid-range GPUs.
 
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
   TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
@@ -101,18 +138,6 @@ for q, q_pred in zip(quantiles, quantile_predictions):
   best_idx = exp_mape.argmin(axis=1)
   y_hat = samples[np.arange(samples.shape[0]), best_idx]
   ```
-</Accordion>
-
-<Accordion title="GPU memory keeps increasing after multiple regression predictions, why?">
-  This is due to cached tensors not being cleared between predictions. It occurs primarily in regression because distributional predictions retain more GPU buffers.
-
-  ```python
-  for _ in range(10):
-      y_pred = reg.predict(X)
-      torch.cuda.empty_cache()
-  ```
-
-  This prevents gradual VRAM growth until automatic cleanup is added in future releases.
 </Accordion>
 
 ## Related Extensions

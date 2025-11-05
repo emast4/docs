@@ -40,13 +40,8 @@
             "expanded": false,
             "pages": [
               "models/overview",
-              {
-                "group": "Versions",
-                "pages": [
-                  "models/tabpfn-2",
-                  "models/tabpfn-ts"
-                ]
-              }
+              "models/tabpfn-2",
+              "models/tabpfn-ts"
             ]
           },
           {
@@ -56,14 +51,9 @@
               "capabilities/classification",
               "capabilities/regression",
               "capabilities/forecasting",
-              {
-                "group": "More Capabilities",
-                "pages": [
-                  "capabilities/anomaly-detection",
-                  "capabilities/data-generation",
-                  "capabilities/fine-tuning"
-                ]
-              }
+              "capabilities/anomaly-detection",
+              "capabilities/data-generation",
+              "capabilities/fine-tuning"
             ]
           },
           {

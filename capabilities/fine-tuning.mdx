@@ -3,37 +3,27 @@ title: "Fine Tuning"
 description: "Optimize TabPFN models to your own data with fine-tuning."
 ---
 
-Fine-tuning enables you to **optimize TabPFN’s pretrained foundation models** to your own datasets. While TabPFN delivers strong out-of-the-box performance on most tabular problems, fine-tuning allows for domain-specific adaptation — improving calibration, robustness, and accuracy in specialized tasks.
-
-## Getting Started
-
-Fine-tuning works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent. This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
+Fine-tuning enables you to **optimize TabPFN’s pretrained foundation models** to your own datasets. It works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent. This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
 
 You can fine-tune both:
 
 - `TabPFNClassifier` – for classification tasks
 - `TabPFNRegressor` – for regression tasks
 
-Fine-tuning can help when:
+Fine-tuning can help especially when:
 
 - Your data distribution differs significantly from TabPFN’s priors
 - You want to specialize the model for a single domain (e.g., healthcare, finance, IoT sensors)
-- You need better calibration, reduced bias, or improved small-class performance
-- You want to study TabPFN’s adaptation or representation behavior on domain-specific datasets
 
 **Recommended setup**
 
-- CUDA-enabled GPU (T4, H100, or similar)
-- `torch>=2.1`
-- Dataset sizes between **10k–100k samples** for best stability
-
-Fine-tuning typically requires **GPU acceleration** for efficient training.
+Fine-tuning requires **GPU acceleration** for efficient training.
 
 ### Workflow
 
 The fine-tuning process is similar for classifiers and regressors:
 
-1. **Prepare your dataset:** Load, subset, and split your data into train and validation sets.
+1. **Prepare your dataset:** Load, subset, and split your data into train and validation sets. 
 2. **Configure your model:** Initialize a `TabPFNClassifier` or `TabPFNRegressor` with fine-tuning-specific hyperparameters. Use a **very low learning rate** (e.g., `1e-5` to `1e-6`) to avoid catastrophic forgetting.
 3. **Create a fine-tuning dataloader:** Use `get_preprocessed_datasets()` and `meta_dataset_collator` to prepare batches.
 4. **Run the fine-tuning loop:** Iterate for several epochs, performing backpropagation and optimizer updates.
@@ -65,7 +55,6 @@ clf = TabPFNClassifier(
     fit_mode="batched",
     differentiable_input=False,
 )
-clf._initialize_model_variables()
 optimizer = Adam(clf.model_.parameters(), lr=1e-5)
 
 # --- Prepare datasets ---
@@ -118,7 +107,6 @@ reg = TabPFNRegressor(
     fit_mode="batched",
     differentiable_input=False,
 )
-reg._initialize_model_variables()
 optimizer = Adam(reg.model_.parameters(), lr=1.5e-6)
 
 # --- Dataloader setup ---
@@ -151,14 +139,6 @@ print("R²:", r2_score(y_test, preds))
 
 </CodeGroup>
 
-## Best Practices
-
-- Always start with **a small learning rate** (`1e-5` or lower).
-- Limit **epochs (≤10)** to avoid overfitting or forgetting pretraining.
-- Use a **subset of 10k–50k samples** for fast iteration and stability.
-- Evaluate frequently using validation splits or the provided evaluation utilities.
-- Store and reuse checkpoints if iterating across different data domains.
-
 <Card title="GitHub Examples" icon="book" horizontal href="https://github.com/priorlabs/tabpfn/tree/main/examples">
-  See more examples and fine-tuning utilities in our official TabPFN GitHub repository.
+  See more examples and fine-tuning utilities in our TabPFN GitHub repository.
 </Card>

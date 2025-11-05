@@ -77,14 +77,9 @@
         "capabilities/classification",
         "capabilities/regression",
         "capabilities/forecasting",
-        {
-          "group": "Use Cases",
-          "pages": [
-            "use-cases/classification",
-            "use-cases/regression",
-            "use-cases/forecasting"
-          ]
-        }
+        "use-cases/classification",
+        "use-cases/regression",
+        "use-cases/forecasting"
       ]
     }
   ],

@@ -61,7 +61,6 @@ from tabpfn_client import TabPFNRegressor
 # Use TabPFN like any scikit-learn model
 model = TabPFNRegressor()
 model.fit(X_train, y_train)
-# Get predictions
 preds = model.predict(X_test)
 ```
 
@@ -137,7 +136,7 @@ print(f":white_check_mark: Model trained: {model_id}")
 
 </CodeGroup>
 
-Once fitted your model using in-context learning, send your test dataset to the `/v1/predict` endpoint using the returned `model_id`. You’ll receive predictions and/or probabilities in JSON format.
+Once fitted, you can send your test dataset to the `/v1/predict` endpoint using the returned `model_id`. You’ll receive predictions and/or probabilities in JSON format.
 
 <CodeGroup>
 
@@ -146,7 +145,7 @@ payload = {
     "task": "classification",
     "model_id": model_id,
     "params": {
-      "output_type": "preds"
+      "output_type": "preds"  # choose 'probas' for returning probabilities
     }
 }
 files = {

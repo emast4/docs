@@ -3,7 +3,7 @@ title: "Regression"
 description: "Learn about TabPFN's regression capabilities."
 ---
 
-TabPFN can also be applied to regression tasks using the [`TabPFNRegressor`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/regressor.py) class. The regressor is built to make forecasts or predict an output distribution that measures uncertainty.
+TabPFN can be applied to regression tasks using the [`TabPFNRegressor`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/regressor.py) class. Instead of a single point estimate, the regressor predicts an output distribution, enabling you to generate forecasts and accurately measure uncertainty in your predictions.
 
 ## Getting Started
 
@@ -57,9 +57,11 @@ To perform quantile regression and get predictions for specific quantiles, set `
 
 ```python
 # Get predictions for the 10th, 50th (median), and 90th quantiles
-quantile_preds = model.predict(X_test, 
-                               output_type="quantiles", 
-                               quantiles=[0.1, 0.5, 0.9])
+quantile_preds = model.predict(
+    X_test,
+    output_type="quantiles",
+    quantiles=[0.1, 0.5, 0.9],
+)
 
 # quantile_preds is a list of arrays
 # q10_preds = quantile_preds[0]
@@ -86,16 +88,8 @@ full_outputs = model.predict(X_test, output_type="full")
 # > dict_keys(['mean', 'median', 'mode', 'quantiles', 'criterion', 'logits'])
 ```
 
-## Key Features
-
-- **Training in seconds:** Generates predictions in a single forward pass using the provided context window.
-- **Calibrated uncertainty:** Produces mean, median, or quantile-based predictions for confidence estimation.
-- **Robust to real-world noise:** Handles outliers, missing values, and mixed data types.
-- **Text-aware inputs:** Detects textual columns, extracts embeddings, and integrates them into predictions.
-- **Minimal preprocessing:** Works directly with raw numerical and categorical data.
-
 <Accordion title="How can I apply a custom loss (e.g. MAPE, asymmetric loss) to regression?">
-  TabPFN provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
+  `TabPFNRegressor` provides a full predictive distribution, enabling loss-aware predictions without retraining. You can compute the Bayes-optimal point prediction that minimizes the expected custom loss. This method gives flexible custom-loss predictions without modifying the model.
 
   ```python
   out = reg.predict(X, output_type="full")

@@ -89,9 +89,18 @@
             "group": "Use Cases",
             "icon": "lightbulb",
             "pages": [
-              "use-cases/credit-fraud",
-              "use-cases/customer-churn",
-              "use-cases/drug-response"
+              {
+                "label": "Credit Fraud",
+                "href": "https://prior-labs.webflow.io/industries/credit-fraud"
+              },
+              {
+                "label": "Customer Churn",
+                "href": "https://prior-labs.webflow.io/industries/customer-churn"
+              },
+              {
+                "label": "Drug Response",
+                "href": "https://prior-labs.webflow.io/industries/drug-response"
+              }
             ]
           }
         ]

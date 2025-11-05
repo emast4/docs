@@ -84,6 +84,28 @@
               "extensions/hpo",
               "extensions/rf-pfn"
             ]
+          },
+          {
+            "group": "Use Cases",
+            "icon": "lightbulb",
+            "links": [
+              {
+                "label": "Industrials",
+                "href": "https://prior-labs.webflow.io/industries/industrials"
+              },
+              {
+                "label": "Healthcare",
+                "href": "https://prior-labs.webflow.io/industries/healthcare"
+              },
+              {
+                "label": "Energy",
+                "href": "https://prior-labs.webflow.io/industries/energy"
+              },
+              {
+                "label": "Finance",
+                "href": "https://prior-labs.webflow.io/industries/finance"
+              }
+            ]
           }
         ]
       },

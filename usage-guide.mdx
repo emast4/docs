@@ -20,34 +20,6 @@ TabPFN is intended as a powerful drop-in replacement for traditional tabular dat
 3. **Scale numerical features**: Normalize or standardize as needed
 4. **Feature engineering**: Create meaningful derived features
 
-### Model Selection
-
-Choose the right TabPFN variant for your task:
-
-<CardGroup cols={3}>
-  <Card
-    title="TabPFN v2"
-    icon="brain"
-    href="/models/tabpfn-v2"
-  >
-    General-purpose classification and regression
-  </Card>
-  <Card
-    title="TabPFN v3"
-    icon="star"
-    href="/models/tabpfn-v3"
-  >
-    Multi-task learning and advanced scenarios
-  </Card>
-  <Card
-    title="TabPFN-TS"
-    icon="chart-line"
-    href="/models/tabpfn-ts"
-  >
-    Time series forecasting and temporal data
-  </Card>
-</CardGroup>
-
 ### Performance Optimization
 
 - **Batch processing**: Process multiple samples together for better efficiency
@@ -121,13 +93,11 @@ forecasts = ts_model.forecast(
     - Use more efficient data types
     - Process data in chunks
   </Accordion>
-  
   <Accordion title="Poor Performance">
     - Check data quality and preprocessing
     - Try different TabPFN variants
     - Verify feature engineering
   </Accordion>
-  
   <Accordion title="Slow Inference">
     - Use batch processing
     - Optimize data types
@@ -172,18 +142,10 @@ ensemble_prediction = np.mean(predictions, axis=0)
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card
-    title="Explore Capabilities"
-    icon="cog"
-    href="/capabilities"
-  >
+  <Card title="Explore Capabilities" icon="cog" href="/capabilities">
     Learn about specific TabPFN capabilities
   </Card>
-  <Card
-    title="View Use Cases"
-    icon="lightbulb"
-    href="/use-cases"
-  >
+  <Card title="View Use Cases" icon="lightbulb" href="/use-cases">
     See real-world applications and examples
   </Card>
 </CardGroup>

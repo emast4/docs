@@ -1,10 +1,10 @@
 ---
 title: "Overview"
-description: "One model, infinite predictions."
+description: "Summary of the TabPFN platform."
 ---
 ## Welcome to Prior Labs
-TabPFN is a **tabular foundation model** - providing state-of-the-art predictions across thousands of use-cases in seconds.
-It is a pre-trained transformer trained on billions of synthetic datasets to learn the learning process itself. Instead of optimizing weights for every new dataset, TabPFN already encodes the inductive biases, priors, and optimization strategies that traditional models must rediscover each time. When you run it on your data, it uses in-context learning to make predictions in a single neural network forward pass - producing predictions in seconds that match or exceed the accuracy of tuned ensembles trained for hours.
+TabPFN is a tabular foundation model designed to deliver strong predictions across a wide range of use cases with short training times.
+It is a pre-trained transformer trained on billions of synthetic datasets to learn the learning process itself. Instead of optimizing weights for every new dataset, TabPFN already encodes the inductive biases, priors, and optimization strategies that traditional models must rediscover each time. When you run it on your data, it uses in-context learning to make predictions in a single neural network forward pass, providing results in seconds that match or exceed the accuracy of tuned ensembles trained for hours.
 
 ### Why teams choose TabPFN
 <Columns cols={2}>
@@ -12,7 +12,7 @@ It is a pre-trained transformer trained on billions of synthetic datasets to lea
     TabPFN-2.5 delivers benchmark-level performance instantly, achieving tuned-ensemble accuracy in seconds, not hours.
   </Card>
   <Card title="No re-training required" icon="repeat">
-    Skip the re-training loop. Simply update the context and TabPFN performs zero-shot inference.
+    Skip repeated training loops. Simply update the context and TabPFN performs zero-shot inference.
   </Card>
   <Card title="Familiar interface" icon="puzzle">
     Plug into any workflow with the familiar `scikit-learn` interface or through the Prior Labs API for production use.
@@ -31,18 +31,16 @@ It is a pre-trained transformer trained on billions of synthetic datasets to lea
 ### TabPFN Integrations
 <Columns cols={2}>
   <Card title="API Client" icon="cloud-check" href="https://github.com/PriorLabs/tabpfn-client">
-    **Best models, no GPU needed.**  
     The fastest way to get started with TabPFN. Access our models through the cloud without requiring local GPU resources.
   </Card>
 
   <Card title="Python Package" icon="language-python" href="https://github.com/PriorLabs/tabpfn">
-    **Most popular.**  
     Local installation for research and privacy-sensitive use cases with GPU support and a scikit-learn compatible interface.
   </Card>
 
   <Card title="User Interface (No-Code)" icon="application" href="https://ux.priorlabs.ai/">
     **No code.**  
-    Visual interface for point-and-click experimentation and visualization—perfect for quick pilots and demos.
+    Use a visual interface for experimentation without writing code.
   </Card>
 
   <Card title="R Integration" icon="language-r" href="https://github.com/PriorLabs/R-tabpfn">
@@ -52,7 +50,7 @@ It is a pre-trained transformer trained on billions of synthetic datasets to lea
 </Columns>
 
 ### Capabilities
-TabPFN be used for various tasks including:
+TabPFN can be used for various tasks including:
 <CardGroup cols={3}> <Card title="Classification" icon="bullseye" href="/capabilities/classification"> Solve binary or multi-class classification problems with calibrated probabilities. </Card> <Card title="Regression" icon="puzzle" href="/capabilities/regression"> Estimate continuous values with uncertainty-aware outputs and minimal preprocessing. </Card> <Card title="Forecasting" icon="line-chart" href="/capabilities/forecasting"> Model tabular time series (via TabPFN for forecasting) to predict future values and trends. </Card> <Card title="Anomaly Detection" icon="search" href="/capabilities/anomaly-detection"> Detect rare and anomalous samples using TabPFN’s unsupervised extension. </Card> <Card title="Data Generation" icon="clone" href="/capabilities/data-generation"> Generate realistic synthetic tabular data with TabPFN. </Card> <Card title="Fine Tuning" icon="gear" href="/capabilities/fine-tuning"> Optimize TabPFN models to your own data with fine-tuning. </Card> </CardGroup>
 
 ## Get Started

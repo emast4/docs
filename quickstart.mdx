@@ -5,7 +5,7 @@ description: "Get started with TabPFN in minutes."
 
 ## How to Use TabPFN
 
-TabPFN can be used in two ways, depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, get our non-commercial OSS package on Hugging Face.
+TabPFN can be used in two ways, depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, install the non-commercial open-source package from Hugging Face.
 
 <div className="table-container-dc3e57e5">
 | OSS Package                                                                        | API Access                                       |
@@ -19,7 +19,7 @@ TabPFN can be used in two ways, depending on your workflow and compute setup. Us
 
 #### OSS Package
 
-**Best for**: researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the full model locally, giving you complete control over your data and experimentation.
+**Recommended for** researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the model locally, giving you full control over your data and experimentation.
 
 ```bash
 pip install tabpfn
@@ -40,7 +40,7 @@ preds = model.predict(X_test)
 
 #### TabPFN API
 
-**Best for**: data teams and developers who want TabPFN’s performance without managing infrastructure. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 - we handle all GPU compute, scaling, and model versioning. You can use it either through a REST API or our Python SDK.
+**Recommended for** data teams and developers who want TabPFN’s performance without managing infrastructure. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 and manages GPU compute, scaling, and model versioning. You can use it either through a REST API or the Python SDK.
 
 #### Using the Python SDK (API Client)
 
@@ -76,7 +76,7 @@ preds = model.predict(X_test)
 
 ### Authentification
 
-To authenticate you can simply run a prediction - which will ask you to login if you are not authenticated yet. To programmatically login, follow these steps:
+To authenticate you can run a prediction, which will prompt you to sign in if needed. To log in programmatically, follow these steps:
 
 ```python
 import tabpfn_client
@@ -158,7 +158,7 @@ payload = {
 }
 files = {
     "data": (None, json.dumps(payload), "application/json"),
-    "file": (test_path, open(test_path, "rb")),
+    "dataset_file": (test_path, open(test_path, "rb")),
 }
 predict_response = requests.post(
     "https://api.priorlabs.ai/v1/predict",

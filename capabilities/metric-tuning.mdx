@@ -1,13 +1,13 @@
 ---
-title: 'Tuning Predictions for Your Metric'
-description: ''
+title: "Tuning Predictions for Your Metric"
+description: "Learn how to optimize the classifier's predictions to your metric"
 ---
 
-You can tune the classifier's output probabilities to optimize for specific evaluation metrics. This matters when your metric is not aligned with a maximum probability prediction, e.g. when tuning F1 or balanced accuracy.
+You can calibrate the `TabPFNClassifier`'s output probabilities or tune the decision thresholds to optimize for specific evaluation metrics. This matters when your metric is not aligned with a maximum probability prediction, e.g. when evaluating F1 or balanced accuracy.
 
-#### Automated Tuning
+### Automated Tuning
 
-This is a flexible way to optimize predictions. You specify the metric you care about (`eval_metric`) and enable tuning (`tuning_config`).
+We allow you to automatically optimize your predictions by specifying the metric you care about (`eval_metric`) and enabling tuning (by specifying a `tuning_config`).
 
 When you call `.fit()`, the classifier will:
 
@@ -20,11 +20,10 @@ When you call `.fit()`, the classifier will:
 # Optimize for F1-score
 # This will automatically calibrate temperature and tune decision thresholds
 model = TabPFNClassifier(
-    device="auto",
     eval_metric="f1",
     tuning_config={
         "calibrate_temperature": True,
-        "tune_decision_thresholds": True
+        "tune_decision_thresholds": True,
     }
 )
 

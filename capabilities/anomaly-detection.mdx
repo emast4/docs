@@ -13,7 +13,14 @@ The [**TabPFN Unsupervised Extension**](https://github.com/PriorLabs/tabpfn-exte
 
 ## Getting Started
 
-The following walks you through the process of finding anomalies with TabPFN
+First, install the `unsupervised` extension:
+
+```python
+pip install "tabpfn-extensions[unsupervised]"
+```
+
+Then, load your data, initialize a TabPFN classifier and regressor model, and predict outlier scores with the `TabPFNUnsupervisedModel` class:
+
 
 ```python
 import torch

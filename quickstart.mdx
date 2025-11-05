@@ -8,16 +8,16 @@ description: "Get started with TabPFN in minutes."
 TabPFN can be used in two ways, depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, install the non-commercial open-source package from Hugging Face.
 
 <div className="table-container-dc3e57e5">
-| OSS Package                                                                        | API Access                                       |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------ |
-| Full control, local inference                                                      | Managed infrastructure, no setup                 |
-| Requires GPU, Python and PyTorch                                                   | Only Internet Access Needed, Python not required |
-| Best for research & experimentation                                                | Best for production & teams                      |
+| OSS Package                         | API Access                                       |
+| ----------------------------------- | ------------------------------------------------ |
+| Full control, local inference       | Managed infrastructure, no setup                 |
+| Requires GPU, Python and PyTorch    | Only Internet Access Needed, Python not required |
+| Best for research & experimentation | Best for production & teams                      |
 
 </div>
 
 <Info>
-Please note that TabPFN-2.5 is available only for **non-commercial use**, whereas TabPFN-2 is available for any usage.
+  Please note that TabPFN-2.5 is available only for **non-commercial use**, whereas TabPFN-2 is available for any usage.
 </Info>
 
 #### OSS Package
@@ -31,7 +31,6 @@ pip install tabpfn
 Link to GitHub: [GitHub](https://github.com/PriorLabs/tabpfn)
 
 Use the [`TabPFNClassifier`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) just like any scikit-learn estimator:
-
 
 ```python
 from tabpfn import TabPFNClassifier
@@ -70,8 +69,6 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
-Similarly, the [`tabpfn_client.TabPFNRegressor`](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) mirrors the regression interface:
-
 
 ```python Regression
 import tabpfn_client
@@ -86,7 +83,8 @@ preds = model.predict(X_test)
 
 **Access TabPFN-2.5**
 
-In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.: 
+In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.:
+
 ```bash
 pip install -U tabpfn-client
 ```
@@ -95,13 +93,13 @@ If you do this, you'll immediately have access to TabPFN 2.5. Here are some exam
 
 ```python
 # By default use TabPFN-2.5
-model = TabPFNClassifier(n_estimators=4)
+model = TabPFNClassifier()
 
 # Specify an exact model checkpoint
-model = TabPFNClassifier(n_estimators=4, model_path="v2.5_default")
+model = TabPFNClassifier(model_path="v2.5_default")
 
 # Use previous TabPFN-2 model weights
-model = TabPFNClassifier(n_estimators=4, model_path="v2_default")
+model = TabPFNClassifier(model_path="v2_default")
 ```
 
 We also provide a convenience method for listing the available models:

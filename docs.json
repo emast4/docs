@@ -1,5 +1,10 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "integrations": {
+      "ga4": {
+          "measurementId": "G-9VZ68NQKPM"
+      }
+  },
   "theme": "mint",
   "name": "Prior Labs",
   "colors": {

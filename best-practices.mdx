@@ -1,0 +1,36 @@
+---
+title: "Best Practices"
+description: "This guide outlines best practices for getting the optimal fit and predict speed out of TabPFN-2.5."
+---
+
+To achieve good performance, we recommend the following:
+
+- Use a dedicated GPU or GPUs: We recommend NVIDIA H100 or A100 GPUs. Any dedicated
+GPU supported by PyTorch is compatible, but some models may not have enough memory for
+larger datasets or perform slowly. Integrated GPUs, MPS (Apple Silicon), and CPUs are also
+supported, but are only suitable for small datasets.
+
+- Use multiple GPUs: For larger datasets, fit + predict time can be dramatically reduced by paral-
+lelizing inference over several GPUs. To enable this, set the device parameter of `TabPFNClassifier`
+and `TabPFNRegressor`.
+
+- Use batch inference: Unless the fitted-model cache is enabled (see below), the model is retrained
+each time `.predict()` is called. This means that it is much faster to make a prediction for all your
+test points in a single `.predict()` call. If you run out of memory, split the test points into batches
+of 1000 to 10000 and call `.predict()` for each batch.
+
+- Use PyTorch 2.8 or above: TabPFN-2.5 also supports earlier versions of PyTorch, but these
+may have lower performance.
+
+- For small datasets, enable the fitted-model cache: This is an experimental feature that trains
+and stores the model during `.fit()`, making subsequent `.predict()` calls fast by using a KV-Cache.
+
+- It is enabled by setting the `fit_mode` parameter of `TabPFNClassifier` and `TabPFNRegressor` to
+`fit_with_cache`. However, with this setting classification models will consume approximately 6.1
+KB of GPU memory and 48.8 KB of CPU memory per cell in the training dataset (regression
+models about 25% less), thus it is currently only suitable for small training datasets. For larger
+datasets and CPU-based inference, we recommend the TabPFN-as-MLP/Tree output engine.
+
+- If speed is important for your application, you may consider optimizing the `memory_saving_mode`
+and `n_preprocessing_jobs` parameters of `TabPFNClassifier` and `TabPFNRegressor`. See the
+code documentation for further information.

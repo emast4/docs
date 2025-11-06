@@ -3,7 +3,7 @@ title: "Fine Tuning"
 description: "Optimize TabPFN models to your own data with fine-tuning."
 ---
 
-Fine-tuning enables you to **optimize TabPFN’s pretrained foundation models** to your own datasets. It works by **updating the pretrained transformer parameters** on a user-provided dataset using gradient descent. This process retains TabPFN’s powerful priors while aligning it more closely with the target data distribution.
+Fine-tuning enables you to **optimize TabPFN’s pretrained foundation models** to your own datasets. It works by **updating the pretrained transformer parameters** by training with a user-provided dataset using gradient descent. This process retains TabPFN’s learned priors while aligning it more closely with the target data distribution.
 
 You can fine-tune both:
 
@@ -12,26 +12,26 @@ You can fine-tune both:
 
 Fine-tuning can help especially when:
 
-- Your data distribution differs significantly from TabPFN’s priors
+- Your data represents an edge case or niche distribution not well-covered by TabPFN’s priors.
 - You want to specialize the model for a single domain (e.g., healthcare, finance, IoT sensors)
 
 **Recommended setup**
 
 Fine-tuning requires **GPU acceleration** for efficient training.
 
-### Workflow
+## Getting Started
 
 The fine-tuning process is similar for classifiers and regressors:
 
-1. **Prepare your dataset:** Load, subset, and split your data into train and validation sets. 
-2. **Configure your model:** Initialize a [`TabPFNClassifier`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) or [`TabPFNRegressor`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/regressor.py) with fine-tuning-specific hyperparameters. Use a **very low learning rate** (e.g., `1e-5` to `1e-6`) to avoid catastrophic forgetting.
+1. **Prepare your dataset:** Load, subset, and split your data into train and validation sets.
+2. **Configure your model:** Initialize a [`TabPFNClassifier`](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) or `TabPFNRegressor` with fine-tuning-specific hyperparameters. Use a**low learning rate**  (e.g., `1e-5` to `1e-6`) to avoid catastrophic forgetting.
 3. **Create a fine-tuning dataloader:** Use `get_preprocessed_datasets()` and `meta_dataset_collator` to prepare batches.
 4. **Run the fine-tuning loop:** Iterate for several epochs, performing backpropagation and optimizer updates.
 5. **Evaluate performance:** Clone the fine-tuned model and test it on held-out validation data.
 
 <CodeGroup>
 
-```python title="Classifier"
+```python Classifier
 from tabpfn import TabPFNClassifier
 from tabpfn.utils import meta_dataset_collator
 from tabpfn.finetune_utils import clone_model_for_evaluation
@@ -81,7 +81,8 @@ print("ROC AUC:", roc_auc_score(y_test, probs, multi_class="ovr", average="weigh
 print("Log Loss:", log_loss(y_test, probs))
 ```
 
-```python title="Regressor"
+
+```python Regressor
 from tabpfn import TabPFNRegressor
 from tabpfn.utils import meta_dataset_collator
 from tabpfn.finetune_utils import clone_model_for_evaluation

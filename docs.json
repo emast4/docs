@@ -7,6 +7,16 @@
     "light": "#ffffff",
     "dark": "#1e293b"
   },
+  "fonts": {
+    "heading": {
+      "family": "Inter",
+      "weight": 700
+    },
+    "body": {
+      "family": "DM Sans",
+      "weight": 400
+    }
+  },
   "favicon": "/favicon.png",
   "appearance": {
     "default": "light",
@@ -21,7 +31,7 @@
           "icon": "github"
         },
         {
-          "anchor": "Community",
+          "anchor": "Discord",
           "href": "https://discord.com/invite/VJRuU3bSxt",
           "icon": "discord"
         },
@@ -59,7 +69,8 @@
             "pages": [
               "overview",
               "quickstart",
-              "models"
+              "models",
+              "best-practices"
             ]
           },
           {
@@ -136,6 +147,10 @@
       {
         "label": "Changelog",
         "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md"
+      },
+      {
+        "label": "About Us",
+        "href": "https://priorlabs.ai/about"
       }
     ],
     "primary": {

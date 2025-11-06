@@ -16,17 +16,17 @@ Result: an automatically tuned ensemble of TabPFN models optimized for your data
 
 ## Getting Started
 
-Here’s a quick example showing how to build an AutoTabPFN ensemble for classification.
-
-To install the extension, include the `post-hoc-ensembles` extension:
+To install the extension, include the `post_hoc_ensembles` extension:
 
 ```bash
-pip install "tabpfn-extensions[post-hoc-ensembles]"
+pip install "tabpfn-extensions[post_hoc_ensembles]"
 ```
 
 <Note>
   This installs all dependencies, including AutoGluon and the TabPFN core library.
 </Note>
+
+Then, build and AutoTabPFN ensemble for classification like the following:
 
 ```python
 from tabpfn_extensions.post_hoc_ensembles.sklearn_interface import AutoTabPFNClassifier

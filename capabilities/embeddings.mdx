@@ -3,7 +3,7 @@ title: "Embeddings"
 description: "Extract latent feature representations from TabPFN models."
 ---
 
-The **Embeddings** extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, search, or meta-learning.
+The [\*\*Embeddings](**[**https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/embedding**]\(https://github.com/PriorLabs/tabpfn-extensions/tree/main/src/tabpfn_extensions/embedding\)**)\*\* extension enables extraction of **latent feature representations** (embeddings) from TabPFN models. These embeddings provide a way to analyze, visualize, or reuse the learned representations produced by TabPFN’s transformer architecture - useful for downstream tasks such as clustering, feature analysis, search, or meta-learning.
 
 The extension offers two embedding extraction modes:
 
@@ -22,11 +22,9 @@ Install the embeddings extension:
 pip install "tabpfn-extensions[embedding]"
 ```
 
-## Example
-
-### 1. Initialize the Extractor
-
 You can use a classifier or regressor depending on your task. The example below demonstrates the workflow with a **TabPFNClassifier**.
+
+#### 1. Initialize the Extractor
 
 ```python
 from tabpfn_extensions import TabPFNClassifier
@@ -45,7 +43,7 @@ clf = TabPFNClassifier(n_estimators=1)
 embedding_extractor = TabPFNEmbedding(tabpfn_clf=clf, n_fold=0)
 ```
 
-### 2. Extract Vanilla Embeddings
+#### 2. Extract Vanilla Embeddings
 
 When `n_fold=0`, the model extracts embeddings after fitting once on the entire dataset.
 
@@ -60,7 +58,7 @@ test_embeddings = embedding_extractor.get_embeddings(X_train, y_train, X_test, d
 
 This produces NumPy arrays containing dense vector representations of each sample.
 
-### 3. Extract Cross-Validated Embeddings
+#### 3. Extract Cross-Validated Embeddings
 
 When `n_fold > 0`, _K_-fold cross-validation is applied following the method described in _“A Closer Look at TabPFN v2: Strength, Limitation, and Extension"_ ([arXiv:2502.17361](https://arxiv.org/abs/2502.17361)).
 

@@ -5,8 +5,8 @@ This repo contains the source files for [docs.priorlabs.ai](https://docs.priorla
 
 ## About Prior Labs
 
-**Prior Labs** develops foundation models for tabular data, redefining how machine learning works on structured datasets. Our flagship model, **TabPFN**, replaces manual model tuning with instant, state-of-the-art predictions.
-Trained on millions of synthetic datasets, TabPFN has learned the learning process itself. Instead of optimizing weights for every new dataset, it already encodes the inductive biases, priors, and optimization strategies that traditional models must rediscover each time. When you run it on your data, TabPFN performs zero-shot inference - producing benchmark-level predictions in seconds that rival or exceed tuned ensembles trained for hours.
+**Prior Labs** develops foundation models for tabular data. Our flagship model, **TabPFN**, provides a pre-trained option for structured datasets when retraining a model for every task is impractical.
+TabPFN is trained on large collections of synthetic datasets so that it can reuse statistical patterns across problems. Instead of optimizing weights for every new dataset, it encodes inductive biases, priors, and optimization strategies that traditional models must rediscover each time. When you run it on your data, TabPFN performs zero-shot inference by using the provided context window to generate predictions in a single forward pass.
 
 ## Getting Started
 

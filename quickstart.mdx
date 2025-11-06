@@ -8,16 +8,16 @@ description: "Get started with TabPFN in minutes."
 TabPFN can be used in two ways, depending on your workflow and compute setup. Use the API for our hosted service and for production use. For testing and if you have GPUs, install the non-commercial open-source package from Hugging Face.
 
 <div className="table-container-dc3e57e5">
-| OSS Package                                                                        | API Access                                       |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------ |
-| Full control, local inference                                                      | Managed infrastructure, no setup                 |
-| Requires GPU, Python and PyTorch                                                   | Only Internet Access Needed, Python not required |
-| Best for research & experimentation                                                | Best for production & teams                      |
+| OSS Package                         | API Access                                       |
+| ----------------------------------- | ------------------------------------------------ |
+| Full control, local inference       | Managed infrastructure, no setup                 |
+| Requires GPU, Python and PyTorch    | Only Internet Access Needed, Python not required |
+| Best for research & experimentation | Best for production & teams                      |
 
 </div>
 
 <Info>
-Please note that TabPFN-2.5 is available only for **non-commercial use** whereas TabPFN-2 available for any usage.
+  Please note that TabPFN-2.5 is available only for **non-commercial use**, whereas TabPFN-2 is available for any usage.
 </Info>
 
 #### OSS Package
@@ -28,7 +28,11 @@ Please note that TabPFN-2.5 is available only for **non-commercial use** whereas
 pip install tabpfn
 ```
 
-Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN)
+<Card title="GitHub" icon="github" horizontal href="https://github.com/PriorLabs/tabpfn">
+  Check out our TabPFN open-source GitHub repository.
+</Card>
+
+Use the [**TabPFNClassifier**](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) just like any scikit-learn estimator:
 
 ```python
 from tabpfn import TabPFNClassifier
@@ -51,7 +55,11 @@ preds = model.predict(X_test)
 pip install tabpfn-client
 ```
 
-Link to GitHub: [GitHub](https://github.com/PriorLabs/TabPFN-client)
+<Card title="GitHub" icon="github" horizontal href="https://github.com/PriorLabs/tabpfn-client">
+  Check out our `tabpfn-client` open-source GitHub repository for a detailed getting-started guide and examples.
+</Card>
+
+Instantiate the hosted [**tabpfn_client.TabPFNClassifier**](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) for API-backed predictions:
 
 <CodeGroup>
 
@@ -77,9 +85,10 @@ preds = model.predict(X_test)
 
 </CodeGroup>
 
-**Access TabPFN-2.5**
+##### Access TabPFN-2.5
 
-In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.: 
+In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.:
+
 ```bash
 pip install -U tabpfn-client
 ```
@@ -88,22 +97,22 @@ If you do this, you'll immediately have access to TabPFN 2.5. Here are some exam
 
 ```python
 # By default use TabPFN-2.5
-model = TabPFNClassifier(n_estimators=4)
+model = TabPFNClassifier()
 
 # Specify an exact model checkpoint
-model = TabPFNClassifier(n_estimators=4, model_path="v2.5_default")
+model = TabPFNClassifier(model_path="v2.5_default")
 
 # Use previous TabPFN-2 model weights
-model = TabPFNClassifier(n_estimators=4, model_path="v2_default")
+model = TabPFNClassifier(model_path="v2_default")
 ```
 
-We also provide a convinience method for listing the available models:
+We also provide a convenience method for listing the available models:
 
 ```python
 model.list_available_models()
 ```
 
-**Authentification**
+##### Authentication
 
 To authenticate you can run a prediction, which will prompt you to sign in if needed. To log in programmatically, follow these steps:
 
@@ -112,7 +121,7 @@ import tabpfn_client
 token = tabpfn_client.get_access_token()
 ```
 
-and login (on another machine) using your access token, skipping the interactive flow, use:
+To log in on another machine using your access token and skip the interactive flow, use:
 
 ```python
 tabpfn_client.set_access_token(token)
@@ -209,7 +218,7 @@ payload = {
 }
 files = {
     "data": (None, json.dumps(payload), "application/json"),
-    "file": (test_path, open(test_path, "rb")),
+    "dataset_file": (test_path, open(test_path, "rb")),
 }
 predict_response = requests.post(
     "https://api.priorlabs.ai/v1/predict",

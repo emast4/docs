@@ -22,7 +22,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 
 # Initialize and fit
 model = TabPFNRegressor(device="auto")
-# To use TabPFN-2:
+# To use TabPFNv2:
 # model = TabPFNRegressor.create_default_for_version(ModelVersion.V2)
 model.fit(X_train, y_train)
 

@@ -5,18 +5,18 @@ description: "Compare the different versions of the TabPFN foundation model, fro
 
 The following table summarizes the key differences between the major TabPFN releases. The "Max Rows" and "Max Features" represent the recommended maximum dataset sizes the models were designed and evaluated for.
 
-| Model           | Max Rows | Max Features | Data Type    | License                                    | Primary Publication                                                 |
-| :-------------- | :------- | :----------- | :----------- | :----------------------------------------- | :------------------------------------------------------------------ |
-| **TabPFN-2.5**  | 50,000   | 2,000        | Mixed        | [`TABPFN-2.5 Non-Commercial License v1.0`*](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE) | Documentation available soon                                        |
-| **TabPFN-2**    | 10,000   | 500          | Mixed        | [`Prior Labs License`](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE)                       | [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6) |
-| **TabPFN (v1)** | 1,000    | 100          | Numeric Only | `Apache 2.0`                               | [ICLR 2023](https://arxiv.org/abs/2207.01848)                       |
+| Model           | Max Rows | Max Features | Data Type    | License                                                                                                                     | Primary Publication                                                 |
+| :-------------- | :------- | :----------- | :----------- | :-------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------ |
+| **TabPFN-2.5**  | 50,000   | 2,000        | Mixed        | [`TABPFN-2.5 License v1.0`](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE)                                                                                                   | Documentation available soon                                        |
+| **TabPFN-2**    | 10,000   | 500          | Mixed        | [`Prior Labs License`](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) \ allows any commercial use | [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6) |
+| **TabPFN (v1)** | 1,000    | 100          | Numeric Only | `Apache 2.0`                                                                                                                | [ICLR 2023](https://arxiv.org/abs/2207.01848)                       |
 
 \* More information about our license can be found [here](/models#tabpfn-2-5-model-license).
 
 ## TabPFN-2.5
 
 - **Publication:** Detailed documentation and release notes will be available soon.
-- **License:** Model checkpoint under: [`TABPFN-2.5 Non-Commercial License v1.0`](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE), code under [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
+- **License:** Model checkpoint under: [`TABPFN-2.5 License v1.0`](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE), code under [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
 
 TabPFN-2.5 is the next generation of the tabular foundation model, designed to scale to significantly larger datasets. It expands the in-context learning capabilities of TabPFN to additional tabular problems.
 
@@ -58,45 +58,43 @@ This is the original TabPFN model presented at ICLR 2023. It introduced the conc
 ## TabPFN-2.5 Model License
 
 <Accordion title="What does the non-commercial license mean for enterprise use?">
-Enterprises can download and experiment with the model internally without cost. This includes benchmarking, testing on internal datasets, exploring capabilities, and understanding fit for use cases.
-Any competitive benchmarking (i.e. for procurement), testing in deployment in production environments, use in workflows that support business decisions, client projects, or revenue generating activities requires a separate commercial license or API agreement.
+  Enterprises can download and experiment with the model internally without cost. This includes benchmarking, testing on internal datasets, exploring capabilities, and understanding fit for use cases. Any competitive benchmarking (i.e. for procurement), testing in deployment in production environments, use in workflows that support business decisions, client projects, or revenue generating activities requires a separate commercial license or API agreement.
 </Accordion>
 
 <Accordion title="Can enterprises use TabPFN-2.5 for internal testing?">
-Yes. Enterprises may run preliminary internal assessments on their own data for research and exploration. This includes testing on internal datasets, exploring capabilities and understanding fit for use-cases.
+  Yes. Enterprises may run preliminary internal assessments on their own data for research and exploration. This includes testing on internal datasets, exploring capabilities and understanding fit for use-cases.
 </Accordion>
 
 <Accordion title="What is not allowed in enterprise testing?">
-You cannot use the model or its outputs for any activity that influences business decisions, evaluation of vendors, procurement decisions, or commercial workflows. This includes proof of value that affects internal budgeting or vendor selection. In those cases, a commercial license is required. Any competitive benchmarking (i.e. for procurement), testing in deployment in production environments, use in workflows that support business decisions, client projects, or revenue generating activities requires a separate commercial license or API agreement.
+  You cannot use the model or its outputs for any activity that influences business decisions, evaluation of vendors, procurement decisions, or commercial workflows. This includes proof of value that affects internal budgeting or vendor selection. In those cases, a commercial license is required. Any competitive benchmarking (i.e. for procurement), testing in deployment in production environments, use in workflows that support business decisions, client projects, or revenue generating activities requires a separate commercial license or API agreement.
 </Accordion>
 
 <Accordion title="Can we use results from testing to inform product features or deployment strategy?">
-Not without a commercial license. Any evaluation that influences commercial decisions or internal production planning is considered commercial use.
+  Not without a commercial license. Any evaluation that influences commercial decisions or internal production planning is considered commercial use.
 </Accordion>
 
 <Accordion title="Can we evaluate TabPFN-2.5 for integration into our product?">
-You can run small scale internal experiments. If you intend to integrate TabPFN-2.5 into a product or platform, the API or a commercial license is required.
+  You can run small scale internal experiments. If you intend to integrate TabPFN-2.5 into a product or platform, the API or a commercial license is required.
 </Accordion>
 
 <Accordion title="If we want to move from testing to production, what is required?">
-You will need a commercial license or API agreement. Contact [sales@priorlabs.ai](mailto:sales@priorlabs.ai).
+  You will need a commercial license or API agreement. Contact [sales@priorlabs.ai](mailto:sales@priorlabs.ai).
 </Accordion>
 
 <Accordion title="Do non-commercial rules also apply to derivative models or fine tuned versions?">
-Yes. The same restrictions apply to all derivatives. Fine tuned, modified, or otherwise adapted models created from TabPFN-2.5 remain non-commercial unless you secure a commercial license.
+  Yes. The same restrictions apply to all derivatives. Fine tuned, modified, or otherwise adapted models created from TabPFN-2.5 remain non-commercial unless you secure a commercial license.
 </Accordion>
 
 <Accordion title="What about outputs generated by the model?">
-Outputs are yours, but they can only be used for non-commercial evaluation and research. Using them in production or for any business decisions requires a commercial license.
+  Outputs are yours, but they can only be used for non-commercial evaluation and research. Using them in production or for any business decisions requires a commercial license.
 </Accordion>
 
 <Accordion title="If we train a model from scratch without the weights, is that covered by this license?">
-If you do not use any TabPFN-2.5 model weights, checkpoints, or other licensed model elements, then the non-commercial license does not apply to that separately developed model.
-However, if you use TabPFN-2.5 or its outputs to train, guide, fine tune, or distill another model for commercial use, that is not permitted under this license.
+  If you do not use any TabPFN-2.5 model weights, checkpoints, or other licensed model elements, then the non-commercial license does not apply to that separately developed model. However, if you use TabPFN-2.5 or its outputs to train, guide, fine tune, or distill another model for commercial use, that is not permitted under this license.
 </Accordion>
 
 <Accordion title="Can we use TabPFN-2.5 to train a commercial model indirectly?">
-No. Using TabPFN-2.5 or its outputs to train, fine tune, distill, or otherwise improve a commercial model is not allowed without a commercial agreement.
+  No. Using TabPFN-2.5 or its outputs to train, fine tune, distill, or otherwise improve a commercial model is not allowed without a commercial agreement.
 </Accordion>
 
 <Accordion title="Where should we go if we want to deploy TabPFN in production or test it?">
@@ -104,9 +102,9 @@ Use our API or obtain a commercial license. The API is the simplest path for pro
 </Accordion>
 
 <Accordion title="What about the previous TabPFN v2 release?">
-If you want to continue using the earlier TabPFN v2 release, it remains available under its original license. This non-commercial license applies only to TabPFN-2.5. The terms for prior versions do not change.
+  If you want to continue using the earlier TabPFN v2 release, it remains available under its original license. This non-commercial license applies only to TabPFN-2.5. The terms for prior versions do not change.
 </Accordion>
 
 <Accordion title="Who do we contact for commercial licensing?">
-Please reach out to our commercial team at [sales@priorlabs.ai](mailto:sales@priorlabs.ai).
+  Please reach out to our commercial team at [sales@priorlabs.ai](mailto:sales@priorlabs.ai).
 </Accordion>

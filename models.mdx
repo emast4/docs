@@ -1,15 +1,16 @@
 ---
 title: "Model Overview"
-description: "Compare the different versions of the TabPFN foundation model, from the original v1 to the latest TabPFN-2.5."
+description: "Compare the different versions of the TabPFN foundation model, from the latest TabPFN-2.5 to the original v1."
 ---
 
 The following table summarizes the key differences between the major TabPFN releases. The "Max Rows" and "Max Features" represent the recommended maximum dataset sizes the models were designed and evaluated for.
 
 | Model           | Max Rows | Max Features | Data Type    | License              | Primary Publication                                                 |
 | :-------------- | :------- | :----------- | :----------- | :------------------- | :------------------------------------------------------------------ |
-| **TabPFN (v1)** | 1,000    | 100          | Numeric Only | Apache 2.0           | [ICLR 2023](https://arxiv.org/abs/2207.01848)                       |
-| **TabPFN-2**    | 10,000   | 500          | Mixed        | Prior Labs License\* | [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6) |
 | **TabPFN-2.5**  | 50,000   | 2,000        | Mixed        | Prior Labs License\* | Documentation available soon                                        |
+| **TabPFN-2**    | 10,000   | 500          | Mixed        | Prior Labs License\* | [Nature (2025)](https://www.nature.com/articles/s41586-024-08328-6) |
+| **TabPFN (v1)** | 1,000    | 100          | Numeric Only | Apache 2.0           | [ICLR 2023](https://arxiv.org/abs/2207.01848)                       |
+
 
 _\*The Prior Labs License is based on Apache 2.0 with an additional attribution requirement._
 
@@ -18,7 +19,9 @@ _\*The Prior Labs License is based on Apache 2.0 with an additional attribution 
 ## TabPFN-2.5
 
 - **Publication:** Detailed documentation and release notes will be available soon.
-* **License:** Model checkpoint under: [Prior Labs Non Commercial License](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE), code under [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
+
+
+- **License:** Model checkpoint under: [Prior Labs Non Commercial License](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE), code under [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
 
 TabPFN-2.5 is the next generation of the tabular foundation model, designed to scale to significantly larger datasets. It expands the in-context learning capabilities of TabPFN to additional tabular problems.
 
@@ -32,7 +35,9 @@ TabPFN-2.5 is the next generation of the tabular foundation model, designed to s
 ## TabPFN-2
 
 - **Publication:** "Accurate predictions on small data with a tabular foundation model" (Nature, 2025)
-* **License:** [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
+
+
+- **License:** [Prior Labs License](https://raw.githubusercontent.com/PriorLabs/TabPFN/49394b053a6759cfe68e90c21a2d51c31b396768/LICENSE) (Open source, commercial use with attribution)
 
 TabPFN-2 is the model published in _Nature_ and represents a significant upgrade over v1. It was re-engineered to handle real-world, "messy" data. It remains a powerful and accessible foundation model for small- to medium-sized datasets.
 

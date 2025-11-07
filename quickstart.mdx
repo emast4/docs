@@ -222,8 +222,12 @@ See the details of the [available models](/models).
   ```python
   from tapfn import TabPFNClassifier, TabPFNRegressor
   from tabpfn.constants import ModelVersion
+
+  # Set the version of the TabPFNClassifier to 2.5
   classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
-  regressor = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+
+  # Set the version of the TabPFNRegressor to 2.5
+  regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
   ```
 
 ### API via Python SDK
@@ -234,15 +238,22 @@ See the details of the [available models](/models).
   ```python
   from tapfn_client.estimator import TabPFNClassifier, TabPFNRegressor
   from tabpfn_client.constants import ModelVersion
+
+  # Set the version of the TabPFNClassifier to 2.5
   classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
-  regressor = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+
+  # Set the version of the TabPFNRegressor to 2.5
+  regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
   ```
 
 Alternatively, a variety of models can be selected using the `model_path` option:
 
 ```python
+from tabpfn_client import TabPFNClassifier
+
 # View the models available
 print(TabPFNClassifier().list_available_models())
+
 # Create a classifier or regressor using a particular model
 classifier = TabPFNClassifier(model_path="v2.5_real")
 ```
@@ -263,11 +274,13 @@ For example, the payload to specify the TabPFN-2.5 regression model is
 ```json
 {
 	"task": "classification",
-	"model_path": "tabpfn-v2.5-regressor-v2.5_default.ckpt"
+	"config": {
+    "model_path": "tabpfn-v2.5-regressor-v2.5_default.ckpt"
+  }
 }
 ```
 
-TabPFN (v1) is only available through the OSS package, via the [tag on GitHub](https://github.com/PriorLabs/TabPFN/releases/tag/v1.0.0).
+The TabPFN (v1) model is only available through the OSS package, via the [tag on GitHub](https://github.com/PriorLabs/TabPFN/releases/tag/v1.0.0).
 
 <Card title="FAQ" icon="question-circle" horizontal href="/faq">
   Have questions? Check out the FAQ for answers to common topics about GPUs, limits, API usage, and more.

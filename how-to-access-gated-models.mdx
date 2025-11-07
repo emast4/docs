@@ -1,0 +1,47 @@
+---
+title: "How to access TabPFN-2.5"
+description: "Description of your new file."
+---
+
+TabPFN-2.5 is released under a [non-commerical license](models#tabpfn-2-5-model-license), which you need to accept before the model files can be downloaded.
+
+### Step 1: Accept the license agreement
+
+Visit Hugging Face, where the model is hosted, and agree to the license terms: https://huggingface.co/Prior-Labs/tabpfn_2_5/
+
+You will need to log in to your Hugging Face account, or create one if you don't already have it. Once you have agreed to the license, you should be granted access immediately.
+
+### Step 2: Create an access token
+
+- If you created a new account: ensure you have verified your Hugging Face email address
+- Create a new token using this link: https://huggingface.co/settings/tokens/new?tokenType=fineGrained
+  - Give the token a name
+  - Check the box "Read access to contents of all public gated repos you can access" ( [screenshot](guide-screenshots/hf-token-creation.png))
+- Press "Create token", and copy the displayed token (you will only be able to see it once).\
+  Your token should look like `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`
+
+### Step 3: Log in with your new token
+
+**If using Google Colab**
+
+- Select "Secrets" from the left-hand menu ([screenshot](guide-screenshots/colab-secrets-pane.png))
+- Set name to "HF_TOKEN"
+- Set value to the token itself
+
+**If using a notebook other than Google Colab**
+
+Ensure TabPFN is installed. Create a new Python code cell containing:
+
+```python
+import hugging_face
+hugging_face.login()
+```
+
+Execute this cell and follow the instructions.
+
+**If using the terminal**
+
+- Activate the Python environment that you use for TabPFN
+- Run `hf auth login`
+- Enter the token when prompted
+- Alternatively: you may wish to specify the token using the `HF_TOKEN` environment variable

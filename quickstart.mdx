@@ -71,44 +71,7 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
-
-```python Regression
-import tabpfn_client
-from tabpfn_client import TabPFNRegressor
-# Use TabPFN like any scikit-learn model
-model = TabPFNRegressor()
-model.fit(X_train, y_train)
-preds = model.predict(X_test)
-```
-
 </CodeGroup>
-
-##### Access TabPFN-2.5
-
-In order to access TabPFN 2.5 through the Python SDK you will need a recent version of `tabpfn-client`. For best results we recommend upgrading to the most recent version with, e.g.:
-
-```bash
-pip install -U tabpfn-client
-```
-
-If you do this, you'll immediately have access to TabPFN 2.5. Here are some examples:
-
-```python
-# By default use TabPFN-2.5
-model = TabPFNClassifier()
-
-# Specify an exact model checkpoint
-model = TabPFNClassifier(model_path="v2.5_default")
-
-# Use previous TabPFN-2 model weights
-model = TabPFNClassifier(model_path="v2_default")
-```
-
-We also provide a convenience method for listing the available models:
-
-```python
-model.list_available_models()
-```
 
 ##### Authentication
 
@@ -233,7 +196,66 @@ print(json.dumps(predict_response.json(), indent=2))
   <Card title="API Reference" icon="book" horizontal href="/api-reference/getting-started">
     You can follow the step-by-step onboarding instructions in the [API Reference](/api-reference/getting-started), which also includes detailed endpoint descriptions and authentication examples.
   </Card>
-  <Card title="FAQ" icon="question-circle" horizontal href="/faq">
-    Have questions? Check out the FAQ for answers to common topics about GPUs, limits, API usage, and more.
-  </Card>
 </CardGroup>
+
+## Selecting the model version
+
+By default you'll get the latest TabPFN model. However, you can also specify a particular version.
+
+See the details of the [available models](models.mdx).
+
+### OSS Package
+
+- Ensure your installation is up to date: `pip install -U tabpfn`
+- Instantiate the classifier or regressor:
+
+  ```python
+  from tapfn import TabPFNClassifier, TabPFNRegressor
+  from tabpfn.constants import ModelVersion
+  classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+  regressor = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+  ```
+
+### API via Python SDK
+
+- Ensure your installation is up to date: `pip install -U tabpfn-client`
+- Instantiate the classifier or regressor:
+
+  ```python
+  from tapfn_client.estimator import TabPFNClassifier, TabPFNRegressor
+  from tabpfn_client.constants import ModelVersion
+  classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+  regressor = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+  ```
+
+We also provide a convenience method for listing the available models:
+
+```python
+TabPFNClassifier().list_available_models()
+```
+
+### API via REST
+
+The model is selected using the "model_path" in the payload. The default model paths are as follows:
+
+- TabPFN-2.5
+  - classification: `tabpfn-v2.5-classifier-v2.5_default.ckpt`
+  - regression: `tabpfn-v2.5-regressor-v2.5_default.ckpt`
+- TabPFN-2
+  - classification: `tabpfn-v2-classifier-finetuned-zk73skhh.ckpt`
+  - regression: `tabpfn-v2-regressor.ckpt`
+
+For example, the payload to specify the TabPFN-2.5 regression model is
+
+```json
+{
+	"task": "classification",
+	"model_path": "tabpfn-v2.5-regressor-v2.5_default.ckpt"
+}
+```
+
+TabPFN (v1) is only available through the OSS package, via the [tag on GitHub](https://github.com/PriorLabs/TabPFN/releases/tag/v1.0.0).
+
+<Card title="FAQ" icon="question-circle" horizontal href="/faq">
+  Have questions? Check out the FAQ for answers to common topics about GPUs, limits, API usage, and more.
+</Card>

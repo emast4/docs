@@ -71,6 +71,16 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
+
+```python Regression
+import tabpfn_client
+from tabpfn_client import TabPFNRegressor
+# Use TabPFN like any scikit-learn model
+model = TabPFNRegressor()
+model.fit(X_train, y_train)
+preds = model.predict(X_test)
+```
+
 </CodeGroup>
 
 ##### Authentication

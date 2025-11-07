@@ -238,10 +238,13 @@ See the details of the [available models](models.mdx).
   regressor = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
   ```
 
-We also provide a convenience method for listing the available models:
+Alternatively, a variety of models can be selected using the `model_path` option:
 
 ```python
-TabPFNClassifier().list_available_models()
+# View the models available
+print(TabPFNClassifier().list_available_models())
+# Create a classifier or regressor using a particular model
+classifier = TabPFNClassifier(model_path="v2.5_real")
 ```
 
 ### API via REST

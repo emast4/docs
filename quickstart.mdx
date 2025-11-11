@@ -216,35 +216,35 @@ See the details of the [available models](/models).
 
 ### OSS Package
 
-- Ensure your installation is up to date: `pip install -U tabpfn`
-- Instantiate the classifier or regressor:
+1. Ensure your installation is up to date: `pip install -U tabpfn`
+2. Instantiate the classifier or regressor:
 
-  ```python
-  from tapfn import TabPFNClassifier, TabPFNRegressor
-  from tabpfn.constants import ModelVersion
+```python
+from tapfn import TabPFNClassifier, TabPFNRegressor
+from tabpfn.constants import ModelVersion
 
-  # Set the version of the TabPFNClassifier to 2.5
-  classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+# Set the version of the TabPFNClassifier to 2.5
+classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
 
-  # Set the version of the TabPFNRegressor to 2.5
-  regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
-  ```
+# Set the version of the TabPFNRegressor to 2.5
+regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
+```
 
 ### API via Python SDK
 
-- Ensure your installation is up to date: `pip install -U tabpfn-client`
-- Instantiate the classifier or regressor:
+1. Ensure your installation is up to date: `pip install -U tabpfn-client`
+2. Instantiate the classifier or regressor:
 
-  ```python
-  from tapfn_client.estimator import TabPFNClassifier, TabPFNRegressor
-  from tabpfn_client.constants import ModelVersion
+```python
+from tapfn_client.estimator import TabPFNClassifier, TabPFNRegressor
+from tabpfn_client.constants import ModelVersion
 
-  # Set the version of the TabPFNClassifier to 2.5
-  classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+# Set the version of the TabPFNClassifier to 2.5
+classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
 
-  # Set the version of the TabPFNRegressor to 2.5
-  regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
-  ```
+# Set the version of the TabPFNRegressor to 2.5
+regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
+```
 
 Alternatively, a variety of models can be selected using the `model_path` option:
 
@@ -263,11 +263,11 @@ classifier = TabPFNClassifier(model_path="v2.5_real")
 The model is selected using the "model_path" in the payload. The default model paths are as follows:
 
 - TabPFN-2.5
-  - classification: `tabpfn-v2.5-classifier-v2.5_default.ckpt`
-  - regression: `tabpfn-v2.5-regressor-v2.5_default.ckpt`
+  - Classification: `tabpfn-v2.5-classifier-v2.5_default.ckpt`
+  - Regression: `tabpfn-v2.5-regressor-v2.5_default.ckpt`
 - TabPFN-2
-  - classification: `tabpfn-v2-classifier-finetuned-zk73skhh.ckpt`
-  - regression: `tabpfn-v2-regressor.ckpt`
+  - Classification: `tabpfn-v2-classifier-finetuned-zk73skhh.ckpt`
+  - Regression: `tabpfn-v2-regressor.ckpt`
 
 For example, the payload to specify the TabPFN-2.5 regression model is
 

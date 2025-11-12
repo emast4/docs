@@ -26,7 +26,7 @@ from tabpfn_extensions.manyclass_classifier import ManyClassClassifier
 from tabpfn import TabPFNClassifier
 
 estimator = TabPFNClassifier(device="cuda")
-classifier = ManyClassClassifier(base_estimator=estimator)
+classifier = ManyClassClassifier(estimator=estimator)
 classifier.fit(X_train, y_train)
 predictions = classifier.predict(X_test)
 ```

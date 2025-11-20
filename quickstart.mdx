@@ -18,19 +18,22 @@ TabPFN can be used in two ways, depending on your workflow and compute setup. Us
 
 #### OSS Package
 
-**Recommended for** researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the model locally, giving you full control over your data and experimentation.
+Recommended for researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the model locally, giving you full control over your data and experimentation.
 
 ```bash
 pip install tabpfn
 ```
 
-To get the latest models make sure to run `pip install -U tabpfn` if you installed `tabpfn` before.
+To get access to the latest features and our [TabPFN-2.5](/models#tabpfn-2-5) model, please upgrade the package to the latest version:
+```bash
+pip install --upgrade tabpfn
+```
 
 <Card title="GitHub" icon="github" horizontal href="https://github.com/PriorLabs/tabpfn">
   Check out our TabPFN open-source GitHub repository.
 </Card>
 
-Use the [**TabPFNClassifier**](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) just like any scikit-learn estimator:
+Use the [TabPFNClassifier](https://github.com/PriorLabs/tabpfn/blob/main/src/tabpfn/classifier.py) just like any scikit-learn estimator:
 
 ```python
 from tabpfn import TabPFNClassifier
@@ -39,7 +42,9 @@ model.fit(X_train, y_train)
 preds = model.predict(X_test)
 ```
 
+<Warning>
 The first time you use the model, you will be asked to accept the model license and configure the access token, see the [detailed instructions](/how-to-access-gated-models).
+</Warning>
 
 <Note>
   GPU recommended (e.g., NVIDIA T4 at minimum) or A100/H100 for optimal inference speed.
@@ -47,7 +52,7 @@ The first time you use the model, you will be asked to accept the model license 
 
 #### TabPFN API
 
-**Recommended for** data teams and developers who want TabPFN’s performance without managing infrastructure. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 and manages GPU compute, scaling, and model versioning. You can use it either through a REST API or the Python SDK.
+Recommended for data teams and developers who want TabPFN’s performance **without managing infrastructure**. The Prior Labs API provides cloud-hosted access to TabPFN-2.5 and manages GPU compute, scaling, and model versioning. You can use it either through a REST API or the Python SDK.
 
 #### Using the Python SDK (API Client)
 
@@ -59,27 +64,30 @@ pip install tabpfn-client
   Check out our `tabpfn-client` open-source GitHub repository for a detailed getting-started guide and examples.
 </Card>
 
-Instantiate the hosted [**tabpfn_client.TabPFNClassifier**](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) for API-backed predictions:
+Instantiate the hosted [TabPFNClassifier](https://github.com/PriorLabs/tabpfn-client/blob/main/tabpfn_client/estimator.py) for API-backed predictions:
 
 <CodeGroup>
 
 ```python Classification
-import tabpfn_client
 from tabpfn_client import TabPFNClassifier
+
 # Use TabPFN like any scikit-learn model
 model = TabPFNClassifier()
 model.fit(X_train, y_train)
+
 # Get predictions
 preds = model.predict(X_test)
 ```
 
 
 ```python Regression
-import tabpfn_client
 from tabpfn_client import TabPFNRegressor
+
 # Use TabPFN like any scikit-learn model
 model = TabPFNRegressor()
 model.fit(X_train, y_train)
+
+# Get predictions
 preds = model.predict(X_test)
 ```
 
@@ -110,9 +118,11 @@ First, define your dataset paths and authentication details. This allows you to 
 
 ```python
 import os, json, requests
+
 # Define your file paths
 train_path = "train.csv"   # path to your training dataset
 test_path = "test.csv"     # path to your test dataset
+
 # Get your API key from the environment
 api_key = os.getenv("PRIORLABS_API_KEY")
 headers = {"Authorization": f"Bearer {api_key}"}
@@ -134,7 +144,7 @@ fit_response = requests.post(
     files=files,
 )
 model_id = fit_response.json().get("model_id")
-print(f":white_check_mark: Model trained: {model_id}")
+print(f"☑️ Model trained: {model_id}")
 ```
 
 
@@ -150,7 +160,7 @@ fit_response = requests.post(
     files=files,
 )
 model_id = fit_response.json().get("model_id")
-print(f":white_check_mark: Model trained: {model_id}")
+print(f"☑️ Model trained: {model_id}")
 ```
 
 </CodeGroup>
@@ -176,7 +186,7 @@ predict_response = requests.post(
     headers=headers,
     files=files,
 )
-print(":white_check_mark: Predictions:")
+print("☑️ Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
 
@@ -198,7 +208,7 @@ predict_response = requests.post(
     headers=headers,
     files=files,
 )
-print(":white_check_mark: Predictions:")
+print("☑️ Predictions:")
 print(json.dumps(predict_response.json(), indent=2))
 ```
 
@@ -237,16 +247,23 @@ regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
 1. Ensure your installation is up to date: `pip install -U tabpfn-client`
 2. Instantiate the classifier or regressor:
 
-```python
-from tapfn_client.estimator import TabPFNClassifier, TabPFNRegressor
+<CodeGroup>
+```python title="Classifier"
+from tapfn_client.estimator import TabPFNClassifier
 from tabpfn_client.constants import ModelVersion
 
 # Set the version of the TabPFNClassifier to 2.5
 classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+```
+
+```python title="Regressor"
+from tapfn_client.estimator import TabPFNRegressor
+from tabpfn_client.constants import ModelVersion
 
 # Set the version of the TabPFNRegressor to 2.5
-regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
+classifier = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
 ```
+</CodeGroup>
 
 Alternatively, a variety of models can be selected using the `model_path` option:
 
@@ -262,14 +279,13 @@ classifier = TabPFNClassifier(model_path="v2.5_real")
 
 ### API via REST
 
-The model is selected using the "model_path" in the payload. The default model paths are as follows:
-
-- TabPFN-2.5
-  - Classification: `tabpfn-v2.5-classifier-v2.5_default.ckpt`
-  - Regression: `tabpfn-v2.5-regressor-v2.5_default.ckpt`
-- TabPFN-2
-  - Classification: `tabpfn-v2-classifier-finetuned-zk73skhh.ckpt`
-  - Regression: `tabpfn-v2-regressor.ckpt`
+The model is selected using the `model_path` argument in the payload. The default model paths are as follows:
+<div className="table-container-nowrap">
+| | TabPFN-2.5 | TabPFN-2 |
+| --- | --- | --- |
+| Classification | `tabpfn-v2.5-classifier-v2.5_default.ckpt` | `tabpfn-v2-classifier-finetuned-zk73skhh.ckpt` |
+| Regression | `tabpfn-v2.5-regressor-v2.5_default.ckpt` | `tabpfn-v2-regressor.ckpt` |
+</div>
 
 For example, the payload to specify the TabPFN-2.5 regression model is
 

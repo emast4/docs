@@ -90,6 +90,12 @@ body, p, div, a, li, td, th {
   color: #0c0c0c !important;
 }
 
+/* Ensure bold text displays correctly */
+strong, b {
+  font-weight: 700 !important;
+  color: #0c0c0c !important;
+}
+
 /* Specific text elements */
 .paragraph {
   color: #0c0c0c !important;
@@ -155,4 +161,28 @@ a {
 .table-container-dc3e57e5 table td:nth-child(2) {
   width: 50% !important;
   text-align: left !important;
+}
+
+/* Table styling for single-row display without text breaks */
+.table-container-nowrap {
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+
+.table-container-nowrap table {
+  width: auto !important;
+  table-layout: auto !important;
+}
+
+.table-container-nowrap table th,
+.table-container-nowrap table td {
+  white-space: nowrap !important;
+  text-align: left !important;
+  padding-right: 1rem !important;
+}
+
+.table-container-nowrap table th:first-child,
+.table-container-nowrap table td:first-child {
+  width: auto !important;
+  padding-right: 1.5rem !important;
 }

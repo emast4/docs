@@ -269,6 +269,25 @@
                                               [0.8, 0.2]
                                           ],
                                           "task": "classification",
+                                          "params": {
+                                              "average_before_softmax": false,
+                                              "categorical_features_indices": null,
+                                              "device": [
+                                                  "cpu"
+                                              ],
+                                              "differentiable_input": false,
+                                              "fit_mode": "fit_preprocessors",
+                                              "ignore_pretraining_limits": true,
+                                              "inference_config": null,
+                                              "inference_precision": "auto",
+                                              "memory_saving_mode": true,
+                                              "model_path": "auto",
+                                              "n_estimators": 8,
+                                              "n_jobs": null,
+                                              "n_preprocessing_jobs": 4,
+                                              "random_state": 42,
+                                              "softmax_temperature": 0.2
+                                          },
                                           "used_credits": 10,
                                           "remaining_quota": 90
                                       }
@@ -283,6 +302,25 @@
                                               "class_1"
                                           ],
                                           "task": "classification",
+                                          "params": {
+                                              "average_before_softmax": false,
+                                              "categorical_features_indices": null,
+                                              "device": [
+                                                  "cpu"
+                                              ],
+                                              "differentiable_input": false,
+                                              "fit_mode": "fit_preprocessors",
+                                              "ignore_pretraining_limits": true,
+                                              "inference_config": null,
+                                              "inference_precision": "auto",
+                                              "memory_saving_mode": true,
+                                              "model_path": "auto",
+                                              "n_estimators": 8,
+                                              "n_jobs": null,
+                                              "n_preprocessing_jobs": 4,
+                                              "random_state": 42,
+                                              "softmax_temperature": 0.2
+                                          },
                                           "used_credits": 8,
                                           "remaining_quota": 92
                                       }
@@ -298,6 +336,25 @@
                                               2100.0
                                           ],
                                           "task": "regression",
+                                          "params": {
+                                              "average_before_softmax": false,
+                                              "categorical_features_indices": null,
+                                              "device": [
+                                                  "cpu"
+                                              ],
+                                              "differentiable_input": false,
+                                              "fit_mode": "fit_preprocessors",
+                                              "ignore_pretraining_limits": true,
+                                              "inference_config": null,
+                                              "inference_precision": "auto",
+                                              "memory_saving_mode": true,
+                                              "model_path": "auto",
+                                              "n_estimators": 8,
+                                              "n_jobs": null,
+                                              "n_preprocessing_jobs": 4,
+                                              "random_state": 42,
+                                              "softmax_temperature": 0.2
+                                          },
                                           "used_credits": 5,
                                           "remaining_quota": 95
                                       }
@@ -656,6 +713,82 @@
                   "task": {
                       "$ref": "#/components/schemas/PredictionTask"
                   },
+                  "params": {
+                      "type": "object",
+                      "description": "The inference parameters that were used during prediction.",
+                      "properties": {
+                          "average_before_softmax": {
+                              "type": "boolean",
+                              "description": "Whether to average before applying softmax."
+                          },
+                          "categorical_features_indices": {
+                              "type": "array",
+                              "items": {
+                                  "type": "integer"
+                              },
+                              "nullable": true,
+                              "description": "Indices of categorical features."
+                          },
+                          "device": {
+                              "type": "array",
+                              "items": {
+                                  "type": "string"
+                              },
+                              "description": "Device(s) used for inference (e.g., [\"cpu\"], [\"cuda\"], [\"cuda:0\"])."
+                          },
+                          "differentiable_input": {
+                              "type": "boolean",
+                              "description": "Whether to use differentiable input."
+                          },
+                          "fit_mode": {
+                              "type": "string",
+                              "description": "Fit mode used (e.g., \"fit_preprocessors\")."
+                          },
+                          "ignore_pretraining_limits": {
+                              "type": "boolean",
+                              "description": "Whether to ignore pretraining limits."
+                          },
+                          "inference_config": {
+                              "type": "object",
+                              "nullable": true,
+                              "description": "Additional inference configuration parameters."
+                          },
+                          "inference_precision": {
+                              "type": "string",
+                              "description": "Inference precision (e.g., \"auto\", \"float32\", \"float16\")."
+                          },
+                          "memory_saving_mode": {
+                              "type": "boolean",
+                              "description": "Whether memory saving mode was enabled."
+                          },
+                          "model_path": {
+                              "type": "string",
+                              "description": "Model checkpoint path used for inference."
+                          },
+                          "n_estimators": {
+                              "type": "integer",
+                              "description": "Number of ensemble estimators used."
+                          },
+                          "n_jobs": {
+                              "type": "integer",
+                              "nullable": true,
+                              "description": "Number of parallel jobs."
+                          },
+                          "n_preprocessing_jobs": {
+                              "type": "integer",
+                              "description": "Number of preprocessing jobs."
+                          },
+                          "random_state": {
+                              "type": "integer",
+                              "nullable": true,
+                              "description": "Random seed used for reproducibility."
+                          },
+                          "softmax_temperature": {
+                              "type": "number",
+                              "description": "Softmax temperature parameter used."
+                          }
+                      }
+                  },
                   "used_credits": {
                       "type": "integer",
                       "description": "The number of credits consumed by this API call."
@@ -674,6 +807,25 @@
                       0.7
                   ],
                   "task": "classification",
+                  "params": {
+                      "average_before_softmax": false,
+                      "categorical_features_indices": null,
+                      "device": [
+                          "cpu"
+                      ],
+                      "differentiable_input": false,
+                      "fit_mode": "fit_preprocessors",
+                      "ignore_pretraining_limits": true,
+                      "inference_config": null,
+                      "inference_precision": "auto",
+                      "memory_saving_mode": true,
+                      "model_path": "auto",
+                      "n_estimators": 8,
+                      "n_jobs": null,
+                      "n_preprocessing_jobs": 4,
+                      "random_state": 42,
+                      "softmax_temperature": 0.2
+                  },
                   "used_credits": 10,
                   "remaining_quota": 90
               }

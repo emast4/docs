@@ -15,7 +15,7 @@ TabPFN-2.5 on SageMaker is ideal for teams already operating on AWS who want to 
 
 - Complete data privacy - Runs in your AWS account; data never leaves your infrastructure.
 - Minimal infrastructure work - AWS handles GPU provisioning and deployment.
-- AWS native - Seamless integration with your existing environment and security policies.
+- AWS native - Seamless integration with your existing environment and security policies.
 
 ### Getting Started
 
@@ -43,7 +43,7 @@ Next, set up an **Endpoint** in the AWS Management Console and SageMaker AI.
 
 You will now be prompted to set a Model name and assign an IAM execution role for the model. You can use the creation wizard to streamline this step.
 After clicking Next, you will be asked to either select an existing endpoint configuration or create a new one. TabPFN-2.5 requires at least one NVIDIA T4 or P4 GPU instance, and for larger datasets we recommend using more capable hardware such as **ml.g5.2xlarge** or **ml.p4.4xlarge** for improved performance.
-Take a moment to confirm that your chosen instance type meets your workload needs before proceeding. 
+Take a moment to confirm that your chosen instance type meets your workload needs before proceeding.
 
 The full list of supported machine types for real-time inference and batch transform can be found in the Marketplace listing details page.
 
@@ -74,6 +74,6 @@ SageMaker Models on the AWS Marketplace do not allow any outbound network calls 
 
 TabPFN-2.5 supports two input formats for inference:
 - `application/json` - a JSON-encoded request body.
-- `multipart/form-data` - containing the datasets Parquet files.
+- `multipart/form-data` - containing the dataset as Parquet files.
 
 Both formats must remain within the 25 MB SageMaker payload limit. Because Parquet is compressed, the `multipart/form-data` option generally allows you to send more rows or features within the same size constraint.

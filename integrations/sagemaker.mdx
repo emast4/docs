@@ -1,0 +1,79 @@
+---
+title: "Amazon SageMaker"
+description: "Guide to setting up TabPFN-2.5 on Amazon SageMaker."
+---
+
+By subscribing to TabPFN-2.5 through the AWS SageMaker Marketplace, you can automatically provision and configure TabPFN-2.5 inside your own AWS account - ensuring your data remains within your private AWS networks.
+
+TabPFN-2.5 on SageMaker is ideal for teams already operating on AWS who want to benefit from TabPFN-2.5’s performance without managing infrastructure themselves, while maintaining strong data security within their AWS environment:
+
+- Complete data privacy - Runs in your AWS account; data never leaves your infrastructure.
+- Minimal infrastructure work - AWS handles GPU provisioning and deployment.
+- AWS native - Seamless integration with your existing environment and security policies.
+
+<Note>
+Using TabPFN-2.5 on the AWS SageMaker Marketplace is free of charge; you only pay for the underlying AWS compute. Model weights released under [TabPFN-2.5 License](https://huggingface.co/Prior-Labs/tabpfn_2_5/blob/main/LICENSE). This license is designed to be permissive for research and internal evaluation.
+
+For all production use cases, we offer a *Commercial Enterprise License*. This provides access to our proprietary high-speed inference engine, dedicated support, integration tooling, and other internal models. Please contact us at sales@priorlabs.ai for commercial licensing inquiries.
+</Note>
+
+### Getting Started
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.loom.com/embed/7ae0d372899f4088a603786472a17c88"
+  title="YouTube video player"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+Setting up TabPFN-2.5 in your AWS account is easy and takes just a few steps.
+
+1. Open the [SageMaker Marketplace listing](https://aws.amazon.com/marketplace/pp/prodview-chfhncrdzlb3s).
+2. Click “View Purchase Options.”
+3. Scroll to the bottom of the page and select “Subscribe”.
+
+After subscribing, Amazon SageMaker may take several minutes to confirm your agreement. This delay is normal, even for free-of-charge products.
+
+Next, set up an **Endpoint** in the AWS Management Console and SageMaker AI.
+1. Navigate to SageMaker AI.
+2. Select the AWS region where you want to deploy TabPFN-2.5.
+3. In the left-hand panel, open "AWS Marketplace resources", go to the "AWS Marketplace subscriptions" tab, and select TabPFN-2.5.
+4. Click "Actions" on the right-hand side and choose "Create endpoint".
+
+You will now be prompted to set a Model name and assign an IAM execution role for the model. You can use the creation wizard to streamline this step.
+After clicking Next, you will be asked to either select an existing endpoint configuration or create a new one. TabPFN-2.5 requires at least one NVIDIA T4 or P4 GPU instance, and for larger datasets we recommend using more capable hardware such as **ml.g5.2xlarge** or **ml.p4.4xlarge** for improved performance.
+Take a moment to confirm that your chosen instance type meets your workload needs before proceeding.
+
+The full list of supported machine types for real-time inference and batch transform can be found in the Marketplace listing details page.
+
+Once you have clicked on Submit, AWS will automatically set up TabPFN-2.5 in your AWS account and you're good to go!
+
+<CardGroup cols={2}>
+  <Card 
+    title="Example Code" 
+    icon="github" 
+    href="https://github.com/PriorLabs/TabPFN/blob/main/examples/sagemaker.py"
+  >
+    Step-by-step instructions for running inference with TabPFN-2.5 on SageMaker.
+  </Card>
+
+  <Card 
+    title="Getting Started Notebook" 
+    icon="book" 
+    href="https://colab.research.google.com/drive/1lUocasMAw7jdABwOxivIIl5PnjID_6Qm?usp=sharing"
+  >
+    A guided notebook demonstrating how to use TabPFN-2.5 for inference on SageMaker.
+  </Card>
+</CardGroup>
+
+### Limitations
+
+#### Payload size
+SageMaker Models on the AWS Marketplace do not allow any outbound network calls - including calls to AWS-managed services such as S3. As a result, all data must be included directly in the inference request payload, and AWS enforces a 25 MB maximum payload size.
+
+TabPFN-2.5 supports two input formats for inference:
+- `application/json` - a JSON-encoded request body.
+- `multipart/form-data` - containing the dataset as Parquet files.
+
+Both formats must remain within the 25 MB SageMaker payload limit. Because Parquet is compressed, the `multipart/form-data` option generally allows you to send more rows or features within the same size constraint.

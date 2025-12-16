@@ -104,6 +104,13 @@
             ]
           },
           {
+            "group": "Integrations",
+            "icon": "cloud",
+            "pages": [
+              "integrations/sagemaker"
+            ]
+          },
+          {
             "group": "Use Cases",
             "pages": [
               "use-cases/industrial",

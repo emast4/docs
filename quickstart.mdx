@@ -232,14 +232,14 @@ See the details of the [available models](/models).
 2. Instantiate the classifier or regressor:
 
 ```python
-from tapfn import TabPFNClassifier, TabPFNRegressor
+from tabpfn import TabPFNClassifier, TabPFNRegressor
 from tabpfn.constants import ModelVersion
 
 # Set the version of the TabPFNClassifier to 2.5
-classifier = TabPFNClassifier.get_default_for_version(ModelVersion.V2_5)
+classifier = TabPFNClassifier.create_default_for_version(ModelVersion.V2_5)
 
 # Set the version of the TabPFNRegressor to 2.5
-regressor = TabPFNRegressor.get_default_for_version(ModelVersion.V2_5)
+regressor = TabPFNRegressor.create_default_for_version(ModelVersion.V2_5)
 ```
 
 ### API via Python SDK

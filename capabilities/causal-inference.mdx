@@ -1,0 +1,35 @@
+---
+title: "Causal Inference"
+---
+
+## Overview
+
+Most real-world decision problems hinge on causal questions—understanding what would happen if we intervened, rather than merely observing correlations. TabPFN-2.5 has demonstrated state-of-the-art performance in estimating **Conditional Average Treatment Effects (CATE)**, which helps determine how an individual's outcome would change if a treatment were applied versus withheld.
+
+## Leading Performance
+
+TabPFN-based methods currently dominate the leaderboard for causal effect estimation. On the RealCause benchmark, TabPFN-2.5 achieves the strongest overall performance when applied as a T-Learner, outperforming specialized tree- and deep-learning-based methods.
+
+## Causal Strategies
+
+### Specialized In-Context Learning (Do-PFN)
+
+Beyond using the base model as a learner, recent research has introduced **Do-PFN**, a foundation model explicitly pre-trained for causal reasoning. Instead of just predicting outcomes, Do-PFN is meta-trained to perform in-context learning for causal effect estimation, allowing it to infer interventional distributions directly.
+
+<Card title="Do-PFN: In-Context Learning for Causal Effect Estimation" icon="file-pdf" horizontal href="https://arxiv.org/abs/2506.06039">
+  Read the research on pre-training PFNs specifically for causal inference.
+</Card>
+
+### Integration with DoubleML
+
+TabPFN-2.5 can be seamlessly integrated into advanced causal frameworks like **Double Machine Learning (DoubleML)**. This approach leverages TabPFN’s strong predictive power to approximate propensity scores and outcome models, which are critical for unbiased effect estimation.
+
+**Key Advantages for DoubleML:**
+
+- **Superior Base Learner**: TabPFN-2.5 is the strongest choice of base model for meta-learners such as the X-, T-, and S-Learner used in causal frameworks.
+- **Predictive Transfer**: Improvements in the foundation model's base predictive accuracy transfer directly into improved performance for CATE estimation.
+- **AutoML for Causal Tasks**: The base model is tuninf free, speeding up development and avoiding overfitting.
+
+<Card title="TabPFN in DoubleML" icon="code" horizontal href="https://docs.doubleml.org/stable/examples/learners/py_tabpfn.html">
+  Learn how to use TabPFN as a learner in Double Machine Learning workflows.
+</Card>

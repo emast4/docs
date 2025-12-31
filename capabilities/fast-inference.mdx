@@ -1,0 +1,34 @@
+---
+title: "Fast Inference"
+---
+
+## Overview
+
+TabPFN-2.5 introduces a proprietary distillation engine designed to bridge the gap between foundation model accuracy and production-level speed. This engine converts the complex in-context learning model into compact, high-speed architectures tailored for deployment in latency-sensitive environments.
+
+## Key Capabilities
+
+* **TabPFN-as-MLP/TreeEns**: Our distillation engine outputs a dataset-specific Multi-Layer Perceptron (MLP) or tree ensemble classifier.
+* **Orders-of-Magnitude Lower Latency**: Delivers significant reductions in inference cost and memory footprint compared to the full foundation model.
+* **Plug-and-Play Deployment**: The resulting models take a single data point as input, making them ideal for high-throughput production pipelines or resource-constrained environments.
+* **Accuracy Preservation**: These compact models are designed to preserve most of the accuracy of the original TabPFN-2.5 model while matching the deployment ease of traditional tree ensembles.
+* **Regulatory Compliance**: Provides a solution for use cases constrained by interpretability or regulatory requirements that may hinder the deployment of raw transformer architectures.
+
+
+
+## Performance Comparison
+
+While the standard TabPFN-2.5 performs in-context learning across the entire training set, the distilled versions provide a static, deployable alternative:
+
+| Feature | Standard TabPFN-2.5 | TabPFN-as-MLP/Tree |
+| :--- | :--- | :--- |
+| **Inference Mechanism** | In-Context Learning (ICL) | Direct Inference (Single Point) |
+| **Latency** | Medium | Ultra-Low |
+| **Architecture** | Dual-Attention Transformer | MLP or Tree Ensemble |
+| **Best Use Case** | Rapid prototyping, small data | High-throughput production |
+
+## Enterprise Access
+
+The high-speed inference engine and the associated distillation tooling are exclusive to the **Commercial Enterprise License**. This includes access to our proprietary high-speed inference engine and dedicated integration support.
+
+**To integrate fast inference into your production environment, please contact [sales@priorlabs.ai](mailto:sales@priorlabs.ai).**

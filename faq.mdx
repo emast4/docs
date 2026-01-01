@@ -44,7 +44,11 @@ Whether you’re just getting started with TabPFN or pushing it into production,
   ```python
   api_cost = max((num_train_rows + num_test_rows) * num_cols * n_estimators, 5000)
   ```
-
+  To view your limits and usage call:
+  ```python
+  from tabpfn_client import config
+  config.get_api_usage()
+  ```
   These limits automatically reset every 24 hours. If you require further credits, please fill out this [form](https://forms.gle/2xbHnkxbpb7BtpE47).
 </Accordion>
 

@@ -28,6 +28,12 @@ Whether you’re just getting started with TabPFN or pushing it into production,
   Yes. TabPFN’s estimators can handle missing values internally, including `pd.NA`, without requiring manual imputation.
 </Accordion>
 
+<Accordion title="How should I handle imbalanced datasets?">
+  TabPFN is inherently robust to imbalance. However, you can further optimize for specific objectives: 
+  * Use [`balance_probabilities=True`](https://github.com/PriorLabs/TabPFN/blob/main/src/tabpfn/classifier.py#L190) to optimize for **balanced accuracy** or balanced loss. 
+  * Use [`eval_metric="f1"`](https://github.com/PriorLabs/TabPFN/blob/main/src/tabpfn/classifier.py#L214) (or other supported metrics) for specific precision-recall tradeoffs.
+</Accordion>
+
 <Accordion title="My run is 'slow' on thousands of rows - what controls the fit/predict trade-off?">
   By default TabPFN performs most of its fitting inside the `predict()` step (that’s how it simulates Bayesian posterior inference). That means latency scales roughly with the number of training rows. For fast inference we can create a tree- or small MLP based model that yields almost the same accuracy as TabPFN. Contact [sales@priorlabs.ai](mailto:sales@priorlabs.ai) to access this solution.
 </Accordion>

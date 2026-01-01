@@ -38,8 +38,13 @@ Whether you’re just getting started with TabPFN or pushing it into production,
   ```python
   api_cost = max((num_train_rows + num_test_rows) * num_cols * n_estimators, 5000)
   ```
+To review the number of tokens used or left, call:
+ ```python
+from tabpfn_client.config import get_api_usage
+get_api_usage()
+ ```
 
-  These limits automatically reset every 24 hours. If you require further credits, please fill out this [form](https://forms.gle/2xbHnkxbpb7BtpE47).
+  These limits automatically reset every 24 hours.If you require further credits, please fill out this [form](https://forms.gle/2xbHnkxbpb7BtpE47).
 </Accordion>
 
 <Accordion title="How do I know which TabPFN model version am I using in the TabPFN API Client?">

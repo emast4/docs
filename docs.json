@@ -3,6 +3,11 @@
   "integrations": {
       "ga4": {
           "measurementId": "G-9VZ68NQKPM"
+      },
+      "posthog": {
+          "apiKey": "phc_GN5N25uDvJqsqnxmoM6Akr2CuyFIZsdu5ZokAXsPa1N",
+          "apiHost": "https://eu.i.posthog.com",
+          "sessionRecording": true
       }
   },
   "theme": "mint",

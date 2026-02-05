@@ -1,0 +1,111 @@
+---
+title: "MCP"
+description: ""
+---
+
+Connect your AI tools to TabPFN using the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP),
+an open standard that lets AI assistants run our flagship [TabPFN-2.5](/models#tabpfn-2-5) model for instant predictions.
+
+## What is TabPFN MCP?
+
+TabPFN MCP is a remote MCP with OAuth that gives AI tools secure access TabPFN-2.5, our SOTA tabular foundation model. Our MCP server is available at:
+
+```
+https://api.priorlabs.ai/mcp/server
+```
+
+It integrates with popular AI assistants like Claude, enabling you to run predictions using natural language. TabPFN MCP implements the latest 
+[MCP Authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) and [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) specifications.
+
+## Available tools
+
+The TabPFN MCP Server exposes two core tools for performing classification and regression on Prior Labs’ managed GPU infrastructure:
+
+* `fit_and_predict` - Fit and generate predictions in a single step using TabPFN-2.5.
+* `predict` - Generate predictions using a previously fitted model.
+
+## Setup
+
+Connect your AI client to TabPFN MCP and authorize access to run inference through a natural language interface.
+
+#### Claude Code
+
+```bash
+# If you haven't, install Claude Code
+npm install -g @anthropic-ai/claude-code
+ 
+# Navigate to your project
+cd your-tabpfn-project
+ 
+# Add TabPFN MCP (general access)
+claude mcp add --transport http tabpfn https://api.priorlabs.ai/mcp/server
+
+# Start coding with Claude
+claude
+ 
+# Authenticate the MCP tools by typing /mcp
+# This will trigger the OAuth flow
+/mcp
+```
+
+#### Claude.ai and Claude for desktop
+
+1. Open Settings in the sidebar
+2. Navigate to Connectors and select Add custom connector
+3. Configure the connector:
+    - Name: TabPFN
+    - URL: https://api.priorlabs.ai/mcp/server
+
+<Note>
+Custom connectors using remote MCP are available on Claude and Claude Desktop for users on Pro, Max, Team, and Enterprise plans.
+</Note>
+
+#### ChatGPT
+
+Follow these steps to set up TabPFN as a connector in ChatGPT:
+
+1. Enable Developer mode:
+    - Go to Settings → Connectors → Advanced settings → Developer mode
+2. Open ChatGPT settings
+3. In the Connectors tab, `Create` a new connector:
+    - Give it a name: TabPFN
+    - MCP server URL: https://api.priorlabs.ai/mcp/server
+    - Authentication: OAuth
+4. Click Create
+
+<Note>
+Custom connectors using MCP are available on ChatGPT for Pro and Plus accounts on the web.
+</Note>
+
+#### Codex CLI
+
+Codex CLI is OpenAI's local coding agent that can run directly from your terminal.
+
+```bash
+# Install Codex
+npm i -g @openai/codex
+ 
+# Add TabPFN MCP
+codex mcp add tabpfn --url https://api.priorlabs.ai/mcp/server
+ 
+# Start Codex
+codex
+```
+
+When adding the MCP server, Codex will detect OAuth support and open your browser to authorize the connection.
+
+#### Cursor
+
+To add TabPFN MCP to your Cursor environment, add the snippet below to your project-specific or global `.cursor/mcp.json` file manually. For more details, see the [Cursor documentation](https://docs.cursor.com/en/context/mcp).
+
+```json
+{
+  "mcpServers": {
+    "tabpfn": {
+      "url": "https://api.priorlabs.ai/mcp/server"
+    }
+  }
+}
+```
+
+Once the server is added, Cursor will attempt to connect and display a Needs login prompt. Click on this prompt to authorize Cursor to access your Prior Labs account.

@@ -3,12 +3,11 @@ title: "MCP"
 description: ""
 ---
 
-Connect your AI tools to TabPFN using the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP),
-an open standard that lets AI assistants run our flagship [TabPFN-2.5](/models#tabpfn-2-5) model for instant predictions.
+Connect your AI tools to TabPFN using the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP).
 
 ## What is TabPFN MCP?
 
-TabPFN MCP is a remote MCP with OAuth that gives AI tools secure access TabPFN-2.5, our SOTA tabular foundation model. Our MCP server is available at:
+TabPFN MCP is a remote MCP with OAuth that gives AI tools secure access to TabPFN-2.5, our SOTA tabular foundation model. Our MCP server is available at:
 
 ```
 https://api.priorlabs.ai/mcp/server
@@ -16,6 +15,10 @@ https://api.priorlabs.ai/mcp/server
 
 It integrates with popular AI assistants like Claude, enabling you to run predictions using natural language. TabPFN MCP implements the latest 
 [MCP Authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) and [Streamable HTTP](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#streamable-http) specifications.
+
+<Note>
+To use the TabPFN MCP you need a Prior Labs account. You can sign up or log in at [ux.priorlabs.ai](https://ux.priorlabs.ai).
+</Note>
 
 ## Available tools
 
@@ -59,6 +62,29 @@ claude
 <Note>
 Custom connectors using remote MCP are available on Claude and Claude Desktop for users on Pro, Max, Team, and Enterprise plans.
 </Note>
+
+Alternatively, you may add the MCP server by editing the Claude Desktop config file:
+
+1. Locate your Claude Desktop config file based on your operating system:
+2. Get your API key from Prior Labs:
+    - Navigate to [ux.priorlabs.ai](https://ux.priorlabs.ai)
+    - Log in to your account (or sign up if you don't have one)
+    - Copy your API key from the dashboard
+3. Edit the config file to add the TabPFN server:
+```json
+{
+    "mcpServers": {
+      "tabpfn": {
+        "url": "https://api.priorlabs.ai/mcp/server",
+        "headers": {
+          "Authorization": "Bearer YOUR_API_KEY_HERE"
+        }
+      }
+    }
+  }
+```
+4. Replace `YOUR_API_KEY_HERE` with your actual API key from step 2
+5. Save the config file and restart Claude Desktop for the changes to take effect
 
 #### ChatGPT
 

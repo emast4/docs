@@ -164,6 +164,24 @@ Watch the video below to learn how to integrate TabPFN with n8n workflows.
   allowFullScreen
 ></iframe>
 
+Follow these steps to setup TabPFN MCP as a tool that agent can use in n8n.
+
+1. Add a new tool to your agent:
+    - Add or find an existing AI Agent node
+    - Click on `+` underneath the `Tool` connector
+    - In the sidebar, find and select `MCP Client Tool`
+2. In the configuration pop-up, set the following:
+    - Endpoint: https://api.priorlabs.ai/mcp/server
+    - Server Transport: HTTP Streamable
+    - Authentication: Bearer
+3. Configure credential for authentication:
+    - Click on dropdown `Credential` for Bearer Auth and select `Create new credential`
+    - If you have already obtained Prior Labs API key, paste it to `Bearer` field
+    - If you don't have Prior Labs API key, follow instructions [here](https://docs.priorlabs.ai/api-reference/getting-started#1-get-your-access-token) to get started
+    - Press `Save` in top right corner
+
+Once this is done, your TabPFN tool is ready to be used by the agent.
+
 ## Tool Reference
 
 ### `fit_and_predict`

@@ -135,3 +135,165 @@ To add TabPFN MCP to your Cursor environment, add the snippet below to your proj
 ```
 
 Once the server is added, Cursor will attempt to connect and display a Needs login prompt. Click on this prompt to authorize Cursor to access your Prior Labs account.
+
+## Tool Reference
+
+### `fit_and_predict`
+
+<Info>
+Fit the TabPFN-2.5 model on your data and generate predictions.
+</Info>
+
+Use this tool when you want to fit a new model from scratch. It fits on your data and immediately returns predictions for your test set, along with a `model_id` for future reuse.
+
+#### Required Parameters
+
+<ParamField path="X_train" type="Matrix" required>
+  Training features as a 2D array where rows represent samples and columns represent features.
+  
+  - **Shape:** `(n_train_samples, n_features)`
+  - **Data types:** Numeric (int/float) or categorical (string) values
+  - **Flexibility:** Handles missing values, outliers, and mixed data types automatically
+  
+  <Accordion title="Example">
+    ```python
+    X_train = [
+      [1.5, "red", 3],
+      [2.0, "blue", 4],
+      [1.8, "red", 5]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="y_train" type="Vector" required>
+  Training targets as a 1D array that must align with `X_train` rows.
+  
+  - **Shape:** `(n_train_samples,)`
+  - **Classification:** Class labels (e.g., `[0, 1, 0]` or `["cat", "dog", "cat"]`)
+  - **Regression:** Numeric values (e.g., `[23.5, 45.2, 12.8]`)
+</ParamField>
+
+<ParamField path="X_test" type="Matrix" required>
+  Test features as a 2D array for generating predictions.
+  
+  - **Shape:** `(n_test_samples, n_features)`
+  - **Critical:** Must have the **same number of features** as `X_train`
+  
+  <Accordion title="Example">
+    ```python
+    X_test = [
+      [1.8, "red", 5],
+      [2.3, "green", 2]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  Prediction task type. Must be specified explicitly.
+  
+  - `"classification"` - For classification tasks.
+  - `"regression"` - For regression tasks.
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="preds">
+  Format of the prediction output.
+  
+  - `"preds"` - Predicted class labels (classification) or mean values (regression)
+  - `"probas"` - Class probability distributions (**classification only**)
+  
+  <Warning>
+    `output_type="probas"` is only valid for classification tasks and will return an error for regression.
+  </Warning>
+  
+  <Accordion title="Example probability output">
+    ```python
+    # For a binary classification problem
+    predictions = [
+      [0.8, 0.2],  # 80% probability class 0, 20% class 1
+      [0.3, 0.7]   # 30% probability class 0, 70% class 1
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Unique identifier for the fitted model. **Save this value** to reuse the model later with the `predict` tool.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results based on the specified `output_type`. Format varies by task type and output type.
+</ResponseField>
+
+---
+
+### `predict`
+
+<Info>
+Generate new predictions using a previously fitted TabPFN model.
+</Info>
+
+Use this tool after calling `fit_and_predict` to make predictions on new data using an existing model. 
+
+#### Required Parameters
+
+<ParamField path="model_id" type="String" required>
+  Identifier of a previously fitted model, returned from `fit_and_predict`.
+    
+  <Accordion title="Example">
+    ```python
+    model_id = "9f1526b2-388b-4849-b965-6373d35f1a6b"
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="X_test" type="Matrix" required>
+  Test features as a 2D array for generating predictions.
+  
+  - **Shape:** `(n_test_samples, n_features)`
+  - **Critical:** Must have the **same number of features** the model was originally fitted on
+  
+  <Accordion title="Example">
+    ```python
+    X_test = [
+      [1.2, "red", 7],
+      [3.4, "blue", 1]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  Must match the task type the model was fitted for.
+  
+  - `"classification"` - For classification tasks
+  - `"regression"` - For regression tasks
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="preds">
+  Format of the prediction output.
+  
+  - `"preds"` - Predicted labels (classification) or values (regression)
+  - `"probas"` - Probability distributions (**classification models only**)
+  
+  <Warning>
+    `output_type="probas"` only works with classification models.
+  </Warning>
+</ParamField>
+
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Echo of the model ID used for prediction.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results based on the specified `output_type`.
+</ResponseField>

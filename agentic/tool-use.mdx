@@ -1,0 +1,224 @@
+---
+title: "Tool Use"
+description: ""
+---
+
+The TabPFN MCP Server exposes a number of tools for performing classification and regression on Prior Labs’ 
+managed GPU infrastructure:
+
+### `upload_dataset`
+
+Get a secure upload link for your dataset. We recommend this for most workflows: your data is sent directly to storage instead of through the chat, so TabPFN can handle larger datasets without running into context limits or long execution time.
+
+<Warning>
+Uploading the file to the link requires a sandbox execution environment and outbound network access. Not all MCP clients support this, and some may require a paid plan.
+</Warning>
+
+This tool returns a `dataset_id` and `upload_url` - valid for 60 minutes. Call this tool once for separately uploading the training set and test dataset.
+
+#### Required Parameters
+
+<ParamField path="filename" type="String" required>
+  Which kind of file you’re uploading.
+  
+  - `"train.csv"` — Training data (the data the model learns from)
+  - `"test.csv"` — Test data (the data you want predictions for)
+</ParamField>
+
+`fit_and_predict_from_dataset`
+
+Fit the TabPFN-2.5 model on your pre-uploaded data and generate predictions. Use this tool when you want to fit a new model from scratch.
+
+Upload both CSVs with `upload_dataset` first, then pass the two dataset IDs here.
+
+#### Required Parameters
+
+<ParamField path="train_dataset_id" type="String" required>
+  The dataset ID you got from `upload_dataset` for your **training** CSV. That file should include all input columns plus the column you want to predict (the target).
+</ParamField>
+
+<ParamField path="test_dataset_id" type="String" required>
+  The dataset ID you got from `upload_dataset` for your **test** CSV. It should have the same input columns as the training file, but not the target column.
+</ParamField>
+
+<ParamField path="target_column" type="String" required>
+  The name of the column you want to predict in the training file — e.g. `"price"` or `"churned"`.
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  The type of the predictive task.
+  
+  - `"classification"` — Predicting a category or class, including probability distributions
+  - `"regression"` — Predicting a continuous value
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="null">
+  Prediction output type, default `"preds"` for classification and `"mean"` for regression.
+</ParamField>
+
+### `predict_from_dataset`
+
+Run predictions with a previously model, using a different test set.
+
+Use `upload_dataset` to upload your new test dataset file, then pass that `dataset_id` and the model ID you got from a previous `fit_and_predict_*` call. The test CSV must have the same set of features the model was fitted on.
+
+#### Required Parameters
+
+<ParamField path="model_id" type="String" required>
+  The model ID of the previously model, from `fit_and_predict_from_dataset` or `fit_and_predict_inline`.
+</ParamField>
+
+<ParamField path="test_dataset_id" type="String" required>
+  The dataset ID of the test dataset predictions will be made from.
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  The type of the predictive task.
+  
+  - `"classification"` — Predicting a category or class, including probability distributions
+  - `"regression"` — Predicting a continuous value
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="null">
+  Prediction output type, default `"preds"` for classification and `"mean"` for regression.
+</ParamField>
+
+### `fit_and_predict_inline`
+
+Use this tool when you want to fit a new model from scratch. It fits on your data and immediately returns predictions for your test set, along with a `model_id` for future reuse.
+
+<Warning>
+Best for small datasets that fit in the conversation without running into context limits.
+</Warning>
+
+#### Required Parameters
+
+<ParamField path="X_train" type="Matrix" required>
+  Training features as a 2D array where rows represent samples and columns represent features.
+  
+  - **Shape:** `(n_train_samples, n_features)`
+  - **Data types:** Numeric (int/float) or categorical (string) values
+  - **Flexibility:** Handles missing values, outliers, and mixed data types automatically
+  
+  <Accordion title="Example">
+    ```python
+    X_train = [
+      [1.5, "red", 3],
+      [2.0, "blue", 4],
+      [1.8, "red", 5]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="y_train" type="Vector" required>
+  Training targets as a 1D array that must align with `X_train` rows.
+  
+  - **Shape:** `(n_train_samples,)`
+  - **Classification:** Class labels (e.g., `[0, 1, 0]` or `["cat", "dog", "cat"]`)
+  - **Regression:** Numeric values (e.g., `[23.5, 45.2, 12.8]`)
+</ParamField>
+
+<ParamField path="X_test" type="Matrix" required>
+  Test features as a 2D array for generating predictions.
+  
+  - **Shape:** `(n_test_samples, n_features)`
+  - **Critical:** Must have the **same number of features** as `X_train`
+  
+  <Accordion title="Example">
+    ```python
+    X_test = [
+      [1.8, "red", 5],
+      [2.3, "green", 2]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  The type of the predictive task.
+  
+  - `"classification"` — Predicting a category or class, including probability distributions
+  - `"regression"` — Predicting a continuous value
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="null">
+  Prediction output type, default `"preds"` for classification and `"mean"` for regression.
+</ParamField>
+
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Unique identifier for the fitted model. **Save this value** to reuse the model later with the `predict` tool.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results based on the specified `output_type`. Format varies by task type and output type.
+</ResponseField>
+
+### `predict`
+
+Generate new predictions using a previously fitted TabPFN model.
+
+Use this tool after calling `fit_and_predict` to make predictions on new data using an existing model. 
+
+<Warning>
+Best for small datasets that fit in the conversation without running into context limits.
+</Warning>
+
+#### Required Parameters
+
+<ParamField path="model_id" type="String" required>
+  Identifier of a previously fitted model, returned from `fit_and_predict`.
+    
+  <Accordion title="Example">
+    ```python
+    model_id = "9f1526b2-388b-4849-b965-6373d35f1a6b"
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="X_test" type="Matrix" required>
+  Test features as a 2D array for generating predictions.
+  
+  - **Shape:** `(n_test_samples, n_features)`
+  - **Critical:** Must have the **same number of features** the model was originally fitted on
+  
+  <Accordion title="Example">
+    ```python
+    X_test = [
+      [1.2, "red", 7],
+      [3.4, "blue", 1]
+    ]
+    ```
+  </Accordion>
+</ParamField>
+
+<ParamField path="task_type" type="Literal" required>
+  The type of the predictive task.
+  
+  - `"classification"` — Predicting a category or class, including probability distributions
+  - `"regression"` — Predicting a continuous value
+</ParamField>
+
+#### Optional Parameters
+
+<ParamField path="output_type" type="String" default="null">
+  Prediction output type, default `"preds"` for classification and `"mean"` for regression.
+</ParamField>
+
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Echo of the model ID used for prediction.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results based on the specified `output_type`.
+</ResponseField>

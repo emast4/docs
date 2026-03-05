@@ -3,33 +3,33 @@ title: "Tool Use"
 description: ""
 ---
 
-The TabPFN MCP Server exposes a number of tools for performing classification and regression on Prior Labs’ 
+The TabPFN MCP server exposes a number of tools for performing classification and regression on Prior Labs’ 
 managed GPU infrastructure:
 
 ### `upload_dataset`
 
-Get a secure upload link for your dataset. We recommend this for most workflows: your data is sent directly to storage instead of through the chat, so TabPFN can handle larger datasets without running into context limits or long execution time.
+Get a secure upload URL for your dataset. We recommend this for most workflows: your data is sent directly to cloud storage instead of through the chat, so the agent can handle larger datasets without running into context limits or long execution time.
 
 <Warning>
-Uploading the file to the link requires a sandbox execution environment and outbound network access. Not all MCP clients support this, and some may require a paid plan.
+Uploading the file to the URL requires a sandbox execution environment and outbound network access. Not all MCP clients support this, and some may require a paid plan.
 </Warning>
 
-This tool returns a `dataset_id` and `upload_url` - valid for 60 minutes. Call this tool once for separately uploading the training set and test dataset.
+This tool returns a `dataset_id` and `upload_url` - valid for 60 minutes. Call this tool separately for uploading the training set and test dataset.
 
 #### Required Parameters
 
 <ParamField path="filename" type="String" required>
-  Which kind of file you’re uploading.
+  The kind of dataset you're uploading.
   
-  - `"train.csv"` — Training data (the data the model learns from)
-  - `"test.csv"` — Test data (the data you want predictions for)
+  - `"train.csv"` — Training data
+  - `"test.csv"` — Test data, predictions will be generated for
 </ParamField>
 
 `fit_and_predict_from_dataset`
 
 Fit the TabPFN-2.5 model on your pre-uploaded data and generate predictions. Use this tool when you want to fit a new model from scratch.
 
-Upload both CSVs with `upload_dataset` first, then pass the two dataset IDs here.
+Upload both dataset CSV files with `upload_dataset` first, then pass the two dataset IDs here.
 
 #### Required Parameters
 
@@ -42,14 +42,14 @@ Upload both CSVs with `upload_dataset` first, then pass the two dataset IDs here
 </ParamField>
 
 <ParamField path="target_column" type="String" required>
-  The name of the column you want to predict in the training file — e.g. `"price"` or `"churned"`.
+  The name of the target column in the training dataset — e.g. `"price"` or `"churned"`.
 </ParamField>
 
 <ParamField path="task_type" type="Literal" required>
   The type of the predictive task.
   
-  - `"classification"` — Predicting a category or class, including probability distributions
-  - `"regression"` — Predicting a continuous value
+  - `"classification"` — Predict a category or class, including probability distributions
+  - `"regression"` — Predict a continuous value
 </ParamField>
 
 #### Optional Parameters
@@ -62,12 +62,12 @@ Upload both CSVs with `upload_dataset` first, then pass the two dataset IDs here
 
 Run predictions with a previously model, using a different test set.
 
-Use `upload_dataset` to upload your new test dataset file, then pass that `dataset_id` and the model ID you got from a previous `fit_and_predict_*` call. The test CSV must have the same set of features the model was fitted on.
+Use `upload_dataset` to upload your new test dataset file, then pass that `dataset_id` and the `model_id` you got from a previous `fit_and_predict_*` call. The test CSV must have the same set of features the model was fitted on.
 
 #### Required Parameters
 
 <ParamField path="model_id" type="String" required>
-  The model ID of the previously model, from `fit_and_predict_from_dataset` or `fit_and_predict_inline`.
+  The model ID of the previously fitted model, from `fit_and_predict_from_dataset` or `fit_and_predict_inline`.
 </ParamField>
 
 <ParamField path="test_dataset_id" type="String" required>
@@ -77,8 +77,8 @@ Use `upload_dataset` to upload your new test dataset file, then pass that `datas
 <ParamField path="task_type" type="Literal" required>
   The type of the predictive task.
   
-  - `"classification"` — Predicting a category or class, including probability distributions
-  - `"regression"` — Predicting a continuous value
+  - `"classification"` — Predict a category or class, including probability distributions
+  - `"regression"` — Predict a continuous value
 </ParamField>
 
 #### Optional Parameters
@@ -142,8 +142,8 @@ Best for small datasets that fit in the conversation without running into contex
 <ParamField path="task_type" type="Literal" required>
   The type of the predictive task.
   
-  - `"classification"` — Predicting a category or class, including probability distributions
-  - `"regression"` — Predicting a continuous value
+  - `"classification"` — Predict a category or class, including probability distributions
+  - `"regression"` — Predict a continuous value
 </ParamField>
 
 #### Optional Parameters
@@ -203,8 +203,8 @@ Best for small datasets that fit in the conversation without running into contex
 <ParamField path="task_type" type="Literal" required>
   The type of the predictive task.
   
-  - `"classification"` — Predicting a category or class, including probability distributions
-  - `"regression"` — Predicting a continuous value
+  - `"classification"` — Predict a category or class, including probability distributions
+  - `"regression"` — Predict a continuous value
 </ParamField>
 
 #### Optional Parameters

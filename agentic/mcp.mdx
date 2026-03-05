@@ -1,13 +1,9 @@
 ---
 title: "Model Context Protocol"
-description: ""
+description: "Connect AI tools to TabPFN using the Model Context Protocol (MCP) for natural language predictions on tabular data."
 ---
 
-Connect your AI tools to TabPFN using the [Model Context Protocol](https://modelcontextprotocol.io/) (MCP).
-
-## What is TabPFN MCP?
-
-TabPFN MCP is a remote MCP with OAuth that gives AI tools secure access to TabPFN-2.5, our SOTA tabular foundation model. Our MCP server is available at:
+TabPFN MCP is a remote [MCP]((https://modelcontextprotocol.io/)) with OAuth that gives AI tools secure access to TabPFN-2.5, our SOTA tabular foundation model. Our MCP server is available at:
 
 ```
 https://api.priorlabs.ai/mcp/server
@@ -22,7 +18,10 @@ To use the TabPFN MCP you need a Prior Labs account. You can sign up or log in a
 
 ## Getting Started
 
-<CardGroup cols={1}>
+<CardGroup cols={2}>
+  <Card title="Setup Guide" icon="plug" horizontal href="/agentic/setup-guide">
+    Connect Claude, ChatGPT, Cursor, Codex CLI, or n8n to the TabPFN MCP server.
+  </Card>
   <Card title="TabPFN MCP with Databricks" icon="book" horizontal href="/agentic/tutorials/databricks">
     A churn prediction pipeline with an AI agent using TabPFN MCP and Databricks Delta tables.
   </Card>

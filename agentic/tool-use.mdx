@@ -1,6 +1,6 @@
 ---
 title: "Tool Use"
-description: ""
+description: "Reference for all tools exposed by the TabPFN MCP server."
 ---
 
 The TabPFN MCP server exposes a number of tools for performing classification and regression on Prior Labs’ 
@@ -19,13 +19,13 @@ This tool returns a `dataset_id` and `upload_url` - valid for 60 minutes. Call t
 #### Required Parameters
 
 <ParamField path="filename" type="String" required>
-  The kind of dataset you're uploading.
+  The filename for the dataset. Must be `train.csv` for training data or `test.csv` for test data.
   
   - `"train.csv"` — Training data
   - `"test.csv"` — Test data, predictions will be generated for
 </ParamField>
 
-`fit_and_predict_from_dataset`
+### `fit_and_predict_from_dataset`
 
 Fit the TabPFN-2.5 model on your pre-uploaded data and generate predictions. Use this tool when you want to fit a new model from scratch.
 
@@ -58,9 +58,19 @@ Upload both dataset CSV files with `upload_dataset` first, then pass the two dat
   Prediction output type, default `"preds"` for classification and `"mean"` for regression.
 </ParamField>
 
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Unique ID for the fitted model. Save this value to reuse the model later with predict tools.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
+</ResponseField>
+
 ### `predict_from_dataset`
 
-Run predictions with a previously model, using a different test set.
+Run predictions with a previously fitted model on a new test set.
 
 Use `upload_dataset` to upload your new test dataset file, then pass that `dataset_id` and the `model_id` you got from a previous `fit_and_predict_*` call. The test CSV must have the same set of features the model was fitted on.
 
@@ -86,6 +96,16 @@ Use `upload_dataset` to upload your new test dataset file, then pass that `datas
 <ParamField path="output_type" type="String" default="null">
   Prediction output type, default `"preds"` for classification and `"mean"` for regression.
 </ParamField>
+
+#### Returns
+
+<ResponseField name="model_id" type="String">
+  Echo of the model ID used for prediction.
+</ResponseField>
+
+<ResponseField name="predictions" type="Array">
+  Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
+</ResponseField>
 
 ### `fit_and_predict_inline`
 
@@ -155,18 +175,18 @@ Best for small datasets that fit in the conversation without running into contex
 #### Returns
 
 <ResponseField name="model_id" type="String">
-  Unique identifier for the fitted model. **Save this value** to reuse the model later with the `predict` tool.
+  Unique ID for the fitted model. Save this value to reuse the model later with predict tools.
 </ResponseField>
 
 <ResponseField name="predictions" type="Array">
-  Prediction results based on the specified `output_type`. Format varies by task type and output type.
+  Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
 </ResponseField>
 
 ### `predict`
 
 Generate new predictions using a previously fitted TabPFN model.
 
-Use this tool after calling `fit_and_predict` to make predictions on new data using an existing model. 
+Use this tool after calling `fit_and_predict_*` to make predictions on new data using an existing model. 
 
 <Warning>
 Best for small datasets that fit in the conversation without running into context limits.
@@ -175,7 +195,7 @@ Best for small datasets that fit in the conversation without running into contex
 #### Required Parameters
 
 <ParamField path="model_id" type="String" required>
-  Identifier of a previously fitted model, returned from `fit_and_predict`.
+  ID of a previously fitted model, returned from `fit_and_predict_*`.
     
   <Accordion title="Example">
     ```python
@@ -220,5 +240,5 @@ Best for small datasets that fit in the conversation without running into contex
 </ResponseField>
 
 <ResponseField name="predictions" type="Array">
-  Prediction results based on the specified `output_type`.
+  Prediction results in the format specified by `output_type`. Same structure as `fit_and_predict_inline`.
 </ResponseField>

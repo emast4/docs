@@ -1,6 +1,6 @@
 ---
 title: "Databricks"
-description: ""
+description: "Build a customer churn prediction pipeline using an AI agent, TabPFN MCP, and Databricks Delta tables."
 ---
 
 This tutorial shows you how to connect your Databricks Delta table to TabPFN's MCP server
@@ -11,6 +11,10 @@ and run a churn prediction pipeline with an AI agent.
 - Databricks workspace with a SQL warehouse running
 - Create a Delta table named `customer_analytics`
 - Get your [Prior Labs API key](/api-reference/getting-started#1-get-your-access-token)
+- Install the required Python packages:
+```bash
+pip install openai-agents databricks-sdk databricks-sql-connector httpx pandas scikit-learn
+```
 
 ### Overview
 Here's what happens end-to-end:
@@ -373,3 +377,15 @@ async def main() -> None:
 
 asyncio.run(main())
 ```
+
+### Running the script
+
+Set the required environment variables and run the script:
+```bash
+export PRIORLABS_API_KEY="your-prior-labs-api-key"
+export DATABRICKS_TABLE="catalog.schema.customer_analytics"
+
+python example.py
+```
+
+On success, the agent prints a churn model evaluation summary with ROC-AUC, accuracy, F1, precision, and recall for the churned class.

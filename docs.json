@@ -108,7 +108,9 @@
               {
                 "group": "Tutorials",
                 "pages": [
-                  "agentic/tutorials/databricks"
+                  "agentic/tutorials/databricks",
+                  "agentic/tutorials/mcp-claude-skills",
+                  "agentic/tutorials/n8n"
                 ]
               }
             ]

@@ -33,11 +33,38 @@ The skill activates automatically when you use phrases like "predict X from this
 
 ## Install the skill
 
-The skill is a single [`SKILL.md`](https://github.com/dianaprior/table-predictions-skill/blob/main/.claude/skills/SKILL.md) file placed in a `.claude/skills/` directory. Install it globally (available across all projects) or locally (for a single project).
-
 <Tabs>
+  <Tab title="Claude Desktop">
+    1. Download the [`SKILL.md`](https://raw.githubusercontent.com/dianaprior/table-predictions-skill/main/.claude/skills/SKILL.md) file from the repository.
+
+    2. Open the sidebar and click **Customize**.
+
+    <Frame>
+      <img src="/images/claude-skills/sidebar-customize.png" alt="Claude Desktop sidebar with Customize option" />
+    </Frame>
+
+    3. Click **Skills** in the left panel.
+
+    <Frame>
+      <img src="/images/claude-skills/customize-skills.png" alt="Customize page showing Skills and Connectors" />
+    </Frame>
+
+    4. Click the **+** button at the top of the skills list.
+
+    <Frame>
+      <img src="/images/claude-skills/skills-list.png" alt="Skills list with the plus button" />
+    </Frame>
+
+    5. Select **Upload skill** from the dropdown.
+
+    6. Select the `SKILL.md` file you downloaded in step 1.
+
+    The skill should appear under **My skills** once uploaded.
+  </Tab>
   <Tab title="Claude Code">
-    Install globally so the skill is available in every project:
+    The skill is a single [`SKILL.md`](https://github.com/dianaprior/table-predictions-skill/blob/main/.claude/skills/SKILL.md) file placed in a `.claude/skills/` directory. Install it globally (available across all projects) or locally (for a single project).
+
+    Install globally:
 
     ```bash
     mkdir -p ~/.claude/skills/predicting-with-tabpfn
@@ -61,29 +88,6 @@ The skill is a single [`SKILL.md`](https://github.com/dianaprior/table-predictio
 
     You should see `predicting-with-tabpfn` in the list. You can also invoke it directly with `/predicting-with-tabpfn`.
   </Tab>
-  <Tab title="Claude Desktop">
-    1. Download the [`SKILL.md`](https://raw.githubusercontent.com/dianaprior/table-predictions-skill/main/.claude/skills/SKILL.md) file from the repository.
-
-    2. Create the skill directory and copy the file into it:
-
-    **macOS / Linux:**
-    ```bash
-    mkdir -p ~/.claude/skills/predicting-with-tabpfn
-    cp ~/Downloads/SKILL.md ~/.claude/skills/predicting-with-tabpfn/SKILL.md
-    ```
-
-    **Windows:**
-    ```powershell
-    New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\skills\predicting-with-tabpfn"
-    Copy-Item "$env:USERPROFILE\Downloads\SKILL.md" "$env:USERPROFILE\.claude\skills\predicting-with-tabpfn\SKILL.md"
-    ```
-
-    3. Restart Claude Desktop for the skill to load.
-
-    <Note>
-    You can also install the skill for a single project by placing it in that project's `.claude/skills/predicting-with-tabpfn/` directory instead.
-    </Note>
-  </Tab>
 </Tabs>
 
 ## Allow network access
@@ -91,15 +95,6 @@ The skill is a single [`SKILL.md`](https://github.com/dianaprior/table-predictio
 The TabPFN MCP server runs remotely at `api.priorlabs.ai`. When Claude calls TabPFN tools, it needs permission to make outbound network requests to this domain.
 
 <Tabs>
-  <Tab title="Claude Code">
-    The first time Claude uses a TabPFN MCP tool, it will prompt you to approve the network request. You can allow it once for the current session or permanently.
-
-    To pre-approve all TabPFN MCP tools so Claude won't prompt each time:
-
-    ```bash
-    claude permissions allow mcp__tabpfn
-    ```
-  </Tab>
   <Tab title="Claude Desktop">
     When Claude Desktop runs code in its local coding environment, network access is restricted by default. To allow connections to the TabPFN API:
 
@@ -113,6 +108,15 @@ The TabPFN MCP server runs remotely at `api.priorlabs.ai`. When Claude calls Tab
     <Note>
     On Team and Enterprise plans, an admin may need to configure the network allowlist. Domains like `github.com` and `pypi.org` are allowed by default, but `api.priorlabs.ai` must be added explicitly.
     </Note>
+  </Tab>
+  <Tab title="Claude Code">
+    The first time Claude uses a TabPFN MCP tool, it will prompt you to approve the network request. You can allow it once for the current session or permanently.
+
+    To pre-approve all TabPFN MCP tools so Claude won't prompt each time:
+
+    ```bash
+    claude permissions allow mcp__tabpfn
+    ```
   </Tab>
 </Tabs>
 

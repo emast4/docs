@@ -1,0 +1,141 @@
+---
+title: "n8n"
+description: "Build an n8n chat workflow that accepts CSV uploads and runs TabPFN predictions through MCP."
+---
+
+This tutorial walks through building an n8n workflow where users can upload CSV files through a chat interface and get TabPFN predictions back. The agent parses the file, sends the data to TabPFN via MCP, and returns results in the conversation.
+
+Works with both n8n Cloud and self-hosted instances.
+
+### Prerequisites
+
+- An n8n instance (cloud or self-hosted) with the AI Agent node available
+- A [Prior Labs account](https://ux.priorlabs.ai) and API key — see [getting your access token](/api-reference/getting-started#1-get-your-access-token)
+- An API key for your LLM provider (this tutorial uses Anthropic, but any supported model works)
+- TabPFN MCP server configured in your n8n agent — see the [n8n section of the setup guide](/agentic/setup-guide#n8n)
+
+### What you can build with this
+
+Once you have an n8n agent connected to TabPFN, you can wire it into any n8n automation. A few examples:
+
+| Use case | How it works |
+| --- | --- |
+| Lead scoring | Upload a CSV of leads, get churn/conversion probabilities, route high-value leads to a CRM node |
+| Outreach gating | Run predictions mid-workflow and branch on the result — continue the sequence or stop |
+| Anomaly flagging | Score incoming data against a baseline and trigger Slack/email alerts on outliers |
+
+The workflow in this tutorial handles the CSV upload and prediction part. You can extend it with additional n8n nodes for whatever comes after the prediction.
+
+### Overview
+
+Here's the finished workflow:
+
+<Frame>
+  <img src="/images/n8n/workflow-full.png" alt="Complete n8n workflow showing chat trigger, If node, Extract from File, and AI Agent with Anthropic model" />
+</Frame>
+
+The flow:
+1. A chat trigger receives messages and file uploads from the user.
+2. An If node checks whether the message includes a file.
+3. If yes, an Extract from File node parses the CSV into structured data.
+4. The AI Agent — connected to TabPFN via MCP — handles the conversation, receives the parsed data, and runs predictions.
+
+### Step 1: Chat trigger with file uploads
+
+Create a new workflow and add a **When chat message received** trigger node.
+
+Open the node, click **Add Field** under Options, and enable **Allow File Uploads**. You can also add **Allowed File Mime Types** and set it to `text/csv` if you want to restrict uploads to CSV files only.
+
+<Frame>
+  <img src="/images/n8n/chat-trigger-options.png" alt="Chat trigger node with Add Field dropdown showing Allow File Uploads option" />
+</Frame>
+
+### Step 2: Route based on file uploads
+
+Add an **If** node connected to the chat trigger output.
+
+Set the condition to check whether the incoming message has files attached:
+- Field: `{{ $json.files }}`
+- Condition: **is not empty**
+
+When a user sends a message with a CSV, the `files` array in the trigger output will contain the file metadata and binary data. Messages without files go down the false branch.
+
+<Frame>
+  <img src="/images/n8n/if-node-config.png" alt="If node configured to check $json.files is not empty" />
+</Frame>
+
+<Note>
+If you need to handle multiple file types (Excel, JSON, etc.), add a second condition or a Switch node after the If to route each type to its own extraction node.
+</Note>
+
+### Step 3: Extract CSV data
+
+Connect an **Extract from File** node to the **true** branch of the If node.
+
+Configure it:
+- **Operation**: Extract From CSV
+- **Input Binary Field**: `data0`
+
+The chat trigger stores uploaded files as binary data. The first file is `data0`, the second would be `data1`, and so on. The Extract from File node converts the binary CSV into structured JSON rows that the agent can work with.
+
+<Frame>
+  <img src="/images/n8n/extract-from-file.png" alt="Extract from File node set to Extract From CSV with Input Binary Field data0" />
+</Frame>
+
+### Step 4: Connect the AI Agent
+
+Add an **AI Agent** node to the workflow. Connect it so it receives data from both branches:
+- The **true** branch (after Extract from File) feeds in the parsed CSV data.
+- The **false** branch passes through chat messages that don't have files.
+
+**The AI Agent must also be connected to the chat trigger node.** This is required — without this connection, the chat interface won't return responses. In n8n, the chat trigger needs a direct path to an agent node for the conversation loop to work.
+
+Connect your LLM to the agent's **Chat Model** input. This tutorial uses the **Anthropic Chat Model** node, but you can use OpenAI, Google, or any other supported model.
+
+<Frame>
+  <img src="/images/n8n/workflow-trigger-if.png" alt="Workflow showing chat trigger connected to If node" />
+</Frame>
+
+### Step 5: Add conversation memory
+
+Add a **Simple Memory** node and connect it to the agent's **Memory** input.
+
+Configure it:
+- **Session ID**: Connected Chat Trigger Node
+- **Session Key From Previous Node**: `{{ $json.sessionId }}`
+- **Context Window Length**: `15` (or adjust based on how much conversation history the agent should retain)
+
+This keeps the conversation stateful so users can ask follow-up questions about their predictions.
+
+<Frame>
+  <img src="/images/n8n/simple-memory.png" alt="Simple Memory node configured with session ID from chat trigger" />
+</Frame>
+
+### Step 6: Connect TabPFN via MCP
+
+Add the TabPFN MCP server as a tool for the agent. If you haven't set up the MCP connection yet, follow the [n8n setup guide video](/agentic/setup-guide#n8n) first.
+
+Connect the MCP tool node to the agent's **Tool** input. The agent will have access to TabPFN's tools for uploading datasets, fitting models, and generating predictions. See the full [tool reference](/agentic/tool-use) for available operations.
+
+### Step 7: Configure the agent prompt
+
+Set the AI Agent's system prompt to tell it how to use the TabPFN tools. We maintain a ready-made skill file that covers the full workflow — data validation, tool selection, edge case handling — so you don't need to write this from scratch.
+
+Grab the [`SKILL.md`](https://github.com/dianaprior/table-predictions-skill/blob/main/.claude/skills/SKILL.md) from the [TabPFN Prediction Skill](/agentic/tutorials/mcp-claude-skills) tutorial and paste its contents into the agent's system prompt field. The skill was written for Claude, but the instructions are model-agnostic — they work with any LLM that supports tool use.
+
+You can use the skill as-is for a general-purpose prediction agent, or trim it down for a narrower use case. For a lead scoring workflow, for example, you might hardcode the target column and task type so the agent doesn't need to ask.
+
+### Test it
+
+Click **Test chat** in the n8n editor. Send a message with a CSV file attached — something like:
+
+```
+Here's my customer data. Predict the "churned" column.
+```
+
+The agent should:
+1. Confirm the target column and task type
+2. Upload the CSV to TabPFN
+3. Return predictions
+
+From here, you can extend the workflow with additional n8n nodes downstream — write predictions to a Google Sheet, send a Slack summary, update a CRM record, or branch into different automation paths based on the prediction results.

@@ -99,6 +99,23 @@
             ]
           },
           {
+            "group": "Agentic",
+            "icon": "robot",
+            "pages": [
+              "agentic/mcp",
+              "agentic/setup-guide",
+              "agentic/tool-use",
+              {
+                "group": "Tutorials",
+                "pages": [
+                  "agentic/tutorials/databricks",
+                  "agentic/tutorials/mcp-claude-skills",
+                  "agentic/tutorials/n8n"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Extensions",
             "icon": "puzzle-piece",
             "pages": [

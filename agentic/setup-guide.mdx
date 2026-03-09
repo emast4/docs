@@ -1,0 +1,145 @@
+---
+title: "Setup Guide"
+description: "Step-by-step instructions for connecting Claude, ChatGPT, Cursor, Codex CLI, and n8n to the TabPFN MCP server."
+---
+
+#### Claude Code
+
+<Note>
+After setup, checkout our [Claude skill](/agentic/tutorials/mcp-claude-skills) to get the most out of TabPFN MCP. 
+</Note>
+
+```bash
+# If you haven't, install Claude Code
+npm install -g @anthropic-ai/claude-code
+ 
+# Navigate to your project
+cd your-tabpfn-project
+ 
+# Add TabPFN MCP (general access)
+claude mcp add --transport http tabpfn https://api.priorlabs.ai/mcp/server
+
+# Start coding with Claude
+claude
+ 
+# Authenticate the MCP tools by typing /mcp
+# This will trigger the OAuth flow
+/mcp
+```
+
+#### Claude.ai and Claude for desktop
+
+<Note>
+After setup, checkout our [Claude skill](/agentic/tutorials/mcp-claude-skills) to get the most out of TabPFN MCP. 
+</Note>
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/p-yNAqdWQIg"
+  title="YouTube video player"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+1. Open Settings in the sidebar
+2. Navigate to Connectors and select Add custom connector
+3. Configure the connector:
+    - Name: TabPFN
+    - URL: https://api.priorlabs.ai/mcp/server
+
+<Note>
+Custom connectors using remote MCP are available on Claude and Claude Desktop for users on Pro, Max, Team, and Enterprise plans.
+</Note>
+
+Alternatively, you may add the MCP server by editing the Claude Desktop config file:
+
+1. Locate your Claude Desktop config file based on your operating system:
+2. Get your API key from Prior Labs:
+    - Navigate to [ux.priorlabs.ai](https://ux.priorlabs.ai)
+    - Log in to your account (or sign up if you don't have one)
+    - Copy your API key from the dashboard
+3. Edit the config file to add the TabPFN server:
+```json
+{
+    "mcpServers": {
+      "tabpfn": {
+        "url": "https://api.priorlabs.ai/mcp/server",
+        "headers": {
+          "Authorization": "Bearer YOUR_API_KEY_HERE"
+        }
+      }
+    }
+  }
+```
+4. Replace `YOUR_API_KEY_HERE` with your actual API key from step 2
+5. Save the config file and restart Claude Desktop for the changes to take effect
+
+#### ChatGPT
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/kMsvhawptgc"
+  title="YouTube video player"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
+
+Follow these steps to set up TabPFN as a connector in ChatGPT:
+
+1. Enable Developer mode:
+    - Go to Settings → Connectors → Advanced settings → Developer mode
+2. Open ChatGPT settings
+3. In the Connectors tab, `Create` a new connector:
+    - Give it a name: TabPFN
+    - MCP server URL: https://api.priorlabs.ai/mcp/server
+    - Authentication: OAuth
+4. Click Create
+
+<Note>
+Custom connectors using MCP are available on ChatGPT for Pro and Plus accounts on the web.
+</Note>
+
+#### Codex CLI
+
+Codex CLI is OpenAI's local coding agent that can run directly from your terminal.
+
+```bash
+# Install Codex
+npm i -g @openai/codex
+ 
+# Add TabPFN MCP
+codex mcp add tabpfn --url https://api.priorlabs.ai/mcp/server
+ 
+# Start Codex
+codex
+```
+
+When adding the MCP server, Codex will detect OAuth support and open your browser to authorize the connection.
+
+#### Cursor
+
+To add TabPFN MCP to your Cursor environment, add the snippet below to your project-specific or global `.cursor/mcp.json` file manually. For more details, see the [Cursor documentation](https://docs.cursor.com/en/context/mcp).
+
+```json
+{
+  "mcpServers": {
+    "tabpfn": {
+      "url": "https://api.priorlabs.ai/mcp/server"
+    }
+  }
+}
+```
+
+Once the server is added, Cursor will attempt to connect and display a Needs login prompt. Click on this prompt to authorize Cursor to access your Prior Labs account.
+
+#### n8n
+
+Watch the video below to learn how to integrate TabPFN with n8n workflows.
+
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/Po8r77MBmow"
+  title="YouTube video player"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>

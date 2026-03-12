@@ -182,16 +182,12 @@
       {
         "label": "Changelog",
         "href": "https://github.com/PriorLabs/TabPFN/blob/main/CHANGELOG.md"
-      },
-      {
-        "label": "About Us",
-        "href": "https://priorlabs.ai/about"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Book a Demo",
-      "href": "https://eepurl.com/isV1hc"
+      "label": "Try TabPFN-2.5-Plus",
+      "href": "https://ux.priorlabs.ai/playground"
     }
   },
   "footer": {

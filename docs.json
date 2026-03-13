@@ -186,7 +186,7 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Try TabPFN-2.5-Plus",
+      "label": "Try TabPFN",
       "href": "https://ux.priorlabs.ai/playground"
     }
   },

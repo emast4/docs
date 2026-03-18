@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PriorLabs/tabpfn-server.git"
+    "url": "https://github.com/PriorLabs/TabPFN.git"
   },
   "homepage": "https://priorlabs.ai",
-  "support": "https://github.com/PriorLabs/tabpfn-server/issues",
+  "support": "https://github.com/PriorLabs/TabPFN/issues",
   "icon": "icon.png",
   "server": {
     "type": "node",
@@ -50,7 +50,7 @@
     "prior-labs"
   ],
   "license": "Apache-2.0",
-  "privacy_policies": ["https://priorlabs.ai/privacy"],
+  "privacy_policies": ["https://priorlabs.ai/about"],
   "user_config": {
     "api_token": {
       "type": "string",

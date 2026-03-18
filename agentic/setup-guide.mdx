@@ -30,7 +30,7 @@ claude
 #### Claude.ai and Claude for desktop
 
 <Note>
-After setup, checkout our [Claude skill](/agentic/tutorials/mcp-claude-skills) to get the most out of TabPFN MCP. 
+After setup, checkout our [Claude skill](/agentic/tutorials/mcp-claude-skills) to get the most out of TabPFN MCP.
 </Note>
 
 <iframe
@@ -41,38 +41,75 @@ After setup, checkout our [Claude skill](/agentic/tutorials/mcp-claude-skills) t
   allowFullScreen
 ></iframe>
 
-1. Open Settings in the sidebar
-2. Navigate to Connectors and select Add custom connector
-3. Configure the connector:
-    - Name: TabPFN
-    - URL: https://api.priorlabs.ai/mcp/server
+<Tabs>
+  <Tab title="One-click bundle install">
+    The fastest way to get started with Claude Desktop is the TabPFN MCP Bundle.
+    Download it, double-click the file, and Claude Desktop will open the install dialog.
 
-<Note>
-Custom connectors using remote MCP are available on Claude and Claude Desktop for users on Pro, Max, Team, and Enterprise plans.
-</Note>
+    1. Enable network egress in Claude Desktop's Settings → Capabilities (required to reach `api.priorlabs.ai`)
+    2. Get your API token from [ux.priorlabs.ai](https://ux.priorlabs.ai) (log in or sign up, then copy from the dashboard)
+    3. Download the bundle:
 
-Alternatively, you may add the MCP server by editing the Claude Desktop config file:
+    <a
+      href="/public/tabpfn-0.1.0.mcpb"
+      download="tabpfn-0.1.0.mcpb"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '12px 24px',
+        background: '#101075',
+        color: 'white',
+        WebkitTextFillColor: 'white',
+        borderRadius: '8px',
+        fontWeight: 600,
+        fontSize: '15px',
+        textDecoration: 'none',
+        cursor: 'pointer',
+      }}
+    >
+      <Icon icon="download" size={16} color="white" /> Install in Claude
+    </a>
+    <span style={{ display: 'block', marginTop: '8px', fontSize: '13px', color: '#6b7280' }}>
+      v0.1.0 · .mcpb · ~1 MB · macOS, Windows, Linux
+    </span>
 
-1. Locate your Claude Desktop config file based on your operating system:
-2. Get your API key from Prior Labs:
-    - Navigate to [ux.priorlabs.ai](https://ux.priorlabs.ai)
-    - Log in to your account (or sign up if you don't have one)
-    - Copy your API key from the dashboard
-3. Edit the config file to add the TabPFN server:
-```json
-{
-    "mcpServers": {
-      "tabpfn": {
-        "url": "https://api.priorlabs.ai/mcp/server",
-        "headers": {
-          "Authorization": "Bearer YOUR_API_KEY_HERE"
+    4. Open the downloaded `.mcpb` file — Claude Desktop will show the install dialog
+    5. Paste your API token when prompted
+  </Tab>
+  <Tab title="Custom connector (OAuth)">
+    1. Open Settings in the sidebar
+    2. Navigate to Connectors and select Add custom connector
+    3. Configure the connector:
+        - Name: TabPFN
+        - URL: https://api.priorlabs.ai/mcp/server
+
+    <Note>
+    Custom connectors using remote MCP are available on Claude and Claude Desktop for users on Pro, Max, Team, and Enterprise plans.
+    </Note>
+  </Tab>
+  <Tab title="Manual config file">
+    You may add the MCP server by editing the Claude Desktop config file:
+
+    1. Locate your Claude Desktop config file based on your operating system
+    2. Get your API key from [ux.priorlabs.ai](https://ux.priorlabs.ai) (log in or sign up, then copy from the dashboard)
+    3. Edit the config file to add the TabPFN server:
+    ```json
+    {
+        "mcpServers": {
+          "tabpfn": {
+            "url": "https://api.priorlabs.ai/mcp/server",
+            "headers": {
+              "Authorization": "Bearer YOUR_API_KEY_HERE"
+            }
+          }
         }
       }
-    }
-  }
-```
-4. Replace `YOUR_API_KEY_HERE` with your actual API key from step 2
-5. Save the config file and restart Claude Desktop for the changes to take effect
+    ```
+    4. Replace `YOUR_API_KEY_HERE` with your actual API key from step 2
+    5. Save the config file and restart Claude Desktop for the changes to take effect
+  </Tab>
+</Tabs>
 
 #### ChatGPT
 

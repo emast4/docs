@@ -35,6 +35,21 @@ mintlify dev
 
 Then open **[http://localhost:3000](http://localhost:3000)** in your browser to preview the docs.
 
+## MCP Bundle (MCPB)
+
+The `mcpb/` directory contains the source for the TabPFN MCP Bundle — a one-click installer for Claude Desktop.
+
+To rebuild the bundle after changes:
+
+```bash
+cd mcpb
+npm install
+npx @anthropic-ai/mcpb pack
+cp mcpb.mcpb ../public/tabpfn-0.1.0.mcpb
+```
+
+Bump the version in `mcpb/manifest.json` and `mcpb/package.json` when releasing, and update the filename in `public/` and `agentic/setup-guide.mdx` to match.
+
 ## Contributing 🤝
 
 We welcome contributions to improve the Prior Labs documentation!

@@ -1,0 +1,17 @@
+**/test/
+**/tests/
+**/.github/
+**/example/
+**/examples/
+**/*.md
+**/CHANGELOG*
+**/HISTORY*
+**/LICENSE*
+**/Makefile
+**/.npmignore
+**/.coveralls.yml
+**/.travis.yml
+**/karma.conf.js
+**/component.json
+**/package-support.json
+**/eslint.config.*

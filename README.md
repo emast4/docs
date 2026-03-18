@@ -45,10 +45,14 @@ To rebuild the bundle after changes:
 cd mcpb
 npm install
 npx @anthropic-ai/mcpb pack
-cp mcpb.mcpb ../public/tabpfn-0.1.0.mcpb
 ```
 
-Bump the version in `mcpb/manifest.json` and `mcpb/package.json` when releasing, and update the filename in `public/` and `agentic/setup-guide.mdx` to match.
+The built `.mcpb` file is hosted as a GitHub Release asset. To publish a new version:
+
+1. Bump the version in `mcpb/manifest.json` and `mcpb/package.json`
+2. Rebuild with `npx @anthropic-ai/mcpb pack`
+3. Create a new GitHub Release on this repo (e.g. tag `tabpfn-mcpb-0.2.0`) and upload the `.mcpb` file
+4. Update the download URL in `agentic/setup-guide.mdx` to match
 
 ## Contributing 🤝
 

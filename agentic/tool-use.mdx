@@ -64,8 +64,19 @@ Upload both dataset CSV files with `upload_dataset` first, then pass the two dat
   Unique ID for the fitted model. Save this value to reuse the model later with predict tools.
 </ResponseField>
 
-<ResponseField name="predictions" type="Array">
-  Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
+<ResponseField name="download_url" type="String">
+  Pre-signed URL to download the full prediction results as a JSON file. Valid for 60 minutes. Use HTTP GET to retrieve.
+</ResponseField>
+
+<ResponseField name="predictions_preview" type="Object">
+  Preview of the first predictions (up to 50 samples). Contains a `note` describing how many predictions are shown vs total, and a `predictions` array with the preview data. Download the full results via `download_url` for all predictions.
+</ResponseField>
+
+<ResponseField name="summary" type="Object">
+  Summary statistics of the predictions, varying by task type.
+
+  - **Classification:** `num_samples`, `class_distribution`, `mean_confidence`, `min_confidence`, `max_confidence`
+  - **Regression:** `num_samples`, `mean`, `std`, `min`, `max`, `quantile_25`, `quantile_50`, `quantile_75`
 </ResponseField>
 
 ### `predict_from_dataset`
@@ -103,8 +114,19 @@ Use `upload_dataset` to upload your new test dataset file, then pass that `datas
   Echo of the model ID used for prediction.
 </ResponseField>
 
-<ResponseField name="predictions" type="Array">
-  Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
+<ResponseField name="download_url" type="String">
+  Pre-signed URL to download the full prediction results as a JSON file. Valid for 60 minutes. Use HTTP GET to retrieve.
+</ResponseField>
+
+<ResponseField name="predictions_preview" type="Object">
+  Preview of the first predictions (up to 50 samples). Contains a `note` describing how many predictions are shown vs total, and a `predictions` array with the preview data. Download the full results via `download_url` for all predictions.
+</ResponseField>
+
+<ResponseField name="summary" type="Object">
+  Summary statistics of the predictions, varying by task type.
+
+  - **Classification:** `num_samples`, `class_distribution`, `mean_confidence`, `min_confidence`, `max_confidence`
+  - **Regression:** `num_samples`, `mean`, `std`, `min`, `max`, `quantile_25`, `quantile_50`, `quantile_75`
 </ResponseField>
 
 ### `fit_and_predict_inline`
@@ -182,11 +204,18 @@ Best for small datasets that fit in the conversation without running into contex
   Prediction results in the format specified by `output_type`. For classification with `"preds"`, returns a 1D array of class labels. With `"probas"`, returns a 2D array of class probabilities. For regression with `"mean"`, returns a 1D array of predicted values.
 </ResponseField>
 
-### `predict`
+<ResponseField name="summary" type="Object">
+  Summary statistics of the predictions, varying by task type.
+
+  - **Classification:** `num_samples`, `class_distribution`, `mean_confidence`, `min_confidence`, `max_confidence`
+  - **Regression:** `num_samples`, `mean`, `std`, `min`, `max`, `quantile_25`, `quantile_50`, `quantile_75`
+</ResponseField>
+
+### `predict_inline`
 
 Generate new predictions using a previously fitted TabPFN model.
 
-Use this tool after calling `fit_and_predict_*` to make predictions on new data using an existing model. 
+Use this tool after calling `fit_and_predict_*` to make predictions on new data using an existing model.
 
 <Warning>
 Best for small datasets that fit in the conversation without running into context limits.
@@ -196,7 +225,7 @@ Best for small datasets that fit in the conversation without running into contex
 
 <ParamField path="model_id" type="String" required>
   ID of a previously fitted model, returned from `fit_and_predict_*`.
-    
+
   <Accordion title="Example">
     ```python
     model_id = "9f1526b2-388b-4849-b965-6373d35f1a6b"
@@ -206,10 +235,10 @@ Best for small datasets that fit in the conversation without running into contex
 
 <ParamField path="X_test" type="Matrix" required>
   Test features as a 2D array for generating predictions.
-  
+
   - **Shape:** `(n_test_samples, n_features)`
   - **Critical:** Must have the **same number of features** the model was originally fitted on
-  
+
   <Accordion title="Example">
     ```python
     X_test = [
@@ -222,7 +251,7 @@ Best for small datasets that fit in the conversation without running into contex
 
 <ParamField path="task_type" type="Literal" required>
   The type of the predictive task.
-  
+
   - `"classification"` — Predict a category or class, including probability distributions
   - `"regression"` — Predict a continuous value
 </ParamField>
@@ -241,4 +270,11 @@ Best for small datasets that fit in the conversation without running into contex
 
 <ResponseField name="predictions" type="Array">
   Prediction results in the format specified by `output_type`. Same structure as `fit_and_predict_inline`.
+</ResponseField>
+
+<ResponseField name="summary" type="Object">
+  Summary statistics of the predictions, varying by task type.
+
+  - **Classification:** `num_samples`, `class_distribution`, `mean_confidence`, `min_confidence`, `max_confidence`
+  - **Regression:** `num_samples`, `mean`, `std`, `min`, `max`, `quantile_25`, `quantile_50`, `quantile_75`
 </ResponseField>

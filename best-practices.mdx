@@ -1,6 +1,6 @@
 ---
 title: "Best Practices"
-description: "This guide outlines best practices for getting the optimal fit and predict speed out of TabPFN-2.5."
+description: "This guide outlines best practices for getting the optimal fit and predict speed out of TabPFN"
 ---
 
 To achieve good performance, we recommend the following:
@@ -19,7 +19,7 @@ each time `.predict()` is called. This means that it is much faster to make a pr
 test points in a single `.predict()` call. If you run out of memory, split the test points into batches
 of 1000 to 10000 and call `.predict()` for each batch.
 
-- Use PyTorch 2.8 or above: TabPFN-2.5 also supports earlier versions of PyTorch, but these
+- Use PyTorch 2.8 or above: TabPFN also supports earlier versions of PyTorch, but these
 may have lower performance.
 
 - For small datasets, enable the fitted-model cache: This is an experimental feature that trains

@@ -22,13 +22,13 @@ TabPFN can be used in two ways, depending on your workflow and compute setup. Us
 
 #### OSS Package
 
-Recommended for researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_5). It provides the model locally, giving you full control over your data and experimentation.
+Recommended for researchers, ML practitioners, and engineers with GPU availability. TabPFN is available as an open-source Python package on [GitHub](https://github.com/PriorLabs/TabPFN) with the checkpoint for non-commercial use hosted on [HuggingFace](https://huggingface.co/Prior-Labs/tabpfn_2_6). It provides the model locally, giving you full control over your data and experimentation.
 
 ```bash
 pip install tabpfn
 ```
 
-To get access to the latest features and our [TabPFN-2.5](/models#tabpfn-2-5) model, please upgrade the package to the latest version:
+To get access to the latest features and our [TabPFN-2.6](/models#tabpfn-2-6) model, please upgrade the package to the latest version:
 ```bash
 pip install --upgrade tabpfn
 ```
@@ -239,10 +239,10 @@ See the details of the [available models](/models).
 from tabpfn import TabPFNClassifier, TabPFNRegressor
 from tabpfn.constants import ModelVersion
 
-# Set the version of the TabPFNClassifier to 2.5
+# Set the version of the TabPFNClassifier to 2.5 instead of using the default 2.6
 classifier = TabPFNClassifier.create_default_for_version(ModelVersion.V2_5)
 
-# Set the version of the TabPFNRegressor to 2.5
+# Set the version of the TabPFNRegressor to 2.5 instead of using the default 2.6
 regressor = TabPFNRegressor.create_default_for_version(ModelVersion.V2_5)
 ```
 
